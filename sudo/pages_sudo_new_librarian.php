@@ -1,102 +1,94 @@
-<?php 
-    session_start();
-    include('assets/config/config.php');
-    include('assets/config/checklogin.php');
-    check_login();
-    //generate random librarian number
-    $length = 5;    
-    $Number =  substr(str_shuffle('0123456789'),1,$length);
+<?php
+session_start();
+include('assets/config/config.php');
+include('assets/config/checklogin.php');
+check_login();
+//generate random librarian number
+$length = 5;
+$Number =  substr(str_shuffle('0123456789'), 1, $length);
 
-    //create a librarian account
-    if(isset($_POST['add_librarian']))
-    {
-        $error = 0;
-            if (isset($_POST['l_name']) && !empty($_POST['l_name'])) {
-                $l_name=mysqli_real_escape_string($mysqli,trim($_POST['l_name']));
-            }else{
-                $error = 1;
-                $err="Librarian name cannot be empty";
-            }
-            if (isset($_POST['l_email']) && !empty($_POST['l_email'])) {
-                $l_email=mysqli_real_escape_string($mysqli,trim($_POST['l_email']));
-            }else{
-                $error = 1;
-                $err="Librarian email cannot be empty";
-            }
-            if (isset($_POST['l_number']) && !empty($_POST['l_number'])) {
-                $l_number=mysqli_real_escape_string($mysqli,trim($_POST['l_number']));
-            }else{
-                $error = 1;
-                $err="Librarian email cannot be empty";
-            }
-            if(!$error)
-            {
-                $sql="SELECT * FROM  iL_Librarians WHERE  l_number='$l_number' || l_email ='$l_email' ";
-                $res=mysqli_query($mysqli,$sql);
-                if (mysqli_num_rows($res) > 0) {
-                $row = mysqli_fetch_assoc($res);
-                if ($l_number==$row['l_number'])
-                {
-                    $err="Librarian number already exists";
-                }
-                else
-                {
-                    $err="Librarian email already exists";
-                }
-            }
-            else
-            {
-
-                $l_number = $_POST['l_number'];
-                $l_name =$_POST['l_name'];
-                $l_phone = $_POST['l_phone'];
-                $l_email = $_POST['l_email'];
-                $l_pwd = sha1(md5($_POST['l_pwd']));
-                $l_adr = $_POST['l_adr'];
-                $l_bio = $_POST['l_bio'];
-                $l_acc_status = $_POST['l_acc_status'];
-                
-                //Insert Captured information to a database table
-                $query="INSERT INTO iL_Librarians (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
-                $stmt = $mysqli->prepare($query);
-                //bind paramaters
-                $rc=$stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
-                $stmt->execute();
-        
-                //declare a varible which will be passed to alert function
-                if($stmt)
-                {
-                    $success = "Librarian Account Created";
-                }
-                else 
-                {
-                    $err = "Please Try Again Or Try Later";
-                }
-            }
-        }      
+//create a librarian account
+if (isset($_POST['add_librarian'])) {
+    $error = 0;
+    if (isset($_POST['l_name']) && !empty($_POST['l_name'])) {
+        $l_name = mysqli_real_escape_string($mysqli, trim($_POST['l_name']));
+    } else {
+        $error = 1;
+        $err = "Librarian name cannot be empty";
     }
+    if (isset($_POST['l_email']) && !empty($_POST['l_email'])) {
+        $l_email = mysqli_real_escape_string($mysqli, trim($_POST['l_email']));
+    } else {
+        $error = 1;
+        $err = "Librarian email cannot be empty";
+    }
+    if (isset($_POST['l_number']) && !empty($_POST['l_number'])) {
+        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['l_number']));
+    } else {
+        $error = 1;
+        $err = "Librarian email cannot be empty";
+    }
+    if (!$error) {
+        $sql = "SELECT * FROM  iL_Librarians WHERE  l_number='$l_number' || l_email ='$l_email' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($l_number == $row['l_number']) {
+                $err = "Librarian number already exists";
+            } else {
+                $err = "Librarian email already exists";
+            }
+        } else {
+
+            $l_number = $_POST['l_number'];
+            $l_name = $_POST['l_name'];
+            $l_phone = $_POST['l_phone'];
+            $l_email = $_POST['l_email'];
+            $l_pwd = sha1(md5($_POST['l_pwd']));
+            $l_adr = $_POST['l_adr'];
+            $l_bio = $_POST['l_bio'];
+            $l_acc_status = $_POST['l_acc_status'];
+
+            //Insert Captured information to a database table
+            $query = "INSERT INTO iL_Librarians (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $stmt = $mysqli->prepare($query);
+            //bind paramaters
+            $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
+            $stmt->execute();
+
+            //declare a varible which will be passed to alert function
+            if ($stmt) {
+                $success = "Librarian Account Created";
+            } else {
+                $err = "Please Try Again Or Try Later";
+            }
+        }
+    }
+}
 ?>
 
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en"> <!--<![endif]-->
 <?php
-    include("assets/inc/head.php");
+include("assets/inc/head.php");
 ?>
+
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
-        <?php 
-            include("assets/inc/nav.php");
-        ?>
+    <?php
+    include("assets/inc/nav.php");
+    ?>
     <!-- main header end -->
     <!-- main sidebar -->
-        <?php
-            include("assets/inc/sidebar.php");
-        ?>
+    <?php
+    include("assets/inc/sidebar.php");
+    ?>
     <!-- main sidebar end -->
 
     <div id="page_content">
-    <!--Breadcrums-->
+        <!--Breadcrums-->
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
@@ -120,15 +112,15 @@
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Librarian Number</label>
-                                    <input type="text" required readonly value="iLib-<?php echo $Number;?>" name="l_number" class="md-input label-fixed" />
+                                    <input type="text" required readonly value="iLib-<?php echo $Number; ?>" name="l_number" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Librarian Email</label>
-                                    <input type="email" required name="l_email" class="md-input"  />
+                                    <input type="email" required name="l_email" class="md-input" />
                                 </div>
                                 <div class="uk-form-row" style="display:none">
                                     <label>Librarian Account Status</label>
-                                    <input type="text" required name="l_acc_status" value="Active" class="md-input"  />
+                                    <input type="text" required name="l_acc_status" value="Active" class="md-input" />
                                 </div>
                             </div>
 
@@ -139,17 +131,17 @@
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Librarian Address</label>
-                                    <input type="text" requied name="l_adr" class="md-input"  />
+                                    <input type="text" requied name="l_adr" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Librarian Passsword</label>
-                                    <input type="password" required name="l_pwd" class="md-input"  />
+                                    <input type="password" required name="l_pwd" class="md-input" />
                                 </div>
                             </div>
 
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
-                                    <label>Librarian Bio | About  </label>
+                                    <label>Librarian Bio | About </label>
                                     <textarea cols="30" rows="4" class="md-input" name="l_bio"></textarea>
                                 </div>
                             </div>
@@ -168,7 +160,7 @@
         </div>
     </div>
     <!--Footer-->
-    <?php require_once('assets/inc/footer.php');?>
+    <?php require_once('assets/inc/footer.php'); ?>
     <!--Footer-->
 
     <!-- google web fonts -->
@@ -184,7 +176,7 @@
         (function() {
             var wf = document.createElement('script');
             wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
             wf.type = 'text/javascript';
             wf.async = 'true';
             var s = document.getElementsByTagName('script')[0];
@@ -202,13 +194,13 @@
 
     <script>
         $(function() {
-            if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+            if (isHighDensity()) {
+                $.getScript("assets/js/custom/dense.min.js", function(data) {
                     // enable hires images
                     altair_helpers.retina_images();
                 });
             }
-            if(Modernizr.touch) {
+            if (Modernizr.touch) {
                 // fastClick (touch devices)
                 FastClick.attach(document.body);
             }
@@ -219,7 +211,7 @@
         });
     </script>
 
-   
+
 
     <div id="style_switcher">
         <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>
@@ -328,15 +320,15 @@
                     .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g app_theme_h app_theme_i app_theme_dark')
                     .addClass(this_theme);
 
-                if(this_theme == '') {
+                if (this_theme == '') {
                     localStorage.removeItem('altair_theme');
-                    $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                    $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                 } else {
                     localStorage.setItem("altair_theme", this_theme);
-                    if(this_theme == 'app_theme_dark') {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.materialblack.min.css')
+                    if (this_theme == 'app_theme_dark') {
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.materialblack.min.css')
                     } else {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                     }
                 }
 
@@ -344,10 +336,10 @@
 
             // hide style switcher
             $document.on('click keyup', function(e) {
-                if( $switcher.hasClass('switcher_active') ) {
+                if ($switcher.hasClass('switcher_active')) {
                     if (
-                        ( !$(e.target).closest($switcher).length )
-                        || ( e.keyCode == 27 )
+                        (!$(e.target).closest($switcher).length) ||
+                        (e.keyCode == 27)
                     ) {
                         $switcher.removeClass('switcher_active');
                     }
@@ -355,81 +347,81 @@
             });
 
             // get theme from local storage
-            if(localStorage.getItem("altair_theme") !== null) {
-                $theme_switcher.children('li[data-app-theme='+localStorage.getItem("altair_theme")+']').click();
+            if (localStorage.getItem("altair_theme") !== null) {
+                $theme_switcher.children('li[data-app-theme=' + localStorage.getItem("altair_theme") + ']').click();
             }
 
 
-        // toggle mini sidebar
+            // toggle mini sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
+            if ((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
                 $mini_sidebar_toggle.iCheck('check');
             }
 
             $mini_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_mini", '1');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 });
 
-        // toggle slim sidebar
+            // toggle slim sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
+            if ((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
                 $slim_sidebar_toggle.iCheck('check');
             }
 
             $slim_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_slim", '1');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 });
 
-        // toggle boxed layout
+            // toggle boxed layout
 
-            if((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
+            if ((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
                 $boxed_layout_toggle.iCheck('check');
                 $body.addClass('boxed_layout');
                 $(window).resize();
             }
 
             $boxed_layout_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_layout", 'boxed');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_layout');
                     location.reload(true);
                 });
 
-        // main menu accordion mode
-            if($sidebar_main.hasClass('accordion_mode')) {
+            // main menu accordion mode
+            if ($sidebar_main.hasClass('accordion_mode')) {
                 $accordion_mode_toggle.iCheck('check');
             }
 
             $accordion_mode_toggle
-                .on('ifChecked', function(){
+                .on('ifChecked', function() {
                     $sidebar_main.addClass('accordion_mode');
                 })
-                .on('ifUnchecked', function(){
+                .on('ifUnchecked', function() {
                     $sidebar_main.removeClass('accordion_mode');
                 });
 
