@@ -26,7 +26,7 @@ while ($row = $res->fetch_object()) {
 
         <!-- Place favicon.ico in the root directory -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-        <link rel="shortcut icon" type="image/ico" href="images/favicon.ico" />
+        <link rel="shortcut icon" type="image/ico" href="images/ico.png" />
 
         <!-- Plugin-CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
