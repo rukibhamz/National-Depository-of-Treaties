@@ -1,4 +1,3 @@
 <footer id="footer">
-         &copy; 2019-<?php echo date('Y');?> iLibrary - InterGrated Library Management System. Powered By 
-        <a target="_blank" href="https://martdev.info/">MartDevelopers Inc</a>, All rights reserved.
+        <p>&copy 2019-<?php echo date("Y"); ?> Ministry Of Justice , National depository of treaties. Powered By MartDevelopers Inc, All rights reserved.</p>
 </footer>
