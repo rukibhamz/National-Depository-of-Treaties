@@ -1,29 +1,28 @@
 <aside id="sidebar_main">
-
-    <div class="sidebar_main_header">
-        <div class="sidebar_logo">
-            <a href="pages_sudo_dashboard.php" class="sSidebar_hide sidebar_logo_large">
-                <img class="logo_regular" src="assets/img/logo-1.png" alt="" height="60" width="71" />
-                <img class="logo_light" src="assets/img/logo-1.png" alt="" height="60" width="71" />
-            </a>
-            <a href="pages_sudo_dashboard.php" class="sSidebar_show sidebar_logo_small">
-                <img class="logo_regular" src="assets/img/logo-1.png" alt="" height="50" width="32" />
-                <img class="logo_light" src="assets/img/logo-1.png" alt="" height="50" width="32" />
-            </a>
-        </div>
-    </div>
-
-    <div class="menu_section">
-        <ul>
-            <!--Dashboard-->
-            <li title="Dashboard">
-                <a href="pages_sudo_dashboard.php">
-                    <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
-                    <span class="menu_title">Dashboard</span>
+        
+        <div class="sidebar_main_header">
+            <div class="sidebar_logo">
+                <a href="pages_sudo_dashboard.php" class="sSidebar_hide sidebar_logo_large">
+                    <img class="logo_regular" src="assets/img/logo-1.png" alt="" height="60" width="71"/>
+                    <img class="logo_light" src="assets/img/logo-1.png" alt="" height="60" width="71"/>
                 </a>
-
-            </li>
-            <div style="display: none;">
+                <a href="pages_sudo_dashboard.php" class="sSidebar_show sidebar_logo_small">
+                    <img class="logo_regular" src="assets/img/logo-1.png" alt="" height="50" width="32"/>
+                    <img class="logo_light" src="assets/img/logo-1.png" alt="" height="50" width="32"/>
+                </a>
+            </div>
+        </div>
+        
+        <div class="menu_section">
+            <ul>
+                <!--Dashboard-->
+                <li title="Dashboard">
+                    <a href="pages_sudo_dashboard.php">
+                        <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
+                        <span class="menu_title">Dashboard</span>
+                    </a>
+                    
+                </li>
                 <!--
                 <li title="Mailbox">
                     <a href="page_mailbox.html">
@@ -51,7 +50,7 @@
                         <li><a href="pages_sudo_new_librarian.php">Add</a></li>
                         <li><a href="pages_sudo_manage_librarians.php">Manage</a></li>
                     </ul>
-
+                
                 </li>
 
                 <!--Students-->
@@ -64,7 +63,7 @@
                         <li><a href="pages_sudo_new_student.php">Add</a></li>
                         <li><a href="pages_sudo_manage_student.php">Manage</a></li>
                     </ul>
-
+                
                 </li>
 
                 <!--
@@ -110,7 +109,7 @@
                         <li><a href="pages_sudo_new_book.php">Add Book</a></li>
                         <li><a href="pages_sudo_manage_books.php">Manage Books</a></li>
                     </ul>
-
+                
                 </li>
 
                 <!--Library Operations-->
@@ -125,9 +124,9 @@
                         <li><a href="pages_sudo_library_operations_lost_book.php">Lost Books</a></li>
                         <li><a href="pages_sudo_library_operations_damanged_book.php">Damanged Books</a></li>
                         <li><a href="pages_sudo_manage_library_operations.php">Manage Operations</a></li>
-
+                        
                     </ul>
-
+                
                 </li>
 
                 <!--Library Finances-->
@@ -141,7 +140,7 @@
                         <li><a href="pages_sudo_manage_penalty.php">Manage Penalty Rates</a></li>
                         <li><a href="pages_sudo_manage_finances.php">Manage Finances</a></li>
                     </ul>
-
+                
                 </li>
 
                 <!--Subscriptions-->
@@ -154,7 +153,7 @@
                         <li><a href="pages_sudo_new_subscription.php">Add</a></li>
                         <li><a href="pages_sudo_manage_subscriptions.php">Manage</a></li>
                     </ul>
-
+                
                 </li>
 
                 <!--Recomendations-->
@@ -167,7 +166,7 @@
                         <li><a href="pages_sudo_new_recomendation.php">Add</a></li>
                         <li><a href="pages_sudo_manage_reccomendations.php">Manage</a></li>
                     </ul>
-
+                
                 </li>
 
                 <!--Audits-->
@@ -183,12 +182,12 @@
                         <li><a href="pages_sudo_audit_subscriptions.php">Subscription Records</a></li>
                         <li><a href="pages_sudo_audit_fines_payments.php">Fines Payment Records</a></li>
 
-
+                        
                     </ul>
-
+                
                 </li>
-            </div>
-            <!--Library Store--
+
+                <!--Library Store--
                 <li title="iLibrary Store">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE8CB;</i></span>
@@ -204,7 +203,7 @@
                 
                 </li>
                 -->
-            <!-- Mail
+                <!-- Mail
                 This feature will be implemented on future versions               
              
                
@@ -223,42 +222,17 @@
                 
                 </li>
                 -->
-            <!--Treaties-->
-            <li title="Treaties">
-                <a href="#">
-                    <span class="menu_icon"><i class="material-icons">&#xE8D4;</i></span>
-                    <span class="menu_title">Treaties</span>
-                </a>
-                <ul>
-                    <li><a href="">Submitted</a></li>
-                    <li><a href="">Published</a></li>
-                    <li><a href="">Unpublished</a></li>
-                    <li><a href="">Rejected</a></li>
-                    <li><a href="">Upload Treaty</a></li>
-                </ul>
-            </li>
-            <!--Upload Access-->
-            <li title="Upload Access">
-                <a href="#">
-                    <span class="menu_icon"><i class="material-icons">&#xE2C3;</i></span>
-                    <span class="menu_title">Upload Access</span>
-                </a>
-                <ul>
-                    <li><a href="#">Add</a></li>
-                    <li><a href="#">Manage</a></li>
-                </ul>
-            </li>
-            <!--password resets-->
-            <li title="Password Resets">
-                <a href="#">
-                    <span class="menu_icon"><i class="material-icons">lock</i></span>
-                    <span class="menu_title">Password Resets</span>
-                </a>
-                <ul>
-                    <li><a href="pages_sudo_manage_librarian_password_resets.php">Manage users</a></li>
-                    <li><a href="pages_sudo_manage_student_password_resets.php">Manage uploader</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</aside>
+                <!--password resets-->
+                <li title="Password Resets">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">lock</i></span>
+                        <span class="menu_title">Password Resets</span>
+                    </a>
+                    <ul>
+                        <li><a href="pages_sudo_manage_librarian_password_resets.php">Manage Librarians</a></li>
+                        <li><a href="pages_sudo_manage_student_password_resets.php">Manage Students</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </aside>

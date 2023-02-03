@@ -77,8 +77,17 @@ require_once('sudo/assets/config/config.php');
                             <li>
                                 <a href="">UPLOAD TREATY</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="lib_user/pages_std_index.php">LOGIN</a>
+                            </li>
+                                    <li>
+                                <a href="lib_user/pages_std_index.php">Library User Login</a>
+                            </li>
+                            <li>
+                                <a href="staff/pages_staff_index.php">Staff Login</a>
+                            </li> -->
+                            <li>
+                                <a href="sudo/pages_sudo_index.php">LOGIN</a>
                             </li>
                         </ul>
                     </div>
