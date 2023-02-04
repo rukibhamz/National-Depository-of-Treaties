@@ -39,6 +39,13 @@
 
     <!-- themes -->
     <link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all">
+
+    <!-- New styles -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/icofont.css" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/new-styles.css" media="all">
+
     <!--load swal js -->
 
     <script src="assets/js/swal.js"></script>

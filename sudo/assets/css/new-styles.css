@@ -1,0 +1,62 @@
+.title-bar.black {
+    color: #000000;
+    background-color: #000000;
+    text-align: center;
+}
+
+.title-bar.white {
+    color: #ffffff;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+div.md-card {
+    /* position: relative */
+    border-radius: 8px;
+    /* height: 250px; */
+    /* display: flex;
+    align-items: center; */
+}
+
+div.md-card div.md-card-content {
+    padding: 2rem;
+}
+
+h2 {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48.83px;
+    line-height: 66px;
+}
+
+p.text {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+
+h3.text {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 34px;
+    letter-spacing: 0.1em;
+    color: #717970;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+div.md-card.card-alt {
+    background: linear-gradient(180deg, #0C130D 4.69%, #0C130D 33.52%, rgba(12, 19, 13, 0.86) 54.89%, rgba(12, 19, 13, 0.717233) 86.77%);
+}
+
+div.md-card.card-alt h2, div.md-card.card-alt p.text {
+   color: white;
+}
