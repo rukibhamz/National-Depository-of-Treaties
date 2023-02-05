@@ -5,10 +5,10 @@
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no"/>
 
-    <link rel="icon" type="image/png" href="../images/favicon.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="../images/favicon.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="../images/ico.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="../images/ico.png" sizes="16x16">
 
-    <title>iLibray An Automated Digital Library Management System</title>
+    <title>Home - National Depository Of Treaties</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel='stylesheet' type='text/css'>
 

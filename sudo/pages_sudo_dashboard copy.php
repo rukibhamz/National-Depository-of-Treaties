@@ -258,8 +258,7 @@ include("assets/inc/head.php");
     <div id="page_content">
         <div id="page_content_inner">
 
-            <!--1.Treaty-->
-            <h3 class="text">Treaty Database Analytics</h3>
+            <!--1.Books-->
             <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card">
@@ -267,8 +266,7 @@ include("assets/inc/head.php");
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
                             <div class="space-10"></div>
-                            <p class="text">Total treaties
-                                In Depository</p>
+                            <p class="text">Book Categories</p>
 
                             <div class="space-10"></div>
                             <div class="title-bar black">
@@ -290,7 +288,7 @@ include("assets/inc/head.php");
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
                             <div class="space-10"></div>
-                            <p class="text">Total treaties Published</p>
+                            <p class="text">Book Categories</p>
 
                             <div class="space-10"></div>
                             <div class="title-bar black">
@@ -312,8 +310,7 @@ include("assets/inc/head.php");
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
                             <div class="space-10"></div>
-                            <p class="text">Total treaties
-                                Revised</p>
+                            <p class="text">Book Categories</p>
 
                             <div class="space-10"></div>
                             <div class="title-bar black">
@@ -335,8 +332,7 @@ include("assets/inc/head.php");
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
                             <div class="space-10"></div>
-                            <p class="text">Total treaties
-                                Running</p>
+                            <p class="text">Book Categories</p>
 
                             <div class="space-10"></div>
                             <div class="title-bar black">
@@ -381,109 +377,323 @@ include("assets/inc/head.php");
             </div>
 
             <div class="text-center">
-                <div class="space-20"></div>
-                <div class="title-bar blue">
-                    <ul class="list-inline list-unstyled">
-                        <li><i class="icofont icofont-square"></i></li>
-                        <li><i class="icofont icofont-square"></i></li>
-                    </ul>
+            <div class="space-20"></div>
+            <div class="title-bar blue">
+                <ul class="list-inline list-unstyled">
+                    <li><i class="icofont icofont-square"></i></li>
+                    <li><i class="icofont icofont-square"></i></li>
+                </ul>
+            </div>
+            <div class="space-30"></div>
+            </div>
+
+            <!--2.Library Users(Students and Librarians)-->
+            <!-- <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Librarians</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $librarians; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Enrolled Students</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $students; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Pending Librarians Accounts</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $pending_librarians; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Pending Students Accounts</span>
+                            <h2 class="uk-margin-remove"><?php echo $pending_students; ?></h2>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!--3.Misc-->
+            <!-- <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Pending Lib's Password Resets</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $pending_librarians_pwd_resets; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Pending Students Password Resets</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $pending_student_pwd_resets; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Subscribed Media</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $subscriptions; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Library Fines Posted</span>
+                            <h2 class="uk-margin-remove">Ksh <?php echo $totalFine; ?></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-2-1 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Library Lost Books Fines</span>
+                            <h2 class="uk-margin-remove">Ksh <?php echo $lostBookfines; ?></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Library Damanged Books Fines</span>
+                            <h2 class="uk-margin-remove">Ksh <?php echo $damangedBookfines; ?></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Library Total Fine Paid</span>
+                            <h2 class="uk-margin-remove">Ksh <?php echo $paidFine; ?></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Library Pending Fine Payment</span>
+                            <h2 class="uk-margin-remove">Ksh <?php echo $pendingFine; ?></h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+
+            <!-- Pie Charts-->
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                <!-- <i class="md-icon material-icons" id="print" onclick="printContent('Print_Content');">&#xE8ad;</i> -->
+                                <i class="md-icon material-icons">&#xE5D5;</i>
+
+                            </div>
+                        </div>
+                        <div class="md-card-content">
+
+                            <div class="mGraph-wrapper">
+                                <div id="PieChart" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+                            </div>
+
+                            <div id="Print_Content" class="md-card-fullscreen-content">
+                                <div class="uk-overflow-container">
+                                    <table class="uk-table uk-table-no-border uk-text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Author</th>
+                                                <th>Category</th>
+                                                <th>ISBN No.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $ret = "SELECT * FROM  iL_Books";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($row = $res->fetch_object()) {
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $row->b_title; ?></td>
+                                                    <td><?php echo $row->b_author; ?></td>
+                                                    <td><?php echo $row->bc_name; ?></td>
+                                                    <td class="uk-text-success"><?php echo $row->b_isbn_no; ?></td>
+                                                </tr>
+
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="Print_Content" class="md-card-content">
+                            <div class="mGraph-wrapper">
+                                <div id="BooksBorrowedPerCategory" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+
+                            </div>
+
+                            <div class="md-card-fullscreen-content">
+                                <div class="uk-overflow-container">
+                                    <table class="uk-table uk-table-no-border uk-text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Book Title</th>
+                                                <th>Borrowed By</th>
+                                                <th>Date Borrowed</th>
+                                                <th>Book Status</th>
+                                                <th>Book Category</th>
+                                                <th>ISBN No.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $ret = "SELECT * FROM  iL_LibraryOperations";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($row = $res->fetch_object()) {
+                                                //trim timestamp to DD-MM-YYYY
+                                                $dateBorrowed = $row->created_at;
+                                                //add .success .warning .danger classses to book status
+                                                if ($row->lo_status == 'Returned') {
+                                                    $bookstatus = "<td class='uk-text-success'>$row->lo_status</td>";
+                                                } elseif ($row->lo_status == 'Damanged') {
+                                                    $bookstatus = "<td class='uk-text-warning'>$row->lo_status</td>";
+                                                } elseif ($row->lo_status == 'Lost') {
+                                                    $bookstatus = "<td class='uk-text-danger'>$row->lo_status</td>";
+                                                } else {
+                                                    $bookstatus = "<td class='uk-text-primary'>Pending Return</td>";
+                                                }
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $row->b_title; ?></td>
+                                                    <td><?php echo $row->s_name; ?> <?php echo $row->s_number; ?></td>
+                                                    <td><?php echo date("d-M-Y h:m", strtotime($dateBorrowed)); ?></td>
+                                                    <?php echo $bookstatus; ?>
+                                                    <td><?php echo $row->bc_name; ?></td>
+                                                    <td class="uk-text-primary"><?php echo $row->b_isbn_no; ?></td>
+                                                </tr>
+
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!--2.User Analytics-->
-            <h3 class="text">User Analytics</h3>
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
-                <div>
-                    <div class="md-card card-alt">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
-                            <div class="space-10"></div>
-                            <p class="text">Registered Users</p>
+            <!--Donought chart-->
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                <i class="md-icon material-icons">&#xE5D5;</i>
 
-                            <div class="space-10"></div>
-                            <div class="title-bar white">
-                                <ul class="list-inline list-unstyled">
-                                    <li><i class="icofont icofont-square"></i></li>
-                                </ul>
                             </div>
-                            <div class="space-10"></div>
-                            <a href="#">
-                                <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card card-alt">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
-                            <div class="space-10"></div>
-                            <p class="text">Suspended Users</p>
 
-                            <div class="space-10"></div>
-                            <div class="title-bar white">
-                                <ul class="list-inline list-unstyled">
-                                    <li><i class="icofont icofont-square"></i></li>
-                                </ul>
-                            </div>
-                            <div class="space-10"></div>
-                            <a href="#">
-                                <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
-                            </a>
                         </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card card-alt">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
-                            <div class="space-10"></div>
-                            <p class="text">Active
-                                User</p>
 
-                            <div class="space-10"></div>
-                            <div class="title-bar white">
-                                <ul class="list-inline list-unstyled">
-                                    <li><i class="icofont icofont-square"></i></li>
-                                </ul>
-                            </div>
-                            <div class="space-10"></div>
-                            <a href="#">
-                                <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card card-alt">
                         <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
-                            <div class="space-10"></div>
-                            <p class="text">In-active
-                                User</p>
+                            <div class="mGraph-wrapper">
+                                <div id="libraryOperationsPerBookCategory" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
 
-                            <div class="space-10"></div>
-                            <div class="title-bar white">
-                                <ul class="list-inline list-unstyled">
-                                    <li><i class="icofont icofont-square"></i></li>
-                                </ul>
                             </div>
-                            <div class="space-10"></div>
-                            <a href="#">
-                                <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
-                            </a>
+
+                            <div class="md-card-fullscreen-content">
+                                <div class="uk-overflow-container">
+                                    <table class="uk-table uk-table-no-border uk-text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Book Title</th>
+                                                <th>Borrowed By</th>
+                                                <th>Date Borrowed</th>
+                                                <th>Book Status</th>
+                                                <th>Book Category</th>
+                                                <th>ISBN No.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $ret = "SELECT * FROM  iL_LibraryOperations";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($row = $res->fetch_object()) {
+                                                //trim timestamp to DD-MM-YYYY
+                                                $dateBorrowed = $row->created_at;
+                                                //add .success .warning .danger classses to book status
+                                                if ($row->lo_status == 'Returned') {
+                                                    $bookstatus = "<td class='uk-text-success'>$row->lo_status</td>";
+                                                } elseif ($row->lo_status == 'Damanged') {
+                                                    $bookstatus = "<td class='uk-text-warning'>$row->lo_status</td>";
+                                                } elseif ($row->lo_status == 'Lost') {
+                                                    $bookstatus = "<td class='uk-text-danger'>$row->lo_status</td>";
+                                                } else {
+                                                    $bookstatus = "<td class='uk-text-primary'>Pending Return</td>";
+                                                }
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $row->b_title; ?></td>
+                                                    <td><?php echo $row->s_name; ?> <?php echo $row->s_number; ?></td>
+                                                    <td><?php echo date("d-M-Y h:m", strtotime($dateBorrowed)); ?></td>
+                                                    <?php echo $bookstatus; ?>
+                                                    <td><?php echo $row->bc_name; ?></td>
+                                                    <td class="uk-text-primary"><?php echo $row->b_isbn_no; ?></td>
+                                                </tr>
+
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">Recent Uploads</h4>
+                    <h4 class="heading_a uk-margin-bottom">iLibrary Staffs</h4>
                     <div class="md-card">
                         <div class="md-card-content">
                             <table id="dt_individual_search" class="uk-table" cellspacing="0" width="100%">
@@ -532,58 +742,7 @@ include("assets/inc/head.php");
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">New Uploaders</h4>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>iLib Student No</th>
-                                        <th>Phone No.</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>Gender</th>
-                                        <th>Acc Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $ret = "SELECT * FROM  iL_Students";
-                                    $stmt = $mysqli->prepare($ret);
-                                    $stmt->execute(); //ok
-                                    $res = $stmt->get_result();
-                                    while ($row = $res->fetch_object()) {
-                                        //use .danger, .warning, .success according to account status
-                                        if ($row->s_acc_status == 'Active') {
-                                            $account_status = "<td class='uk-text-success'>$row->s_acc_status</td>";
-                                        } elseif ($row->s_acc_status == 'Pending') {
-                                            $account_status = "<td class='uk-text-warning'>$row->s_acc_status</td>";
-                                        } else {
-                                            $account_status = "<td class='uk-text-danger'>$row->s_acc_status</td>";
-                                        }
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $row->s_name; ?></td>
-                                            <td><?php echo $row->s_number; ?></td>
-                                            <td><?php echo $row->s_phone; ?></td>
-                                            <td><?php echo $row->s_email; ?></td>
-                                            <td><?php echo $row->s_adr; ?></td>
-                                            <td><?php echo $row->s_sex; ?></td>
-                                            <?php echo $account_status; ?>
-
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">Pendfing Uploads Submitted</h4>
+                    <h4 class="heading_a uk-margin-bottom">iLibrary Enrolled Students</h4>
                     <div class="md-card">
                         <div class="md-card-content">
                             <table id="dt_default" class="uk-table" cellspacing="0" width="100%">

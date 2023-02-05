@@ -40,9 +40,10 @@
 }
 
 .nav-tabs > li.active > a::after {
-    background-color: #2352c5;
+    /* background-color: #006D34; */
+    background-color: #18A655;
     bottom: 0;
-    box-shadow: 0 0 6px 0 #2352c5;
+    box-shadow: 0 0 6px 0 #18A655;
     content: "";
     height: 2px;
     left: 0;
@@ -87,12 +88,14 @@
 
 .btn.btn-primary,
 .hover-btn-primary:hover {
-    background-color: #2352c5;
+    /* background-color: #006D34; */
+    background-color: #18A655;
     color: #ffffff;
 }
 
 .btn.btn-primary:hover {
-    background-color: #1b3e98;
+    /* background-color: #1b3e98; */
+    background-color: #108a45;
 }
 
 .btn.hover-btn-default:hover {

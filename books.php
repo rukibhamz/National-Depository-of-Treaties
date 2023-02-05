@@ -12,7 +12,7 @@
 
     <!-- Place favicon.ico in the root directory -->
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="shortcut icon" type="image/ico" href="images/favicon.png" />
+    <link rel="shortcut icon" type="image/ico" href="images/ico.png" />
 
     <!-- Plugin-CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -44,19 +44,19 @@
                 <div class="container">
                     <div class="navbar-header">
                         <div class="space-10"></div>
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
+                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainmenu" aria-expanded="false">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
                         <!--Logo-->
-                        <a href="#sc1" class="navbar-left show"><img src="images/logo.png" alt="library"></a>
+                        <a href="#sc1" class="navbar-left show"><img src="images/logo-2.png" alt="library"></a>
                         <div class="space-10"></div>
                     </div>
                     <!--Toggle-button-->
 
                     <!--Mainmenu list-->
-                    <div class="navbar-right in fade" id="mainmenu">
+                         <div class="collapse navbar-collapse navbar-right" id="mainmenu">
                         <ul class="nav navbar-nav nav-white text-uppercase">
                             <li>
                                 <a href="index.php">Home</a>
