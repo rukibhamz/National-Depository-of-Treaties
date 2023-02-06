@@ -178,7 +178,7 @@
         ga('send', 'pageview');
     </script>
 
-    <div id="style_switcher">
+    <div id="style_switcher" style="display: none;">
         <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>
         <div class="uk-margin-medium-bottom">
             <h4 class="heading_c uk-margin-bottom">Colors</h4>
