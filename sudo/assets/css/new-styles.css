@@ -127,4 +127,23 @@ span.uk-badge.uk-badge-black {
     background: #000000;
 }
 
+div.uk-alert {
+    padding: 17px 35px;
+    width: 704px;
+    height: 63px;
+    margin-left: auto;
+    margin-right: auto;
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+div.uk-alert.black {
+    background: #000000;
+}
+div.uk-alert.danger {
+    background: #BA1A1A;
+}
+
 /* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push origin-remote */

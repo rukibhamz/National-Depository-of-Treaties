@@ -256,6 +256,14 @@ include("assets/inc/head.php");
     <!-- main sidebar end -->
 
     <div id="page_content">
+        <div class="uk-alert black" data-uk-alert>
+            <a href="" class="uk-alert-close uk-close"></a>
+            <p>Lorem Ipsum dpmpr.pdf has been published</p>
+        </div>
+        <div class="uk-alert danger" data-uk-alert>
+            <a href="" class="uk-alert-close uk-close"></a>
+            <p>Lorem Ipsum dpmpr.pdf has been published</p>
+        </div>
         <div id="page_content_inner">
 
             <!--1.Treaty-->
