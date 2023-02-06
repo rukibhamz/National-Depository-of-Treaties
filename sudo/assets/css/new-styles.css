@@ -47,6 +47,8 @@ h3.text {
     line-height: 34px;
     letter-spacing: 0.1em;
     color: #717970;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 a, a:hover {
@@ -80,4 +82,20 @@ div.title-bar.blue ul li i {
 div.title-bar.white ul li i {
     color: #ffffff;
     background: #ffffff;
+}
+
+input.md-btn-success {
+    background: #18A655;
+    border-radius: 6.2181px;
+    padding: 1rem 2rem;
+}
+
+label {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    letter-spacing: 0.1em;
+    color: #8F918D;
 }

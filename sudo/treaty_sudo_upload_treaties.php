@@ -3,8 +3,70 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
+//generate random librarian number
+$length = 5;
+$Number =  substr(str_shuffle('0123456789'), 1, $length);
 
+//create a librarian account
+if (isset($_POST['add_librarian'])) {
+    $error = 0;
+    if (isset($_POST['l_name']) && !empty($_POST['l_name'])) {
+        $l_name = mysqli_real_escape_string($mysqli, trim($_POST['l_name']));
+    } else {
+        $error = 1;
+        $err = "Librarian name cannot be empty";
+    }
+    if (isset($_POST['l_email']) && !empty($_POST['l_email'])) {
+        $l_email = mysqli_real_escape_string($mysqli, trim($_POST['l_email']));
+    } else {
+        $error = 1;
+        $err = "Librarian email cannot be empty";
+    }
+    if (isset($_POST['l_number']) && !empty($_POST['l_number'])) {
+        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['l_number']));
+    } else {
+        $error = 1;
+        $err = "Librarian email cannot be empty";
+    }
+    if (!$error) {
+        $sql = "SELECT * FROM  iL_Librarians WHERE  l_number='$l_number' || l_email ='$l_email' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($l_number == $row['l_number']) {
+                $err = "Librarian number already exists";
+            } else {
+                $err = "Librarian email already exists";
+            }
+        } else {
+
+            $l_number = $_POST['l_number'];
+            $l_name = $_POST['l_name'];
+            $l_phone = $_POST['l_phone'];
+            $l_email = $_POST['l_email'];
+            $l_pwd = sha1(md5($_POST['l_pwd']));
+            $l_adr = $_POST['l_adr'];
+            $l_bio = $_POST['l_bio'];
+            $l_acc_status = $_POST['l_acc_status'];
+
+            //Insert Captured information to a database table
+            $query = "INSERT INTO iL_Librarians (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $stmt = $mysqli->prepare($query);
+            //bind paramaters
+            $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
+            $stmt->execute();
+
+            //declare a varible which will be passed to alert function
+            if ($stmt) {
+                $success = "Librarian Account Created";
+            } else {
+                $err = "Please Try Again Or Try Later";
+            }
+        }
+    }
+}
 ?>
+
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!-->
@@ -26,61 +88,69 @@ include("assets/inc/head.php");
     <!-- main sidebar end -->
 
     <div id="page_content">
-        <div class="space-10"></div>
-        <!--BreadCrumps-->
+        <!--Breadcrums-->
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Treaties</a></li>
-                <li><span>Submitted</span></li>
+                <li><a href="#">Upload Access</a></li>
+                <li><span>Add New Uploader</span></li>
             </ul>
         </div>
+
         <div id="page_content_inner">
-            <?php
-                $ret = "SELECT * FROM iL_Books";
-                $stmt = $mysqli->prepare($ret);
-                $stmt->execute();
-                $res = $stmt->get_result();
-                $numRows = $res->num_rows;
-            ?>
-            <h3 class="heading_a uk-margin-bottom text">Recent -New treaties Published ( <?= $numRows ?> )</h3>
-            <div class="md-card uk-margin-medium-bottom">
+            <h3 class="heading_a text">Please Fill All Fields</h3>
+            <div class="md-card">
                 <div class="md-card-content">
-                    <div class="dt_colVis_buttons"></div>
-                    <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
-                        <thead>
-                            <th>Name</th>
-                            <th>Identification No</th>
-                            <th>Email Address</th>
-                            <th>Treaty File</th>
-                            <th>Date submitted</th>
-                            <th>Action</th>
-                        </thead>
+                    <hr>
+                    <form method="post">
+                        <div class="uk-grid" data-uk-grid-margin>
+                            <div class="uk-width-medium-1-2">
+                                <div class="uk-form-row">
+                                    <label>Full Name</label>
+                                    <input type="text" required name="l_name" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Identification Number</label>
+                                    <input type="email" required name="l_email" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Email Address</label>
+                                    <input type="text" required name="l_acc_status" value="Active" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Password</label>
+                                    <input type="text" requied name="l_adr" class="md-input" />
+                                </div>
+                            </div>
 
-                        <tbody>
-                            <?php
-                            $ret = "SELECT * FROM  iL_Books";
-                            $stmt = $mysqli->prepare($ret);
-                            $stmt->execute(); //ok
-                            $res = $stmt->get_result();
-                            while ($row = $res->fetch_object()) {
-                            ?>
-                                <tr>
-                                    <td class="uk-text-truncate"><?php echo $row->b_title; ?></td>
-                                    <td><?php echo $row->b_author; ?></td>
-                                    <td><?php echo $row->bc_name; ?></td>
-                                    <td><?php echo $row->b_copies; ?> Copies</td>
-                                    <td><?php echo $row->b_publisher; ?> Copies</td>
-                                    <td>
-                                        <a href="pages_sudo_view_book.php?book_id=<?php echo $row->b_id; ?>">
-                                            <span class='uk-badge uk-badge-success'>View</span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                            <div class="uk-width-medium-1-2">
+                                <div class="uk-form-row">
+                                    <label>Mobile Number</label>
+                                    <input type="text" required readonly value="iLib-<?php echo $Number; ?>" name="l_number" class="md-input label-fixed" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>User Address</label>
+                                    <input type="text" required name="l_addr" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Short Description Bio</label>
+                                    <input type="text" required name="l_bio" class="md-input" />
+                                    <!-- <textarea cols="30" required rows="3" class="md-input" name="l_bio"></textarea> -->
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Account Status</label>
+                                    <input type="text" required name="l_status" class="md-input" />
+                                </div>
+                            </div>
+                            <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <div class="uk-input-group">
+                                        <input type="submit" class="md-btn md-btn-success" name="add_uploader" value="Create User Account" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -118,24 +188,6 @@ include("assets/inc/head.php");
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
 
-    <!-- page specific plugins -->
-    <!-- datatables -->
-    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <!-- datatables buttons-->
-    <script src="bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
-    <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
-    <script src="bower_components/jszip/dist/jszip.min.js"></script>
-    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
-    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.colVis.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
-
-    <!-- datatables custom integration -->
-    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
-
-    <!--  datatables functions -->
-    <script src="assets/js/pages/plugins_datatables.min.js"></script>
 
     <script>
         $(function() {
