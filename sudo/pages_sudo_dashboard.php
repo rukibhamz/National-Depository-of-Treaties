@@ -260,7 +260,7 @@ include("assets/inc/head.php");
 
             <!--1.Treaty-->
             <h3 class="text">Treaty Database Analytics</h3>
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-large uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card">
                         <div class="md-card-content">
@@ -380,8 +380,8 @@ include("assets/inc/head.php");
                 </div> -->
             </div>
 
+            <div class="space-30"></div>
             <div class="text-center">
-                <div class="space-20"></div>
                 <div class="title-bar blue">
                     <ul class="list-inline list-unstyled">
                         <li><i class="icofont icofont-square"></i></li>
@@ -392,7 +392,7 @@ include("assets/inc/head.php");
 
             <!--2.User Analytics-->
             <h3 class="text">User Analytics</h3>
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-large uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card card-alt">
                         <div class="md-card-content">

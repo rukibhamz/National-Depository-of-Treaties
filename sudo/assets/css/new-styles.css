@@ -58,5 +58,26 @@ div.md-card.card-alt {
 }
 
 div.md-card.card-alt h2, div.md-card.card-alt p.text {
-   color: white;
+    color: white;
+}
+
+div.title-bar ul li i {
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+div.title-bar.black ul li i {
+    color: #000000;
+    background: #000000;
+}
+
+div.title-bar.blue ul li i {
+    color: #006D34;
+    background: #006D34;
+}
+
+div.title-bar.white ul li i {
+    color: #ffffff;
+    background: #ffffff;
 }
