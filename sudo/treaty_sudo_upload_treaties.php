@@ -101,7 +101,6 @@ include("assets/inc/head.php");
             <h3 class="heading_a text">Treaty Upload Form</h3>
             <div class="md-card">
                 <div class="md-card-content">
-                    <hr>
                     <form method="post">
                         <div class="uk-grid" data-uk-grid-margin>
                             <div class="uk-width-medium-1-2">
@@ -116,7 +115,7 @@ include("assets/inc/head.php");
                                 <div class="uk-form-row">
                                     <label>Treaty Status</label>
                                     <select required onChange="getBookId(this.value);" name="bc_name" class="md-input" />
-                                    <option>Select Book Category</option>
+                                    <option>Select Treaty Category</option>
                                     <?php
                                     $ret = "SELECT * FROM  iL_BookCategories";
                                     $stmt = $mysqli->prepare($ret);
@@ -148,7 +147,7 @@ include("assets/inc/head.php");
 
                             <div class="uk-width-medium-2-2">
                                 <div id="file_upload-drop" class="uk-file-upload">
-                                    <p class="uk-text">Drop Book Cover Image</p>
+                                    <p class="uk-text">Upload Treaty Document</p>
                                     <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
                                     <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_coverimage" type="file"></a>
                                 </div>
