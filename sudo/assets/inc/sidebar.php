@@ -43,8 +43,8 @@
                     <span class="menu_title">Upload Access</span>
                 </a>
                 <ul>
-                    <li><a href="#">Add</a></li>
-                    <li><a href="#">Manage</a></li>
+                    <li><a href="treaty_sudo_upload_add_access.php">Add</a></li>
+                    <li><a href="treaty_sudo_upload_manage_access.php">Manage</a></li>
                 </ul>
             </li>
             <!--password resets-->

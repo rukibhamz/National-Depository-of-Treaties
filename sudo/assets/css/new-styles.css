@@ -99,3 +99,32 @@ label {
     letter-spacing: 0.1em;
     color: #8F918D;
 }
+
+ul li.submenu_trigger a span.menu_title, span.menu_title {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 34px;
+    color: #5D5F5B;
+}
+
+aside#sidebar_main div.menu_section ul li.submenu_trigger ul li a {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.45rem;
+    line-height: 27px;
+    color: #5D5F5B;
+}
+
+span.uk-badge {
+    border-radius: 4px;
+    padding: 10px;
+}
+
+span.uk-badge.uk-badge-black {
+    background: #000000;
+}
+
+/* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push origin-remote */
