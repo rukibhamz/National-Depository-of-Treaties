@@ -92,13 +92,13 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Upload Access</a></li>
-                <li><span>Add New Uploader</span></li>
+                <li><a href="#">Treaties</a></li>
+                <li><span>Treaty Upload Form</span></li>
             </ul>
         </div>
 
         <div id="page_content_inner">
-            <h3 class="heading_a text">Please Fill All Fields</h3>
+            <h3 class="heading_a text">Treaty Upload Form</h3>
             <div class="md-card">
                 <div class="md-card-content">
                     <hr>
@@ -106,46 +106,62 @@ include("assets/inc/head.php");
                         <div class="uk-grid" data-uk-grid-margin>
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
-                                    <label>Full Name</label>
+                                    <label>Treaty Name, Title, Keywords</label>
                                     <input type="text" required name="l_name" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
-                                    <label>Identification Number</label>
+                                    <label>Treaty Signatories</label>
                                     <input type="email" required name="l_email" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
-                                    <label>Email Address</label>
-                                    <input type="text" required name="l_acc_status" value="Active" class="md-input" />
-                                </div>
-                                <div class="uk-form-row">
-                                    <label>Password</label>
-                                    <input type="text" requied name="l_adr" class="md-input" />
+                                    <label>Treaty Status</label>
+                                    <select required onChange="getBookId(this.value);" name="bc_name" class="md-input" />
+                                    <option>Select Book Category</option>
+                                    <?php
+                                    $ret = "SELECT * FROM  iL_BookCategories";
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->execute(); //ok
+                                    $res = $stmt->get_result();
+                                    while ($row = $res->fetch_object()) {
+                                    ?>
+                                        <option value="<?php echo $row->bc_name; ?>"><?php echo $row->bc_name; ?></option>
+                                    <?php } ?>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
-                                    <label>Mobile Number</label>
-                                    <input type="text" required readonly value="iLib-<?php echo $Number; ?>" name="l_number" class="md-input label-fixed" />
+                                    <label>Treaty Definition</label>
+                                    <input type="text" required readonly name="l_number" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
-                                    <label>User Address</label>
-                                    <input type="text" required name="l_addr" class="md-input" />
+                                    <label>Treaty Date</label>
+                                    <input type="date" required name="l_date" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
-                                    <label>Short Description Bio</label>
+                                    <label>Minutes Of Negotiation</label>
                                     <input type="text" required name="l_bio" class="md-input" />
                                     <!-- <textarea cols="30" required rows="3" class="md-input" name="l_bio"></textarea> -->
                                 </div>
-                                <div class="uk-form-row">
-                                    <label>Account Status</label>
-                                    <input type="text" required name="l_status" class="md-input" />
+                            </div>
+
+                            <div class="uk-width-medium-2-2">
+                                <div id="file_upload-drop" class="uk-file-upload">
+                                    <p class="uk-text">Drop Book Cover Image</p>
+                                    <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_coverimage" type="file"></a>
+                                </div>
+                                <div id="file_upload-progressbar" class="uk-progress uk-hidden">
+                                    <div class="uk-progress-bar" style="width:0">0%</div>
                                 </div>
                             </div>
+
+
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <div class="uk-input-group">
-                                        <input type="submit" class="md-btn md-btn-success" name="add_uploader" value="Create User Account" />
+                                        <input type="submit" class="md-btn md-btn-success" name="upload_treaty" value="Upload Treaty" />
                                     </div>
                                 </div>
                             </div>
