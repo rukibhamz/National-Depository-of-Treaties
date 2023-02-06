@@ -47,6 +47,17 @@
                     <li><a href="treaty_sudo_upload_manage_access.php">Manage</a></li>
                 </ul>
             </li>
+             <!--Manage Category-->
+             <li title="Category Access">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                    <span class="menu_title">Treaty Categories</span>
+                </a>
+                <ul>
+                    <li><a href="treaty_sudo_add_category.php">Add</a></li>
+                    <li><a href="pages_sudo_manage_categories.php">Manage</a></li>
+                </ul>
+            </li>
             <!--password resets-->
             <li title="Password Resets">
                 <a href="#">
