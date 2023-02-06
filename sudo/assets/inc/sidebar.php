@@ -1,17 +1,19 @@
 <aside id="sidebar_main">
 
-    <div class="sidebar_main_header">
-        <div class="sidebar_logo">
-            <a href="pages_sudo_dashboard.php" class="sSidebar_hide sidebar_logo_large">
-                <img class="logo_regular" src="assets/img/new-logo.png" alt="" height="60" width="71" />
-                <img class="logo_light" src="assets/img/new-logo.png" alt="" height="60" width="71" />
-            </a>
-            <a href="pages_sudo_dashboard.php" class="sSidebar_show sidebar_logo_small">
-                <img class="logo_regular" src="assets/img/new-logo.png" alt="" height="50" width="32" />
-                <img class="logo_light" src="assets/img/new-logo.png" alt="" height="50" width="32" />
-            </a>
+    <a href="pages_sudo_dashboard.php">
+        <div class="sidebar_main_header">
+            <div class="sidebar_logo">
+                <!-- <a href="pages_sudo_dashboard.php" class="sSidebar_hide sidebar_logo_large">
+                    <img class="logo_regular" src="assets/img/new-logo.png" alt="" height="60" width="71" />
+                    <img class="logo_light" src="assets/img/new-logo.png" alt="" height="60" width="71" />
+                </a>
+                <a href="pages_sudo_dashboard.php" class="sSidebar_show sidebar_logo_small">
+                    <img class="logo_regular" src="assets/img/new-logo.png" alt="" height="50" width="32" />
+                    <img class="logo_light" src="assets/img/new-logo.png" alt="" height="50" width="32" />
+                </a> -->
+            </div>
         </div>
-    </div>
+    </a>
 
     <div class="menu_section">
         <ul>
@@ -47,8 +49,8 @@
                     <li><a href="treaty_sudo_upload_manage_access.php">Manage</a></li>
                 </ul>
             </li>
-             <!--Manage Category-->
-             <li title="Category Access">
+            <!--Manage Category-->
+            <li title="Category Access">
                 <a href="#">
                     <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
                     <span class="menu_title">Treaty Categories</span>
