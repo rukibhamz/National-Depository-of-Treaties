@@ -87,7 +87,7 @@
                 <div class="row wow fadeInUp">
                     <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
                         <div class="jumbotron">
-                            <h1 class="text-white">Choose Your Book and Proceed To Borrowing It</h1>
+                            <h1 class="text-white">Choose your treaty document and proceed to view/preview it</h1>
                         </div>
                         <div class="title-bar white">
                             <ul class="list-inline list-unstyled">
@@ -161,6 +161,7 @@
                                 */
                                 
                         ?>
+                        <!-- Add a description field -->
                             <div class="col-xs-12 col-md-6">
                                 <div class="category-item well yellow">
                                     <div class="media">
@@ -168,18 +169,18 @@
                                         </div>
                                         <div class="media-body">
                                             <h5><?php echo $row->b_title;?></h5>
-                                            <h6>By <?php echo $row->b_author;?></h6>
+                                            <!-- <h6>By <?php echo $row->b_author;?></h6> -->
                                             <h6>Category: <?php echo $row->bc_name;?></h6>
                                             <div class="space-10"></div>
-                                            <ul class="list-inline list-unstyled rating-star">
+                                            <!-- <ul class="list-inline list-unstyled rating-star">
                                                 <li class="active"><i class="icofont icofont-star"></i></li>
                                                 <li class="active"><i class="icofont icofont-star"></i></li>
                                                 <li class="active"><i class="icofont icofont-star"></i></li>
                                                 <li class="active"><i class="icofont icofont-star"></i></li>
                                                 <li><i class="icofont icofont-star"></i></li>
-                                            </ul>
+                                            </ul> -->
                                             <div class="space-10"></div>
-                                            <a href="book.php?book_id=<?php echo $row->b_id;?>" class="text-primary">View Book</a>
+                                            <a href="book.php?book_id=<?php echo $row->b_id;?>" class="text-primary">View Document</a>
                                         </div>
                                     </div>
                                 </div>

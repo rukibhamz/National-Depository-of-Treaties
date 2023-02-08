@@ -741,7 +741,7 @@ include("assets/inc/head.php");
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>PDFObject.embed("assets/magazines/Architectural_Digest_November_2015.pdf", "#example1", {width: "500px"});</script>
+    <script>PDFObject.embed("assets/magazines/Architectural_Digest_November_2015.pdf", "#example1");</script>
 </body>
 
 </html>
