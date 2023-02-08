@@ -254,9 +254,12 @@ include("assets/inc/head.php");
     include("assets/inc/sidebar.php");
     ?>
     <!-- main sidebar end -->
+    <style>
+.pdfobject-container { height: 50rem; border: 1rem solid rgba(0,0,0,.1); }
+</style>
 
     <div id="page_content">
-        
+    <div id="example1"></div>
         <div class="uk-alert black" data-uk-alert>
             <a href="" class="uk-alert-close uk-close"></a>
             <p>Lorem Ipsum dpmpr.pdf has been published</p>
@@ -737,6 +740,8 @@ include("assets/inc/head.php");
             $('#mybook').booklet();
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>PDFObject.embed("assets/magazines/Architectural_Digest_November_2015.pdf", "#example1", {width: "500px"});</script>
 </body>
 
 </html>
