@@ -163,7 +163,7 @@ include("assets/inc/head.php");
 
                                     if (in_array($file_ext, $allowed_extensions)) {
                                         echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
-        <img src='assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
+        <img src='assets/magazines/{$row->b_file}' alt='{$row->b_file}' data-dense-cap='1' />
         <a download href='assets/magazines/{$row->b_file}' class='download-image'><h4>&ensp;Download</h4></a>
     </div>";
                                     } else {
@@ -215,7 +215,7 @@ include("assets/inc/head.php");
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
-    <script src="assets/js/altair_admin_common.min.js"></script>
+    <!-- <script src="assets/js/altair_admin_common.min.js"></script> -->
 
 
     <script>

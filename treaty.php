@@ -148,7 +148,10 @@ while ($row = $res->fetch_object()) {
                                             if (in_array($file_ext, $allowed_extensions)) {
                                                 echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
         <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
-        <a download href='sudo/assets/magazines/{$row->b_file}' class='btn btn-success download-imag text-white'><h4 style='margin-bottom: 0'>&ensp;Download</h4></a>
+        <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
+        <button class='btn btn-success'>
+        &ensp;Download
+        </button></a>
     </div>";
                                             } else {
                                                 echo "";
