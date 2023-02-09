@@ -1,0 +1,179 @@
+.title-bar.black {
+    color: #000000;
+    background-color: #000000;
+    text-align: center;
+}
+
+.title-bar.white {
+    color: #ffffff;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+div.md-card {
+    /* position: relative */
+    border-radius: 8px;
+    /* height: 250px; */
+    /* display: flex;
+    align-items: center; */
+}
+
+div.md-card div.md-card-content {
+    padding: 2rem;
+}
+
+h2 {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48.83px;
+    line-height: 66px;
+}
+
+p.text {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+
+h3.text {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 34px;
+    letter-spacing: 0.1em;
+    color: #717970;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+div.md-card.card-alt {
+    background: linear-gradient(180deg, #0C130D 4.69%, #0C130D 33.52%, rgba(12, 19, 13, 0.86) 54.89%, rgba(12, 19, 13, 0.717233) 86.77%);
+}
+
+div.md-card.card-alt h2, div.md-card.card-alt p.text {
+    color: white;
+}
+
+div.title-bar ul li i {
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+div.title-bar.black ul li i {
+    color: #000000;
+    background: #000000;
+}
+
+div.title-bar.blue ul li i {
+    color: #006D34;
+    background: #006D34;
+}
+
+div.title-bar.white ul li i {
+    color: #ffffff;
+    background: #ffffff;
+}
+
+input.md-btn-success {
+    background: #18A655;
+    border-radius: 6.2181px;
+    padding: 1rem 3rem;
+}
+
+label {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.7rem;
+    line-height: 27px;
+    letter-spacing: 0.1em;
+    color: #8F918D;
+}
+
+ul li.submenu_trigger a span.menu_title, span.menu_title {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 34px;
+    color: #5D5F5B;
+}
+
+aside#sidebar_main div.menu_section ul li.submenu_trigger ul li a {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.45rem;
+    line-height: 27px;
+    color: #5D5F5B;
+}
+
+span.uk-badge {
+    border-radius: 4px;
+    padding: 10px;
+}
+
+span.uk-badge.uk-badge-black {
+    background: #000000;
+}
+
+div.uk-alert {
+    padding: 17px 35px;
+    width: 704px;
+    height: 63px;
+    margin-left: auto;
+    margin-right: auto;
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+div.uk-alert.black {
+    background: #000000;
+}
+
+div.uk-alert.danger {
+    background: #BA1A1A;
+}
+
+div.pdfobject-container {
+    height: 50rem;
+    border: 1rem solid rgba(0, 0, 0, .1);
+}
+
+.uk-tab>li.uk-active>a {
+    border-bottom-color: #008943;
+}
+
+.uk-text-success {
+    color: #008943 !important;
+}
+
+.uk-sticky-placeholder li.preview.uk-active {
+    z-index: 1;
+}
+
+/* Password toggle */
+div.password_level {
+    position: relative;
+}
+
+div.password_level span.password_toggle{
+    position: absolute;
+    top: 10%;
+    cursor: pointer;
+}
+
+/* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push origin-remote */

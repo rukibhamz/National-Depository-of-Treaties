@@ -152,6 +152,7 @@ div.pdfobject-container {
     height: 50rem;
     border: 1rem solid rgba(0, 0, 0, .1);
 }
+
 .uk-tab>li.uk-active>a {
     border-bottom-color: #008943;
 }
@@ -162,6 +163,17 @@ div.pdfobject-container {
 
 .uk-sticky-placeholder li.preview.uk-active {
     z-index: 1;
+}
+
+/* Password toggle */
+div.password_level {
+    position: relative;
+}
+
+div.password_level span.password_toggle{
+    position: absolute;
+    top: 10%;
+    cursor: pointer;
 }
 
 /* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push origin-remote */

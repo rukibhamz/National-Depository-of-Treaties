@@ -72,7 +72,7 @@ include("assets/inc/head.php");
                                     <td><?php echo $row->b_copies; ?> Copies</td>
                                     <td><?php echo $row->b_publisher; ?> Copies</td>
                                     <td>
-                                        <a href="pages_sudo_view_book.php?book_id=<?php echo $row->b_id; ?>">
+                                        <a href="pages_sudo_view_book.php?docs_id=<?php echo $row->b_id; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
                                     </td>

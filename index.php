@@ -72,20 +72,20 @@ require_once('sudo/assets/config/config.php');
                                 <a href="#sc1">Home</a>
                             </li>
                             <li>
-                                <a href="books.php">CATALOGUES</a>
+                                <a href="treaties.php">CATALOGUES</a>
                             </li>
                             <li>
-                                <a href="">UPLOAD TREATY</a>
+                                <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                             </li>
                             <!-- <li>
                                 <a href="lib_user/pages_std_index.php">LOGIN</a>
                             </li>
                                     <li>
                                 <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>
+                            </li>-->
                             <li>
-                                <a href="staff/pages_staff_index.php">Staff Login</a>
-                            </li> -->
+                                <a href="staff/pages_staff_index.php">Uploader Login</a>
+                            </li>
                             <li>
                                 <a href="sudo/pages_sudo_index.php">LOGIN</a>
                             </li>
@@ -127,7 +127,7 @@ require_once('sudo/assets/config/config.php');
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="treaty">
-                                        <form action="books.php">
+                                        <form action="treaties.php">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Enter book name">
                                                 <div class="input-group-btn">
@@ -216,7 +216,7 @@ require_once('sudo/assets/config/config.php');
                                     <div class="space-10"></div>
                                 </div>
                             </div>
-                            <a href="books.php">View files <img src="images/arrow_icon.png" alt="arrow icon" width="35px" /></a>
+                            <a href="treaties.php">View files <img src="images/arrow_icon.png" alt="arrow icon" width="35px" /></a>
                         </div>
                     </div>
                 <?php } ?>
@@ -225,7 +225,7 @@ require_once('sudo/assets/config/config.php');
             <div class="space-60"></div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <a href="books.php" class="btn btn-primary">See More</a>
+                    <a href="treaties.php" class="btn btn-primary">See More</a>
                 </div>
             </div>
             <div class="space-80"></div>
