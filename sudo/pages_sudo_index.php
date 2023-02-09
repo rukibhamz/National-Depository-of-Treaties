@@ -76,7 +76,7 @@
         <div class="md-card" id="login_card">
             <div class="md-card-content large-padding" id="login_form">
                 <div class="login_heading">
-                    <h2>iLibrary SuperUser Login</h2>
+                    <h3 class="text">Sign in</h3>
                 </div>
                 <form method ="post">
                     <div class="uk-form-row">
@@ -88,11 +88,12 @@
                         <input class="md-input" required type="password" id="login_password" name="password" />
                     </div>
                     <div class="uk-margin-medium-top">
-                        <input type="submit" name="sudo_login" value="Sign In" class="md-btn md-btn-primary md-btn-block md-btn-large"/>
+                        <input type="submit" name="sudo_login" value="Sign In" class="md-btn md-btn-success md-btn-block md-btn-medium"/>
                     </div>
                     
                 </form>
             </div>
+            <!-- Display None -->
             <div class="md-card-content large-padding uk-position-relative" id="login_help" style="display: none">
                 <button type="button" class="uk-position-top-right uk-close uk-margin-right uk-margin-top back_to_login"></button>
                 <h2 class="heading_b uk-text-success">Can't log in?</h2>
