@@ -14,6 +14,7 @@
 
     <!-- uikit -->
     <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css" />
+    <!-- <link href="assets/css/booklet.css" type="text/css" rel="stylesheet" media="screen, projection, tv" /> -->
 
     <!-- altair admin login page -->
     <link rel="stylesheet" href="assets/css/login_page.min.css" />

@@ -72,19 +72,19 @@ require_once('sudo/assets/config/config.php');
                                 <a href="#sc1">Home</a>
                             </li>
                             <li>
-                                <a href="books.php">CATALOGUES</a>
+                                <a href="treaties.php">CATALOGUES</a>
                             </li>
                             <li>
-                                <a href="">UPLOAD TREATY</a>
+                                <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                             </li>
                             <!-- <li>
                                 <a href="lib_user/pages_std_index.php">LOGIN</a>
                             </li>
                                     <li>
                                 <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>
-                            <li>
-                                <a href="staff/pages_staff_index.php">Staff Login</a>
+                            </li>-->
+                            <!-- <li>
+                                <a href="staff/pages_staff_index.php">Uploader Login</a>
                             </li> -->
                             <li>
                                 <a href="sudo/pages_sudo_index.php">LOGIN</a>
@@ -127,7 +127,7 @@ require_once('sudo/assets/config/config.php');
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="treaty">
-                                        <form action="books.php">
+                                        <form action="treaties.php">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Enter book name">
                                                 <div class="input-group-btn">
@@ -203,8 +203,9 @@ require_once('sudo/assets/config/config.php');
                     <div class="justify col-xs-12 col-sm-6 col-md-4 wow fadeInLeft" data-wow-delay="0.1s">
                         <div class="category-item well blue">
                             <div>
-                                <p>Newly added treaties</p>
+                                <!-- <p>Newly added treaties</p> -->
                                 <h3><?php echo $row->bc_name; ?></h3>
+                                <p class="trim"><?= $row->bc_desc; ?></p>
                                 <div class="text-center">
 
                                     <div class="space-10"></div>
@@ -216,7 +217,7 @@ require_once('sudo/assets/config/config.php');
                                     <div class="space-10"></div>
                                 </div>
                             </div>
-                            <a href="books.php">View files <img src="images/arrow_icon.png" alt="arrow icon" width="35px" /></a>
+                            <a href="treaties.php"><button class="btn btn-success">View files <img src="sudo/assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></button></a>
                         </div>
                     </div>
                 <?php } ?>
@@ -225,7 +226,7 @@ require_once('sudo/assets/config/config.php');
             <div class="space-60"></div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <a href="books.php" class="btn btn-primary">See More</a>
+                    <a href="treaties.php" class="btn btn-primary">See More</a>
                 </div>
             </div>
             <div class="space-80"></div>
