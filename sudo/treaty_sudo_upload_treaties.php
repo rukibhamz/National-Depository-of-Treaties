@@ -146,6 +146,13 @@ include("assets/inc/head.php");
                             </div>
 
                             <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <label>Brief of Discussion</label>
+                                    <textarea cols="30" required rows="3" class="md-input" name="l_desc"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="uk-width-medium-2-2">
                                 <div id="file_upload-drop" class="uk-file-upload">
                                     <p class="uk-text">Upload Treaty Document</p>
                                     <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>

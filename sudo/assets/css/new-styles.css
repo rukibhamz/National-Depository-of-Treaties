@@ -139,11 +139,29 @@ div.uk-alert {
     right: 0;
     z-index: 100;
 }
+
 div.uk-alert.black {
     background: #000000;
 }
+
 div.uk-alert.danger {
     background: #BA1A1A;
+}
+
+div.pdfobject-container {
+    height: 50rem;
+    border: 1rem solid rgba(0, 0, 0, .1);
+}
+.uk-tab>li.uk-active>a {
+    border-bottom-color: #008943;
+}
+
+.uk-text-success {
+    color: #008943 !important;
+}
+
+.uk-sticky-placeholder li.preview.uk-active {
+    z-index: 1;
 }
 
 /* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push origin-remote */

@@ -161,6 +161,7 @@
                                 */
                                 
                         ?>
+                        <!-- PDF, DOCX -->
                         <!-- Add a description field -->
                             <div class="col-xs-12 col-md-6">
                                 <div class="category-item well yellow">
