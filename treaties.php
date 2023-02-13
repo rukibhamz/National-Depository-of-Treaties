@@ -51,7 +51,7 @@ require_once('sudo/assets/config/config.php');
                             <span class="icon-bar"></span>
                         </button>
                         <!--Logo-->
-                        <a href="#sc1" class="navbar-left show"><img src="images/logo-2.png" alt="library"></a>
+                        <a href="#sc1" class="navbar-left show"><img src="images/logo-2.png" alt="Treaty_DataBase" width="70%" class="img-responsive"></a>
                         <div class="space-10"></div>
                     </div>
                     <!--Toggle-button-->
@@ -68,12 +68,6 @@ require_once('sudo/assets/config/config.php');
                             <li>
                                 <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                             </li>
-                            <!-- <li>
-                                <a href="lib_user/pages_std_index.php">LOGIN</a>
-                            </li>
-                                    <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>-->
                             <li>
                                 <a href="sudo/pages_sudo_index.php">LOGIN</a>
                             </li>

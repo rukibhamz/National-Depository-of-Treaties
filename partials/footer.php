@@ -49,9 +49,8 @@
                 <h4 class="text-white">Useful Links</h4>
                 <div class="space-10"></div>
                 <ul class="list-unstyled menu-tip">
-                    <li><a href="lib_user/pages_std_index.php">Library User Login</a></li>
-                    <li><a href="staff/pages_staff_index.php">Libray Staff Login</a></li>
-                    <li><a href="sudo/pages_sudo_index.php">Library Admin Login</a></li>
+                    <li><a href="staff/pages_staff_index.php">Treaty Uploader's Login</a></li>
+                    <li><a href="sudo/pages_sudo_index.php">Admin Login</a></li>
                 </ul>
                 <div class="space-20"></div>
             </div>
@@ -59,7 +58,7 @@
                 <h4 class="text-white">Catalogue Categories</h4>
                 <div class="space-10"></div>
                 <ul class="list-unstyled menu-tip">
-                    <li><a href="lib_user/pages_std_index.php">Recent treaties</a></li>
+                    <li><a href="#">Recent treaties</a></li>
                     <li><a href="staff/pages_staff_index.php">Recent notifications</a></li>
                     <li><a href="sudo/pages_sudo_index.php">Top treaties</a></li>
                     <li><a href="sudo/pages_sudo_index.php">Most viewed treaties</a></li>
@@ -69,7 +68,6 @@
             <!--  -->
             <div class="col-12 text-center text_rights">
                 <div class="space-20"></div>
-                <!-- <p>&copy 2019-<?php echo date("Y"); ?> Ministry Of Justice , National depository of treaties. Powered By MartDevelopers Inc, All rights reserved.</p> -->
                 <p>&copy 2019-<?php echo date("Y"); ?> Ministry Of Justice , National depository of treaties. All rights reserved.</p>
             </div>
         </div>

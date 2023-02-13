@@ -77,12 +77,6 @@ require_once('sudo/assets/config/config.php');
                             <li>
                                 <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                             </li>
-                            <!-- <li>
-                                <a href="lib_user/pages_std_index.php">LOGIN</a>
-                            </li>
-                                    <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>-->
                             <li>
                                 <a href="staff/pages_staff_index.php">Uploader Login</a>
                             </li>
