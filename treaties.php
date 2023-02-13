@@ -117,7 +117,7 @@ require_once('sudo/assets/config/config.php');
                         </div>
                     </form>
                     <div class="space-30"></div>
-                    <div class="row">
+                    <div class="row" style="display: none;">
                         <div class="pull-right col-xs-12 col-sm-7 col-md-6">
                             <form class="form-horizontal">
                                 <div class="form-group">

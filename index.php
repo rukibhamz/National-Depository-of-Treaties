@@ -77,9 +77,15 @@ require_once('sudo/assets/config/config.php');
                             <li>
                                 <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                             </li>
-                            <li>
-                                <a href="staff/pages_staff_index.php">Uploader Login</a>
+                            <!-- <li>
+                                <a href="lib_user/pages_std_index.php">LOGIN</a>
                             </li>
+                                    <li>
+                                <a href="lib_user/pages_std_index.php">Library User Login</a>
+                            </li>-->
+                            <!-- <li>
+                                <a href="staff/pages_staff_index.php">Uploader Login</a>
+                            </li> -->
                             <li>
                                 <a href="sudo/pages_sudo_index.php">LOGIN</a>
                             </li>
@@ -197,8 +203,9 @@ require_once('sudo/assets/config/config.php');
                     <div class="justify col-xs-12 col-sm-6 col-md-4 wow fadeInLeft" data-wow-delay="0.1s">
                         <div class="category-item well blue">
                             <div>
-                                <p>Newly added treaties</p>
+                                <!-- <p>Newly added treaties</p> -->
                                 <h3><?php echo $row->bc_name; ?></h3>
+                                <p class="trim"><?= $row->bc_desc; ?></p>
                                 <div class="text-center">
 
                                     <div class="space-10"></div>
@@ -210,7 +217,7 @@ require_once('sudo/assets/config/config.php');
                                     <div class="space-10"></div>
                                 </div>
                             </div>
-                            <a href="treaties.php">View files <img src="images/arrow_icon.png" alt="arrow icon" width="35px" /></a>
+                            <a href="treaties.php"><button class="btn btn-success">View files <img src="sudo/assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></button></a>
                         </div>
                     </div>
                 <?php } ?>

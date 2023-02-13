@@ -199,7 +199,7 @@ aside.side_query h4 {
     display: inline-block;
 }
 
-.media-body h5 .trim {
+.media-body h5 .trim, p.trim {
     width: 30ch;
     overflow: hidden;
     text-overflow: ellipsis;
