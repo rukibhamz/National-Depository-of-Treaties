@@ -3,9 +3,9 @@ deploy:
     - git:
         repo: https://github.com/rukibhamz/National-Depository-of-Treaties/
         branch: dev
-        destination: public_html/treaty
+        destination: public_html
   exclude:
     - .cpanel.yml
     - .git
   post-deploy:
-    - chmod -R 755 public_html/treaty
+    - chmod -R 755 public_html
