@@ -1,0 +1,223 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: Digital Library
+    Template URI: https://github.com/MartMbithi/Digital_Library
+    Description: Digital Library is a web based and also desktop based library management system.
+    Author: MartDevelopers Inc
+    Author URI: http://martdev.info
+    Version: 1.0
+
+-----------------------------------------------------------------------------------
+    
+    CSS INDEX
+    ===================
+    1. Google font
+	2. Theme Default CSS (body, link color, section etc)   
+-----------------------------------------------------------------------------------*/
+
+
+/*--------------------
+1. Google font
+----------------------*/
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
+
+/*------------------
+2. Theme Default CSS
+-------------------*/
+
+.alignleft {
+    float: left;
+    margin-right: 15px;
+}
+
+.alignright {
+    float: right;
+    margin-left: 15px;
+}
+
+.aligncenter {
+    display: block;
+    margin: 0 auto 15px;
+}
+
+a {
+    color: #5d5d5d;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+a:focus,
+a:hover {
+    outline: 0 solid;
+    text-decoration: none
+}
+
+img {
+    height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 15px;
+    font-weight: 500;
+    color: #5b5b5b;
+}
+
+p.text_lg {
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 34px;
+}
+
+h2 {
+    font-weight: 300;
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    color: #5b5b5b;
+    line-height: 1.6;
+}
+
+
+/* Remove Chrome Input Field's Unwanted Yellow Background Color */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+button.btn.btn-primary {
+    background-color: #18A655;
+}
+
+footer {
+    background-image: url('./images/footer.png');
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    color: white;
+}
+
+footer div.overlay {
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    background: linear-gradient(180deg, #0C130D 4.69%, #0C130D 33.52%, rgba(12, 19, 13, 0.86) 54.89%, rgba(12, 19, 13, 0.717233) 86.77%);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+footer p.footer_about {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
+footer div.container {
+    z-index: 10;
+    position: relative
+}
+
+footer div.text_rights, a {
+    z-index: 100;
+    color: white;
+}
+
+ul.list_item {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.list_item li {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    font-style: normal;
+    line-height: 27px;
+    color: #FFFFFF;
+}
+
+/* ======== */
+header.header_main {
+    background-color: #008943;
+}
+
+/* TREATIES.PHP */
+aside.side_query {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+}
+
+aside.side_query h3 {
+    font-size: 31.25px;
+    line-height: 43px;
+    letter-spacing: 0.1em;
+    color: #717970;
+}
+
+aside.side_query h4 {
+    font-size: 20px;
+    line-height: 27px;
+    letter-spacing: 0.05em;
+    color: #717970;
+}
+
+.media-body h5 {
+    display: flex;
+    align-items: center;
+}
+
+.media-body h5 span {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 27px;
+    display: inline-block;
+}
+
+.media-body h5 .trim, p.trim {
+    width: 30ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.media-body h6 {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    color: #757873;
+}
+
+aside.side_query ul li {
+    font-size: 16px;
+    line-height: 27px;
+    letter-spacing: 0.05em;
+    color: #717970;
+}

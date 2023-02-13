@@ -1,0 +1,11 @@
+deploy:
+  task:
+    - git:
+        repo: https://github.com/rukibhamz/National-Depository-of-Treaties/
+        branch: dev
+        destination: repositories/National-Depository-of-Treaties
+  exclude:
+    - .cpanel.yml
+    - .git
+  post-deploy:
+    - chmod -R 755 repositories/National-Depository-of-Treaties
