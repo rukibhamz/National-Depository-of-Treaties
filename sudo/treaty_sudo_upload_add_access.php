@@ -4,53 +4,53 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 //generate random librarian number
-$length = 5;
+$length = 3;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
 //create a librarian account
-if (isset($_POST['add_librarian'])) {
+if (isset($_POST['add_staff'])) {
     $error = 0;
-    if (isset($_POST['l_name']) && !empty($_POST['l_name'])) {
-        $l_name = mysqli_real_escape_string($mysqli, trim($_POST['l_name']));
+    if (isset($_POST['staff_name']) && !empty($_POST['staff_name'])) {
+        $l_name = mysqli_real_escape_string($mysqli, trim($_POST['staff_name']));
     } else {
         $error = 1;
-        $err = "Librarian name cannot be empty";
+        $err = "Staff name cannot be empty";
     }
-    if (isset($_POST['l_email']) && !empty($_POST['l_email'])) {
-        $l_email = mysqli_real_escape_string($mysqli, trim($_POST['l_email']));
+    if (isset($_POST['email']) && !empty($_POST['email'])) {
+        $l_email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
     } else {
         $error = 1;
-        $err = "Librarian email cannot be empty";
+        $err = "Staff email cannot be empty";
     }
-    if (isset($_POST['l_number']) && !empty($_POST['l_number'])) {
-        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['l_number']));
+    if (isset($_POST['staff_number']) && !empty($_POST['staff_number'])) {
+        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['staff_number']));
     } else {
         $error = 1;
-        $err = "Librarian email cannot be empty";
+        $err = "Staff number cannot be empty";
     }
     if (!$error) {
-        $sql = "SELECT * FROM  iL_Librarians WHERE  l_number='$l_number' || l_email ='$l_email' ";
+        $sql = "SELECT * FROM  fmoj_staff WHERE  staff_number='$l_number' || email ='$l_email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if ($l_number == $row['l_number']) {
-                $err = "Librarian number already exists";
+                $err = "Staff number already exists";
             } else {
-                $err = "Librarian email already exists";
+                $err = "Staff email already exists";
             }
         } else {
 
-            $l_number = $_POST['l_number'];
-            $l_name = $_POST['l_name'];
-            $l_phone = $_POST['l_phone'];
-            $l_email = $_POST['l_email'];
-            $l_pwd = sha1(md5($_POST['l_pwd']));
-            $l_adr = $_POST['l_adr'];
-            $l_bio = $_POST['l_bio'];
-            $l_acc_status = $_POST['l_acc_status'];
+            $l_number = $_POST['staff_number'];
+            $l_name = $_POST['staff_name'];
+            $l_phone = $_POST['phone'];
+            $l_email = $_POST['email'];
+            $l_pwd = sha1(md5($_POST['pwd']));
+            $l_adr = $_POST['adr'];
+            $l_bio = $_POST['bio'];
+            $l_acc_status = $_POST['acc_status'];
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO iL_Librarians (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO fmoj_staff (staff_number, staff_name, phone, email, pwd, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
             //bind paramaters
             $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
@@ -58,7 +58,7 @@ if (isset($_POST['add_librarian'])) {
 
             //declare a varible which will be passed to alert function
             if ($stmt) {
-                $success = "Librarian Account Created";
+                $success = "Staff Account Created";
             } else {
                 $err = "Please Try Again Or Try Later";
             }
@@ -107,39 +107,39 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Full Name</label>
-                                    <input type="text" required name="l_name" class="md-input" />
-                                </div>
-                                <div class="uk-form-row">
-                                    <label>Identification Number</label>
-                                    <input type="email" required name="l_email" class="md-input" />
+                                    <input type="text" required name="staff_name" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Email Address</label>
-                                    <input type="text" required name="l_acc_status" value="Active" class="md-input" />
+                                    <input type="email" required name="email" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Phone Number</label>
+                                    <input type="text" required name="acc_status" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Password</label>
-                                    <input type="text" requied name="l_adr" class="md-input" />
+                                    <input type="password" requied name="adr" class="md-input" />
                                 </div>
                             </div>
 
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
-                                    <label>Mobile Number</label>
-                                    <input type="text" required readonly value="iLib-<?php echo $Number; ?>" name="l_number" class="md-input label-fixed" />
+                                    <label>Staff ID Number</label>
+                                    <input type="text" required readonly value="FMOJ-<?php echo $Number; ?>" name="staff_number" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>User Address</label>
-                                    <input type="text" required name="l_addr" class="md-input" />
+                                    <input type="text" required name="addr" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Short Description Bio</label>
-                                    <input type="text" required name="l_bio" class="md-input" />
+                                    <input type="text" required name="bio" class="md-input" />
                                     <!-- <textarea cols="30" required rows="3" class="md-input" name="l_bio"></textarea> -->
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Account Status</label>
-                                    <input type="text" required name="l_status" class="md-input" />
+                                    <input type="text" required name="acc_status" class="md-input" />
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">

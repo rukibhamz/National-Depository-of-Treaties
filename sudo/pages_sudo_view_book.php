@@ -26,7 +26,7 @@ include("assets/inc/head.php");
     <!-- main sidebar end -->
     <?php
     $docs_id = $_GET['docs_id'];
-    $ret = "SELECT * FROM  iL_Books WHERE b_id = ?";
+    $ret = "SELECT * FROM  tbl_treaties WHERE treaty_id = ?";
     $stmt = $mysqli->prepare($ret);
     $stmt->bind_param('s', $docs_id);
     $stmt->execute(); //ok

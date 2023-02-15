@@ -1,7 +1,7 @@
 <?php
 require_once('sudo/assets/config/config.php');
 $docs_id = $_GET['docs_id'];
-$ret = "SELECT * FROM  iL_Books WHERE b_id = ?";
+$ret = "SELECT * FROM  tbl_treaties WHERE treaty_id = ?";
 $stmt = $mysqli->prepare($ret);
 $stmt->bind_param('s', $docs_id);
 $stmt->execute(); //ok
@@ -71,7 +71,7 @@ while ($row = $res->fetch_object()) {
                                 <span class="icon-bar"></span>
                             </button>
                             <!--Logo-->
-                            <a href="#sc1" class="navbar-left show"><img src="images/logo-2.png" alt="Treaty_DataBase" width="70%" class="img-responsive"></a>
+                            <a href="index.php" class="navbar-left show"><img src="images/logo-2.png" alt="Treaty_DataBase" width="70%" class="img-responsive"></a>
                             <div class="space-10"></div>
                         </div>
                         <!--Toggle-button-->
@@ -79,10 +79,10 @@ while ($row = $res->fetch_object()) {
                         <!--Mainmenu list-->
                         <div class="collapse navbar-collapse navbar-right" id="mainmenu">
                             <ul class="nav navbar-nav nav-white text-uppercase">
-                                <li class="active">
-                                    <a href="#sc1">Home</a>
-                                </li>
                                 <li>
+                                    <a href="index.php">Home</a>
+                                </li>
+                                <li class="active">
                                     <a href="treaties.php">CATALOGUES</a>
                                 </li>
                                 <li>
@@ -111,7 +111,7 @@ while ($row = $res->fetch_object()) {
                     <div class="row wow fadeInUp">
                         <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
                             <div class="jumbotron">
-                                <h1 class="text-white">Choose Your Book and Proceed To Borrowing It</h1>
+                                <h1 class="text-white">View Treaty</h1>
                             </div>
                             <div class="title-bar white">
                                 <ul class="list-inline list-unstyled">
@@ -163,7 +163,7 @@ while ($row = $res->fetch_object()) {
                                             </div>
                                         </div>
                                         <div class="media-body">
-                                            <h5><?php echo $row->b_title; ?></h5>
+                                            <h5><?php echo $row->title; ?></h5>
                                             <div class="space-10"></div>
                                             <p><?php echo $row->b_summary; ?></p>
                                         </div>

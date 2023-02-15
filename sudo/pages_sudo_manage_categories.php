@@ -7,7 +7,7 @@
     if(isset($_GET['deleteBookCategory']))
    {
          $id=intval($_GET['deleteBookCategory']);
-         $adn="DELETE FROM  iL_BookCategories  WHERE bc_id = ?";
+         $adn="DELETE FROM  tbl_treatiescategory  WHERE treaty_id = ?";
          $stmt= $mysqli->prepare($adn);
          $stmt->bind_param('i',$id);
          $stmt->execute();
@@ -66,7 +66,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_BookCategories"; 
+                                $ret="SELECT * FROM  tbl_treatiescategory"; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();
@@ -75,16 +75,16 @@
                                     
                             ?>
                                 <tr>
-                                    <td><?php echo $row->bc_code;?></td>
-                                    <td><?php echo $row->bc_name;?></td>
+                                    <td><?php echo $row->treaty_code;?></td>
+                                    <td><?php echo $row->treaty_name;?></td>
                                     <td>
-                                        <a href="pages_sudo_view_book_category.php?category_code=<?php echo $row->bc_code;?>">
+                                        <a href="pages_sudo_view_book_category.php?category_code=<?php echo $row->treaty_code;?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
-                                        <a href="pages_sudo_edit_book_category.php?category_code=<?php echo $row->bc_code;?>">
+                                        <a href="pages_sudo_edit_book_category.php?category_code=<?php echo $row->treaty_code;?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
-                                        <a href="pages_sudo_manage_categories.php?deleteBookCategory=<?php echo $row->bc_id;?>">
+                                        <a href="pages_sudo_manage_categories.php?deleteBookCategory=<?php echo $row->treaty_id;?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>

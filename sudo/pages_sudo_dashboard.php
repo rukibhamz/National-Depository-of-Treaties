@@ -38,7 +38,7 @@ check_login();
 //1.Books
 
 //1.0 : Number of all book categories in the library
-$result = "SELECT count(*) FROM iL_BookCategories";
+$result = "SELECT count(*) FROM tbl_treatiescategory";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($book_categories);
@@ -46,7 +46,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.1 : Number of all books no matter what category
-$result = "SELECT SUM(b_copies) FROM iL_Books";
+$result = "SELECT SUM(b_copies) FROM tbl_treaties";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($books);
@@ -90,7 +90,7 @@ $damanged_and_lost_books = $lost_books + $damanged_books;
 
 //2.Library Users(Students and Librarians)
 //2.0 : Number of Employed Librarians
-$result = "SELECT count(*) FROM iL_Librarians WHERE l_acc_status = 'Active' ";
+$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status = 'Active' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($librarians);
@@ -114,7 +114,7 @@ $stmt->fetch();
 $stmt->close();
 
 //2.3 : Number of all Employed Librarians with pending accounts activations
-$result = "SELECT count(*) FROM iL_Librarians WHERE l_acc_status = 'Pending' ";
+$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status = 'Pending' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($pending_librarians);
@@ -149,31 +149,7 @@ $stmt->fetch();
 $stmt->close();
 
 //3.3 : Number of all amount paid by students as a fine of loosing  any book
-$result = "SELECT SUM(f_amt) FROM iL_Fines WHERE f_type = 'Lost Book'";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($lostBookfines);
-$stmt->fetch();
-$stmt->close();
 
-//3.4 : Number of all amount paid by students as a fine of  damaging any book
-$result = "SELECT SUM(f_amt) FROM iL_Fines WHERE f_type = 'Damaged Book' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($damangedBookfines);
-$stmt->fetch();
-$stmt->close();
-
-//3.5 : Number of all amount paid by students as a fine of  damaging any book
-$result = "SELECT SUM(f_amt) FROM iL_Fines WHERE f_status = 'Paid' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($paidFine);
-$stmt->fetch();
-$stmt->close();
-
-$totalFine = $lostBookfines + $damangedBookfines;
-$pendingFine = $totalFine - $paidFine;
 
 
 
@@ -184,26 +160,26 @@ $pendingFine = $totalFine - $paidFine;
     */
 
 //1.0.1 : Number Of Books under Non-fiction Category
-$result = "SELECT COUNT(*) FROM iL_Books WHERE bc_name = 'Non-fiction' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Instruments' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($non_fiction);
+$stmt->bind_result($Instruments);
 $stmt->fetch();
 $stmt->close();
 
 //1.0.2 : Number Of Books under Fiction Category
-$result = "SELECT COUNT(*) FROM iL_Books WHERE bc_name = 'Fiction' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Agreements' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($fiction);
+$stmt->bind_result($Agreements);
 $stmt->fetch();
 $stmt->close();
 
 //1.0.3 : Number Of Books under References Category
-$result = "SELECT COUNT(*) FROM iL_Books WHERE bc_name = 'References' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Memorandum of Understanding' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($References);
+$stmt->bind_result($Memorandum_of_Understanding);
 $stmt->fetch();
 $stmt->close();
 
@@ -508,26 +484,26 @@ include("assets/inc/head.php");
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $ret = "SELECT * FROM  iL_Librarians";
+                                    $ret = "SELECT * FROM  fmoj_staff";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
                                     while ($row = $res->fetch_object()) {
                                         //use .danger, .warning, .success according to account status
-                                        if ($row->l_acc_status == 'Active') {
-                                            $account_status = "<td class='uk-text-success'>$row->l_acc_status</td>";
-                                        } elseif ($row->l_acc_status == 'Pending') {
-                                            $account_status = "<td class='uk-text-warning'>$row->l_acc_status</td>";
+                                        if ($row->acc_status == 'Active') {
+                                            $account_status = "<td class='uk-text-success'>$row->acc_status</td>";
+                                        } elseif ($row->acc_status == 'Pending') {
+                                            $account_status = "<td class='uk-text-warning'>$row->acc_status</td>";
                                         } else {
-                                            $account_status = "<td class='uk-text-danger'>$row->l_acc_status</td>";
+                                            $account_status = "<td class='uk-text-danger'>$row->acc_status</td>";
                                         }
                                     ?>
                                         <tr>
-                                            <td><?php echo $row->l_name; ?></td>
-                                            <td><?php echo $row->l_number; ?></td>
-                                            <td><?php echo $row->l_phone; ?></td>
-                                            <td><?php echo $row->l_email; ?></td>
-                                            <td><?php echo $row->l_adr; ?></td>
+                                            <td><?php echo $row->staff_name; ?></td>
+                                            <td><?php echo $row->staff_number; ?></td>
+                                            <td><?php echo $row->phone; ?></td>
+                                            <td><?php echo $row->email; ?></td>
+                                            <td><?php echo $row->adr; ?></td>
                                             <?php echo $account_status; ?>
                                         </tr>
 

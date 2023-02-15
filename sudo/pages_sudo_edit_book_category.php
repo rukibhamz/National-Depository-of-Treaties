@@ -49,7 +49,7 @@
     <!-- main sidebar end -->
     <?php 
         $category_code = $_GET['category_code'];
-        $ret="SELECT * FROM  iL_BookCategories WHERE bc_code = ?"; 
+        $ret="SELECT * FROM  tbl_treatiescategory WHERE treaty_code = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $category_code);
         $stmt->execute() ;//ok
@@ -63,7 +63,7 @@
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
                 <li><a href="pages_sudo_manage_categories.php">Books Inventory</a></li>
-                <li><span>Update <?php echo $row->bc_name;?></span></li>
+                <li><span>Update <?php echo $row->treaty_name;?></span></li>
             </ul>
         </div>
 
@@ -78,11 +78,11 @@
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Book Category Name</label>
-                                    <input type="text" required name="bc_name" value="<?php echo $row->bc_name;?>" class="md-input" />
+                                    <input type="text" required name="treaty_name" value="<?php echo $row->treaty_name;?>" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Book Category Code</label>
-                                    <input type="text" required readonly value="<?php echo $row->bc_code;?> " name="bc_code" class="md-input label-fixed" />
+                                    <input type="text" required readonly value="<?php echo $row->treaty_code;?> " name="treaty_code" class="md-input label-fixed" />
                                 </div>
                                
                             </div>
@@ -90,7 +90,7 @@
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Book Category Description</label>
-                                    <textarea cols="30" rows="4" class="md-input" name="bc_desc"><?php echo $row->bc_desc;?></textarea>
+                                    <textarea cols="30" rows="4" class="md-input" name="treaty_desc"><?php echo $row->treaty_desc;?></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">

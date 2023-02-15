@@ -2,6 +2,6 @@
     $dbuser="root";
     $dbpass="";
     $host="localhost";
-    $db="martdevelopers_iLibrary";
+    $db="treaties_db";
     $mysqli=new mysqli($host,$dbuser, $dbpass, $db);
 ?>

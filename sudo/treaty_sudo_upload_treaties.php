@@ -106,24 +106,24 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Name, Title, Keywords</label>
-                                    <input type="text" required name="l_name" class="md-input" />
+                                    <input type="text" required name="staff_name" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Treaty Signatories</label>
-                                    <input type="email" required name="l_email" class="md-input" />
+                                    <input type="email" required name="email" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Treaty Status</label>
-                                    <select required onChange="getBookId(this.value);" name="bc_name" class="md-input" />
+                                    <select required onChange="getBookId(this.value);" name="treaty_name" class="md-input" />
                                     <option>Select Treaty Category</option>
                                     <?php
-                                    $ret = "SELECT * FROM  iL_BookCategories";
+                                    $ret = "SELECT * FROM  	tbl_treatiescategory";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
                                     while ($row = $res->fetch_object()) {
                                     ?>
-                                        <option value="<?php echo $row->bc_name; ?>"><?php echo $row->bc_name; ?></option>
+                                        <option value="<?php echo $row->treaty_name; ?>"><?php echo $row->treaty_name; ?></option>
                                     <?php } ?>
                                     </select>
                                 </div>
@@ -132,15 +132,15 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Definition</label>
-                                    <input type="text" required readonly name="l_number" class="md-input" />
+                                    <input type="text" required readonly name="treaty_number" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Treaty Date</label>
-                                    <input type="date" required name="l_date" class="md-input label-fixed" />
+                                    <input type="date" required name="date" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Minutes Of Negotiation</label>
-                                    <input type="text" required name="l_bio" class="md-input" />
+                                    <input type="text" required name="bio" class="md-input" />
                                     <!-- <textarea cols="30" required rows="3" class="md-input" name="l_bio"></textarea> -->
                                 </div>
                             </div>

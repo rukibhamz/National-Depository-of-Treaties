@@ -193,7 +193,7 @@ require_once('sudo/assets/config/config.php');
                 <!--Show Book Categories-->
                 <?php
                 //Fetch all book categories
-                $ret = "SELECT * FROM  iL_BookCategories";
+                $ret = "SELECT * FROM  	tbl_treatiescategory";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
@@ -204,8 +204,8 @@ require_once('sudo/assets/config/config.php');
                         <div class="category-item well blue">
                             <div>
                                 <!-- <p>Newly added treaties</p> -->
-                                <h3><?php echo $row->bc_name; ?></h3>
-                                <p class="trim"><?= $row->bc_desc; ?></p>
+                                <h3><?php echo $row->treaty_name; ?></h3>
+                                <p class="trim"><?= $row->treaty_desc; ?></p>
                                 <div class="text-center">
 
                                     <div class="space-10"></div>

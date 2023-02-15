@@ -51,7 +51,7 @@ require_once('sudo/assets/config/config.php');
                             <span class="icon-bar"></span>
                         </button>
                         <!--Logo-->
-                        <a href="#sc1" class="navbar-left show"><img src="images/logo-2.png" alt="library"></a>
+                        <a href="index.php" class="navbar-left show"><img src="images/logo-2.png" alt="library" width="70%" class="img-responsive"></a>
                         <div class="space-10"></div>
                     </div>
                     <!--Toggle-button-->
@@ -59,10 +59,10 @@ require_once('sudo/assets/config/config.php');
                     <!--Mainmenu list-->
                     <div class="collapse navbar-collapse navbar-right" id="mainmenu">
                         <ul class="nav navbar-nav nav-white text-uppercase">
-                            <li class="active">
-                                <a href="#sc1">Home</a>
-                            </li>
                             <li>
+                                <a href="index.php">Home</a>
+                            </li>
+                            <li class="active">
                                 <a href="treaties.php">CATALOGUES</a>
                             </li>
                             <li>
@@ -116,7 +116,7 @@ require_once('sudo/assets/config/config.php');
                     <div class="space-5"></div>
                     <form action="treaties.php">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter book name">
+                            <input type="text" class="form-control" placeholder="enter document name">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-primary"><i class="icofont icofont-search-alt-2"></i></button>
                             </div>
@@ -132,9 +132,9 @@ require_once('sudo/assets/config/config.php');
                                         <div class="form-group">
                                             <select name="sort" id="sort" class="form-control">
                                                 <option value="">Best Match</option>
-                                                <option value="">Best Book</option>
-                                                <option value="">Latest Book</option>
-                                                <option value="">Old Book</option>
+                                                <option value="">Best Document</option>
+                                                <option value="">Latest Document</option>
+                                                <option value="">Old Document</option>
                                             </select>
                                         </div>
                                     </div>
@@ -147,7 +147,7 @@ require_once('sudo/assets/config/config.php');
                     <div class="row">
                         <!--Books-->
                         <?php
-                        $ret = "SELECT * FROM  iL_Books";
+                        $ret = "SELECT * FROM  tbl_treaties";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
                         $res = $stmt->get_result();
@@ -170,8 +170,8 @@ require_once('sudo/assets/config/config.php');
                                 <div class="category-item well green">
                                     <div class="media">
                                         <div class="media-body">
-                                            <h5><img src="images/file_icon.png" alt='<?= $row->b_title; ?>' />&ensp;<span class="trim"><?= $row->b_title; ?></span></h5>
-                                            <h6>Category: <?= $row->bc_name; ?></h6>
+                                            <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
+                                            <h6>Category: <?= $row->treaty_name; ?></h6>
                                             <div class="space-10"></div>
                                             <div class="title-bar blue text-center">
                                                 <ul class="list-inline list-unstyled">
@@ -180,10 +180,10 @@ require_once('sudo/assets/config/config.php');
                                             </div>
                                             <div class="space-10"></div>
                                             <div class="row">
-                                                <div class="col-md-4"> <a href="treaty.php?docs_id=<?php echo $row->b_id; ?>" class="text-primary">View</a></div>
+                                                <div class="col-md-4"> <a href="treaty.php?docs_id=<?php echo $row->treaty_id; ?>" class="text-primary">View</a></div>
 
                                                 <div class="col-md-8">
-                                                    <img src="images/card-logo.png" alt='<?= $row->b_title; ?>' class="img-responsive" />
+                                                    <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
                                                 </div>
                                             </div>
                                         </div>
@@ -207,13 +207,13 @@ require_once('sudo/assets/config/config.php');
                             <ul class="list-unstyled menu-tip">
                                 <?php
                                 //Fetch all book categories
-                                $ret = "SELECT * FROM  iL_BookCategories";
+                                $ret = "SELECT * FROM  tbl_treatiescategory";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
                                 while ($row = $res->fetch_object()) {
                                 ?>
-                                    <li><a href="#" class="text-success"><?php echo $row->bc_name; ?></a></li>
+                                    <li><a href="#" class="text-success"><?php echo $row->treaty_name; ?></a></li>
                                 <?php } ?>
                             </ul>
                             <!-- <a href="#" class="btn btn-primary btn-xs">See All</a> -->
