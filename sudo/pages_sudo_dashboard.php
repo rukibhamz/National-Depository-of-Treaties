@@ -233,14 +233,15 @@ include("assets/inc/head.php");
 
 
     <div id="page_content">
-        <div class="uk-alert black" data-uk-alert>
+        <!-- USE THIS FOR ALERTS -->
+        <!-- <div class="uk-alert black" data-uk-alert>
             <a href="" class="uk-alert-close uk-close"></a>
             <p>Lorem Ipsum dpmpr.pdf has been published</p>
         </div>
         <div class="uk-alert danger" data-uk-alert>
             <a href="" class="uk-alert-close uk-close"></a>
             <p>Lorem Ipsum dpmpr.pdf has been published</p>
-        </div>
+        </div> -->
         <div id="page_content_inner">
 
             <!--1.Treaty-->
@@ -267,8 +268,8 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
-
                 <div>
                     <div class="md-card">
                         <div class="md-card-content">
@@ -289,8 +290,8 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
-
                 <div>
                     <div class="md-card">
                         <div class="md-card-content">
@@ -312,8 +313,8 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
-
                 <div>
                     <div class="md-card">
                         <div class="md-card-content">
@@ -335,34 +336,8 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
-                <!-- <div>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Books</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $books; ?></noscript></span></h2>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Returned Books</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $Returned; ?></noscript></span></h2>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Lost | Damaged Books</span>
-                            <h2 class="uk-margin-remove"><?php echo $damanged_and_lost_books; ?></h2>
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
             <div class="space-30"></div>
@@ -398,6 +373,7 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
                 <div>
                     <div class="md-card card-alt">
@@ -419,6 +395,7 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
                 <div>
                     <div class="md-card card-alt">
@@ -441,6 +418,7 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
                 <div>
                     <div class="md-card card-alt">
@@ -463,6 +441,7 @@ include("assets/inc/head.php");
                             </a>
                         </div>
                     </div>
+                    <div class="space-10"></div>
                 </div>
             </div>
 
@@ -470,8 +449,8 @@ include("assets/inc/head.php");
                 <div class="uk-width-1-1">
                     <h4 class="heading_a uk-margin-bottom">Recent Uploads</h4>
                     <div class="md-card">
-                        <div class="md-card-content">
-                            <table id="dt_individual_search" class="uk-table" cellspacing="0" width="100%">
+                        <div class="md-card-content uk-overflow-container">
+                            <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -517,14 +496,14 @@ include("assets/inc/head.php");
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">New Uploaders</h4>
+                    <h4 class="heading_a uk-margin-bottom">New Uploader</h4>
                     <div class="md-card">
-                        <div class="md-card-content">
+                        <div class="md-card-content uk-overflow-container">
                             <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>iLib Student No</th>
+                                        <th>Staff Number</th>
                                         <th>Phone No.</th>
                                         <th>Email</th>
                                         <th>Address</th>
@@ -568,14 +547,14 @@ include("assets/inc/head.php");
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">Pendfing Uploads Submitted</h4>
+                    <h4 class="heading_a uk-margin-bottom">Pending Uploads Submitted</h4>
                     <div class="md-card">
-                        <div class="md-card-content">
+                        <div class="md-card-content uk-overflow-container">
                             <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>iLib Student No</th>
+                                        <th>Staff&nbsp;No</th>
                                         <th>Phone No.</th>
                                         <th>Email</th>
                                         <th>Address</th>
@@ -685,6 +664,10 @@ include("assets/inc/head.php");
             altair_helpers.ie_fix();
         });
     </script>
+    <!-- common functions -->
+    <script src="assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="assets/js/uikit_custom.min.js"></script>
     <!-- page specific plugins -->
     <!-- datatables -->
     <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>

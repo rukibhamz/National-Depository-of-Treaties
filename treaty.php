@@ -88,12 +88,6 @@ while ($row = $res->fetch_object()) {
                                 <li>
                                     <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                                 </li>
-                                <!-- <li>
-                                <a href="lib_user/pages_std_index.php">LOGIN</a>
-                            </li>
-                                    <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>-->
                                 <li>
                                     <a href="sudo/pages_sudo_index.php">LOGIN</a>
                                 </li>
