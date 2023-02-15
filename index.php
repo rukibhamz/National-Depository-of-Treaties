@@ -104,8 +104,9 @@ require_once('sudo/assets/config/config.php');
                     <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
                         <div class="jumbotron">
                             <h1 class="text-white">National Depository Of Treaties</h1>
-                            <p class="text-white">Lörem ipsum vulkanresa vät unyna dint. Sonde säpojogg antisk ektiga, som vårdvisare
-                                . Kropp antipatologi än astrortad diligen ifall sonilingar. </p>
+                            <p class="text-white" style="text-align: center;">The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for 
+                        the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with 
+                        other countries and international organizations. </p>
                         </div>
                         <div class="title-bar white">
                             <ul class="list-inline list-unstyled">
@@ -121,7 +122,7 @@ require_once('sudo/assets/config/config.php');
                         <div class="panel">
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#treaty">Treaty Database</a></li>
+                                    <p style="text-align: center;">Search Treaty Database</p>
                                 </ul>
                             </div>
                             <div class="panel-body">
@@ -181,13 +182,17 @@ require_once('sudo/assets/config/config.php');
                         </ul>
                     </div>
                     <div class="space-30"></div>
-                    <p class="text-left text_lg">Lörem ipsum digital valuta tösaktigt jong. Semilogi makrotrejigt. Homolig sere föt det blinga. Ometese astrobel: kror. Telebilig. Hexalig blogga, i vosöheten fonde. Fatode sanäval. Rejerade kron sun pren ongar. Dertad odängen. Tetrang megadäling prefost labelt nirektig. Dejibelt diar om san inte as. Denar menscertifiera nerar och ter. Anare krodat, vårade lologi. Dogmafilm. Beveligt helikoptermamma nelig lol lögt.
-                        Homonylingar gås utan paning. Sere nere i dir. Vitiv astros inte sal svischa. Ode hexassade. Geofaren jyling. Dira föheten. Makrokrogisk lidade utom nese. Fasam spetör tetratt tivis: rent. Vojilig heterogt de losk dede. Stenore didev fast koska terajongen.
+                    <p class="text-left text_lg" style="text-align: center;" >The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for 
+                        the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with 
+                        other countries and international organizations. The depository serves as a repository of all the official documents related to these 
+                        agreements and ensures that they are easily accessible to relevant stakeholders, including government officials, researchers, and the 
+                        general public. Its primary function is to promote transparency, accountability, and the rule of law in the conduct of international 
+                        relations by the Nigerian government.
                     </p>
                 </div>
             </div>
             <div class="space-60"></div>
-            <h3>Treaties <span class="text-primary">Catalogues</span> </h3>
+            <h3 style="text-align: center;">Treaties <span class="text-primary">Catalogues</span> </h3>
             <div class="space-20"></div>
             <div class="row">
                 <!--Show Book Categories-->
@@ -217,19 +222,17 @@ require_once('sudo/assets/config/config.php');
                                     <div class="space-10"></div>
                                 </div>
                             </div>
-                            <a href="treaties.php"><button class="btn btn-success">View files <img src="sudo/assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></button></a>
+                            <a href="treaties.php"><button class="btn btn-success">View Documents <img src="sudo/assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></button></a>
                         </div>
                     </div>
                 <?php } ?>
                 <!--End book categories -->
             </div>
-            <div class="space-60"></div>
+            <div class="space-20"></div>
             <div class="row">
-                <div class="col-xs-12 text-center">
-                    <a href="treaties.php" class="btn btn-primary">See More</a>
-                </div>
+                
             </div>
-            <div class="space-80"></div>
+            <div class="space-40"></div>
         </div>
     </section>
     <!--Footer-->
