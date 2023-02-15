@@ -33,7 +33,7 @@
             
             if(!$error)
             {
-                $sql="SELECT * FROM  iL_Books WHERE  b_isbn_no='$b_isbn_no' ";
+                $sql="SELECT * FROM  tbl_treaties WHERE  b_isbn_no='$b_isbn_no' ";
                 $res=mysqli_query($mysqli,$sql);
                 if (mysqli_num_rows($res) > 0) {
                 $row = mysqli_fetch_assoc($res);
@@ -62,7 +62,7 @@
                 move_uploaded_file($_FILES["b_coverimage"]["tmp_name"],"../sudo/assets/img/books/".$_FILES["b_coverimage"]["name"]); 
                 
                 //Insert Captured information to a database table
-                $query="INSERT INTO iL_Books (b_title, b_copies, b_author, b_isbn_no, b_publisher, bc_id, bc_name, b_status, b_summary, b_coverimage) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                $query="INSERT INTO tbl_treaties (b_title, b_copies, b_author, b_isbn_no, b_publisher, bc_id, bc_name, b_status, b_summary, b_coverimage) VALUES (?,?,?,?,?,?,?,?,?,?)";
                 $stmt = $mysqli->prepare($query);
                 //bind paramaters
                 $rc=$stmt->bind_param('ssssssssss', $b_title, $b_copies, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_coverimage);
@@ -156,7 +156,7 @@
                                             <select required onChange="getBookId(this.value);" name="bc_name" class="md-input"  />
                                             <option>Select Book Category</option>
                                                 <?php
-                                                    $ret="SELECT * FROM  iL_BookCategories"; 
+                                                    $ret="SELECT * FROM  tbl_treatiescategory"; 
                                                     $stmt= $mysqli->prepare($ret) ;
                                                     $stmt->execute() ;//ok
                                                     $res=$stmt->get_result();

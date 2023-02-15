@@ -27,7 +27,7 @@
     <?php
         //get details of the book using student id
         $s_id = $_GET['s_id'];
-        $ret="SELECT * FROM  iL_LibraryOperations WHERE s_id = ?  "; 
+        $ret="SELECT * FROM  il_libraryoperations WHERE s_id = ?  "; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $s_id);
         $stmt->execute() ;//ok

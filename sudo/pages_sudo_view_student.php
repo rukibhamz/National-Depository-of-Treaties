@@ -654,7 +654,7 @@
                                 <ul class="md-list md-list-addon uk-margin-bottom">
                                     <?php 
                                         $student_number = $_GET['student_number'];
-                                        $ret="SELECT * FROM  iL_LibraryOperations WHERE s_number = ?"; 
+                                        $ret="SELECT * FROM  il_libraryoperations WHERE s_number = ?"; 
                                         $stmt= $mysqli->prepare($ret) ;
                                         $stmt->bind_param('s', $student_number);
                                         $stmt->execute() ;//ok

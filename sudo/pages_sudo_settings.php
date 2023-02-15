@@ -18,7 +18,7 @@
         //$number = $_POST['number'];
         
         //Insert Captured information to a database table
-        $query="UPDATE iL_sudo SET username=?, email=?, profile_pic=?, phone =?, password=?  WHERE id =?";
+        $query="UPDATE il_sudo SET username=?, email=?, profile_pic=?, phone =?, password=?  WHERE id =?";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
         $rc=$stmt->bind_param('sssssi', $username, $email, $profile_pic, $phone, $password, $id);
@@ -56,7 +56,7 @@
             include("assets/inc/sidebar.php");
 
             $id = $_SESSION['id'];
-            $ret="SELECT * FROM  iL_sudo  WHERE id = ? "; 
+            $ret="SELECT * FROM  il_sudo  WHERE id = ? "; 
             $stmt= $mysqli->prepare($ret) ;
             $stmt->bind_param('i', $id);
             $stmt->execute() ;//ok

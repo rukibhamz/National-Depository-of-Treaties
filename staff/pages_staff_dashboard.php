@@ -35,7 +35,7 @@
      //1.Books
 
     //1.0 : Number of all book categories in the library
-    $result ="SELECT count(*) FROM iL_BookCategories";
+    $result ="SELECT count(*) FROM tbl_treatiescategory";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($book_categories);
@@ -43,7 +43,7 @@
     $stmt->close();
 
     //1.1 : Number of all books no matter what category
-    $result ="SELECT SUM(b_copies) FROM iL_Books";
+    $result ="SELECT SUM(b_copies) FROM tbl_treaties";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($books);
@@ -51,7 +51,7 @@
     $stmt->close();
 
     //1.2 : Number of all Borrowed Books no matter what category
-    $result ="SELECT count(*) FROM iL_LibraryOperations WHERE lo_type = 'Borrow' AND lo_status = '' ";
+    $result ="SELECT count(*) FROM il_libraryoperations WHERE lo_type = 'Borrow' AND lo_status = '' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($borrowed_books);
@@ -59,7 +59,7 @@
     $stmt->close();
 
     //1.3 : Number of all Lost Books no matter what category
-    $result ="SELECT count(*) FROM iL_LibraryOperations WHERE lo_status = 'Lost'  ";
+    $result ="SELECT count(*) FROM il_libraryoperations WHERE lo_status = 'Lost'  ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($lost_books);
@@ -67,7 +67,7 @@
     $stmt->close();
 
      //1.3.1 : Number of all Damanged no matter what category
-     $result ="SELECT count(*) FROM iL_LibraryOperations WHERE  lo_status = 'Damanged' ";
+     $result ="SELECT count(*) FROM il_libraryoperations WHERE  lo_status = 'Damanged' ";
      $stmt = $mysqli->prepare($result);
      $stmt->execute();
      $stmt->bind_result($damanged_books);
@@ -75,7 +75,7 @@
      $stmt->close();
 
      //1.3.2 : Number of all returned books no matter what category
-    $result ="SELECT count(*) FROM iL_LibraryOperations WHERE lo_status = 'Returned'  ";
+    $result ="SELECT count(*) FROM il_libraryoperations WHERE lo_status = 'Returned'  ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($Returned);
@@ -85,29 +85,11 @@
      $damanged_and_lost_books = $lost_books + $damanged_books;
 
 
-    //2.Library Users(Students and Librarians)
-    
-    //2.0 : Number of all Enrolled Students
-    $result ="SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Active' ";
-    $stmt = $mysqli->prepare($result);
-    $stmt->execute();
-    $stmt->bind_result($students);
-    $stmt->fetch();
-    $stmt->close();
-
-    //2.1 : Number of all Enrolled Students with pending account activation
-    $result ="SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Pending' ";
-    $stmt = $mysqli->prepare($result);
-    $stmt->execute();
-    $stmt->bind_result($pending_students);
-    $stmt->fetch();
-    $stmt->close();
-
 
     // 3.Misc
 
     //3.0 : Number of all students requesting for password resets
-    $result ="SELECT count(*) FROM iL_PasswordResets WHERE pr_usertype = 'Student' AND pr_status='Pending' ";
+    $result ="SELECT count(*) FROM il_passwordresets WHERE pr_usertype = 'Student' AND pr_status='Pending' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($pending_student_pwd_resets);
@@ -157,7 +139,7 @@
     */
 
     //1.0.1 : Number Of Books under Non-fiction Category
-    $result ="SELECT COUNT(*) FROM iL_Books WHERE bc_name = 'Non-fiction' ";
+    $result ="SELECT COUNT(*) FROM tbl_treaties WHERE bc_name = 'Non-fiction' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($non_fiction);
@@ -165,7 +147,7 @@
     $stmt->close();
 
     //1.0.2 : Number Of Books under Fiction Category
-    $result ="SELECT COUNT(*) FROM iL_Books WHERE bc_name = 'Fiction' ";
+    $result ="SELECT COUNT(*) FROM tbl_treaties WHERE bc_name = 'Fiction' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($fiction);
@@ -173,7 +155,7 @@
     $stmt->close();
 
     //1.0.3 : Number Of Books under References Category
-    $result ="SELECT COUNT(*) FROM iL_Books WHERE bc_name = 'References' ";
+    $result ="SELECT COUNT(*) FROM tbl_treaties WHERE bc_name = 'References' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($References);
@@ -181,7 +163,7 @@
     $stmt->close();
 
     //1.1.0 : Number of Borrowed Books Per Books in Non-fiction Category ->Piechart or Donought Chart
-    $result ="SELECT COUNT(*) FROM iL_LibraryOperations WHERE bc_name = 'Non-fiction' AND lo_type ='Borrow' ";
+    $result ="SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Non-fiction' AND lo_type ='Borrow' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($borrowed_non_fiction);
@@ -189,7 +171,7 @@
     $stmt->close();
 
     //1.1.1 : Number of Borrowed Books Per Books in fiction Category ->Piechart or Donought Chart
-    $result ="SELECT COUNT(*) FROM iL_LibraryOperations WHERE bc_name = 'Fiction' AND lo_type ='Borrow' ";
+    $result ="SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Fiction' AND lo_type ='Borrow' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($borrowed_fiction);
@@ -197,7 +179,7 @@
     $stmt->close();
 
     //1.1.2 : Number of Borrowed Books Per Books in References Category ->Piechart or Donought Chart
-    $result ="SELECT COUNT(*) FROM iL_LibraryOperations WHERE bc_name = 'References' AND lo_type ='Borrow' ";
+    $result ="SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'References' AND lo_type ='Borrow' ";
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($borrowed_references);
@@ -383,7 +365,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $ret="SELECT * FROM  iL_Books"; 
+                                                $ret="SELECT * FROM  tbl_treaties"; 
                                                 $stmt= $mysqli->prepare($ret) ;
                                                 $stmt->execute() ;//ok
                                                 $res=$stmt->get_result();
@@ -425,7 +407,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $ret="SELECT * FROM  iL_LibraryOperations"; 
+                                                $ret="SELECT * FROM  il_libraryoperations"; 
                                                 $stmt= $mysqli->prepare($ret) ;
                                                 $stmt->execute() ;//ok
                                                 $res=$stmt->get_result();
@@ -506,7 +488,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $ret="SELECT * FROM  iL_LibraryOperations"; 
+                                            $ret="SELECT * FROM  il_libraryoperations"; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute() ;//ok
                                             $res=$stmt->get_result();
@@ -568,7 +550,7 @@
                                 </thead>    
                                 <tbody>
                                     <?php
-                                        $ret="SELECT * FROM  iL_Books"; 
+                                        $ret="SELECT * FROM  tbl_treaties"; 
                                         $stmt= $mysqli->prepare($ret) ;
                                         $stmt->execute() ;//ok
                                         $res=$stmt->get_result();
@@ -1069,6 +1051,9 @@
 
     <!--  datatables functions -->
     <script src="assets/js/pages/plugins_datatables.min.js"></script>
+    <script>
+        alert('hey')
+    </script>
 </body>
 
 </html>

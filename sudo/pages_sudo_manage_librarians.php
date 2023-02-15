@@ -7,7 +7,7 @@
     if(isset($_GET['deleteAccount']))
    {
          $id=intval($_GET['deleteAccount']);
-         $adn="DELETE FROM  iL_Librarians  WHERE l_id = ?";
+         $adn="DELETE FROM  fmoj_staff  WHERE l_id = ?";
          $stmt= $mysqli->prepare($adn);
          $stmt->bind_param('i',$id);
          $stmt->execute();
@@ -70,7 +70,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_Librarians"; 
+                                $ret="SELECT * FROM  fmoj_staff"; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

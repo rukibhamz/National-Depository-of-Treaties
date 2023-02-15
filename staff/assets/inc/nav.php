@@ -4,7 +4,7 @@
     */
 
     $id = $_SESSION['l_id'];
-    $ret="SELECT * FROM  iL_Librarians  WHERE l_id = ? "; 
+    $ret="SELECT * FROM  fmoj_staff  WHERE l_id = ? "; 
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i', $id);
     $stmt->execute() ;//ok

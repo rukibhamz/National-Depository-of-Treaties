@@ -8,7 +8,7 @@
     if(isset($_GET['RollBack']))
    {
          $id=intval($_GET['RollBack']);
-         $adn="DELETE FROM  iL_LibraryOperations  WHERE lo_id = ?";
+         $adn="DELETE FROM  il_libraryoperations  WHERE lo_id = ?";
          $stmt= $mysqli->prepare($adn);
          $stmt->bind_param('i',$id);
          $stmt->execute();
@@ -70,7 +70,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_LibraryOperations  "; 
+                                $ret="SELECT * FROM  il_libraryoperations  "; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

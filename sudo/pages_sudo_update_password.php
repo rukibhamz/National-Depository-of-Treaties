@@ -14,8 +14,8 @@
         $pr_status = $_GET['pr_status'];
 
         //Insert Captured information to a database table
-        $query="UPDATE  iL_Librarians SET l_pwd = ? WHERE l_email = ? ";
-        $query1 = "UPDATE iL_PasswordResets SET pr_status = ? WHERE pr_id =?";
+        $query="UPDATE  fmoj_staff SET l_pwd = ? WHERE l_email = ? ";
+        $query1 = "UPDATE il_passwordresets SET pr_status = ? WHERE pr_id =?";
         $stmt = $mysqli->prepare($query);
         $stmt1 = $mysqli->prepare($query1);
         //bind paramaters
@@ -54,7 +54,7 @@
     <!-- main sidebar end -->
     <?php
         $pr_id = $_GET['pr_id'];
-        $ret="SELECT * FROM  iL_PasswordResets WHERE pr_id = ?"; 
+        $ret="SELECT * FROM  il_passwordresets WHERE pr_id = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $pr_id);
         $stmt->execute() ;//ok

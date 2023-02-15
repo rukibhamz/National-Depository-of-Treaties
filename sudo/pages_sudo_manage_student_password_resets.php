@@ -8,7 +8,7 @@
     if(isset($_GET['deletePasswordRequest']))
    {
          $id=intval($_GET['deletePasswordRequest']);
-         $adn="DELETE FROM  iL_PasswordResets  WHERE pr_id = ?";
+         $adn="DELETE FROM  il_passwordresets  WHERE pr_id = ?";
          $stmt= $mysqli->prepare($adn);
          $stmt->bind_param('i',$id);
          $stmt->execute();
@@ -68,7 +68,7 @@
                       
                         <tbody>
                             <?php 
-                                $ret="SELECT * FROM  iL_PasswordResets WHERE pr_usertype = 'Student'"; 
+                                $ret="SELECT * FROM  il_passwordresets WHERE pr_usertype = 'Student'"; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

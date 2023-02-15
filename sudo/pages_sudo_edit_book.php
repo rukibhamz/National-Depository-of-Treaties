@@ -27,7 +27,7 @@
         
         
         //Insert Captured information to a database table
-        $query="UPDATE  iL_Books  SET b_title=?, b_author=?, b_isbn_no=?, b_publisher=?, bc_id=?, bc_name=?, b_status=?, b_summary=?, b_copies =?, b_coverimage=? WHERE b_id =?";
+        $query="UPDATE  tbl_treaties  SET b_title=?, b_author=?, b_isbn_no=?, b_publisher=?, bc_id=?, bc_name=?, b_status=?, b_summary=?, b_copies =?, b_coverimage=? WHERE b_id =?";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
         $rc=$stmt->bind_param('ssssssssssi', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_copies, $b_coverimage, $book_id);
@@ -64,7 +64,7 @@
     <!-- main sidebar end -->
     <?php
         $book_id = $_GET['book_id'];
-        $ret="SELECT * FROM  iL_Books WHERE b_id = ?"; 
+        $ret="SELECT * FROM  tbl_treaties WHERE b_id = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $book_id);
         $stmt->execute() ;//ok
@@ -126,7 +126,7 @@
                                                 <select required onChange="getBookId(this.value);" name="bc_name" class="md-input"  />
                                                 <option>Select Book Category</option>
                                                     <?php
-                                                        $ret="SELECT * FROM  iL_BookCategories"; 
+                                                        $ret="SELECT * FROM  tbl_treatiescategory"; 
                                                         $stmt= $mysqli->prepare($ret) ;
                                                         $stmt->execute() ;//ok
                                                         $res=$stmt->get_result();
@@ -159,7 +159,7 @@
                                         <label>Book Cover Page Summary</label>
                                         <?php
                                             $book_id = $_GET['book_id'];
-                                            $ret="SELECT * FROM  iL_Books WHERE b_id = ?"; 
+                                            $ret="SELECT * FROM  tbl_treaties WHERE b_id = ?"; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->bind_param('i', $book_id);
                                             $stmt->execute() ;//ok

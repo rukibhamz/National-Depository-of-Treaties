@@ -49,7 +49,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_Books"; 
+                                $ret="SELECT * FROM  tbl_treaties"; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

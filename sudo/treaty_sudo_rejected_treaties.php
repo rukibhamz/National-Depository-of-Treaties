@@ -37,7 +37,7 @@ include("assets/inc/head.php");
         </div>
         <div id="page_content_inner">
             <?php
-                $ret = "SELECT * FROM iL_Books";
+                $ret = "SELECT * FROM tbl_treaties";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute();
                 $res = $stmt->get_result();
@@ -59,7 +59,7 @@ include("assets/inc/head.php");
 
                         <tbody>
                             <?php
-                            $ret = "SELECT * FROM  iL_Books";
+                            $ret = "SELECT * FROM  tbl_treaties";
                             $stmt = $mysqli->prepare($ret);
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();

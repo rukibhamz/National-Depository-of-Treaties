@@ -27,7 +27,7 @@
                 
                 if(!$error)
                 {
-                    $sql="SELECT * FROM  iL_BookCategories WHERE  bc_code='$bc_code' ";
+                    $sql="SELECT * FROM  tbl_treatiescategory WHERE  bc_code='$bc_code' ";
                     $res=mysqli_query($mysqli,$sql);
                     if (mysqli_num_rows($res) > 0) {
                     $row = mysqli_fetch_assoc($res);
@@ -47,7 +47,7 @@
                 $bc_desc = $_POST['bc_desc'];
                 
                 //Insert Captured information to a database table
-                $query="INSERT INTO iL_BookCategories (bc_code, bc_name, bc_desc) VALUES (?,?,?)";
+                $query="INSERT INTO tbl_treatiescategory (bc_code, bc_name, bc_desc) VALUES (?,?,?)";
                 $stmt = $mysqli->prepare($query);
                 //bind paramaters
                 $rc=$stmt->bind_param('sss', $bc_code, $bc_name, $bc_desc);

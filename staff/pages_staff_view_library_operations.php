@@ -23,7 +23,7 @@
     <!-- main sidebar end -->
     <?php
         $operationChecksum = $_GET['operationChecksum'];
-        $ret="SELECT * FROM  iL_LibraryOperations WHERE lo_checksum = ?"; 
+        $ret="SELECT * FROM  il_libraryoperations WHERE lo_checksum = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $operationChecksum);
         $stmt->execute() ;//ok

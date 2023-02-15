@@ -4,7 +4,7 @@
     */
 
     $id = $_SESSION['id'];
-    $ret="SELECT * FROM  iL_sudo  WHERE id = ? "; 
+    $ret="SELECT * FROM  il_sudo  WHERE id = ? "; 
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i', $id);
     $stmt->execute() ;//ok

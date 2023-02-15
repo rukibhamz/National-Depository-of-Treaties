@@ -10,7 +10,7 @@ include('assets/config/config.php');
 if (isset($_POST['sudo_login'])) {
     $email = $_POST['email'];
     $password = sha1(md5($_POST['password'])); //double encrypt to increase security
-    $stmt = $mysqli->prepare("SELECT email, password, id  FROM iL_sudo  WHERE email=? AND password=?"); //sql to log in user
+    $stmt = $mysqli->prepare("SELECT email, password, id  FROM il_sudo  WHERE email=? AND password=?"); //sql to log in user
     $stmt->bind_param('ss', $email, $password); //bind fetched parameters
     $stmt->execute(); //execute bind
     $stmt->bind_result($email, $password, $id); //bind result
@@ -34,7 +34,7 @@ if (isset($_POST['sudo_signup'])) {
     $number = $_POST['number'];
 
     //Insert Captured information to a database table
-    $query = "INSERT INTO iL_sudo (username, email, password, number) VALUES (?,?,?,?)";
+    $query = "INSERT INTO il_sudo (username, email, password, number) VALUES (?,?,?,?)";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
     $rc = $stmt->bind_param('ssss', $username, $email, $password, $number);

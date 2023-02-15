@@ -23,7 +23,7 @@
     <!-- main sidebar end -->
     <?php
         $book_id = $_GET['book_id'];
-        $ret="SELECT * FROM  iL_Books WHERE b_id = ?"; 
+        $ret="SELECT * FROM  tbl_treaties WHERE b_id = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $book_id);
         $stmt->execute() ;//ok

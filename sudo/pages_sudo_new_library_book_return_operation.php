@@ -51,7 +51,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_LibraryOperations WHERE lo_status = '' "; 
+                                $ret="SELECT * FROM  il_libraryoperations WHERE lo_status = '' "; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

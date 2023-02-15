@@ -54,7 +54,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.2 : Number of all Borrowed Books no matter what category
-$result = "SELECT count(*) FROM iL_LibraryOperations WHERE lo_type = 'Borrow' AND lo_status = '' ";
+$result = "SELECT count(*) FROM il_libraryoperations WHERE lo_type = 'Borrow' AND lo_status = '' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($borrowed_books);
@@ -62,7 +62,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.3 : Number of all Lost Books no matter what category
-$result = "SELECT count(*) FROM iL_LibraryOperations WHERE lo_status = 'Lost'  ";
+$result = "SELECT count(*) FROM il_libraryoperations WHERE lo_status = 'Lost'  ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($lost_books);
@@ -70,7 +70,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.3.1 : Number of all Damanged no matter what category
-$result = "SELECT count(*) FROM iL_LibraryOperations WHERE  lo_status = 'Damanged' ";
+$result = "SELECT count(*) FROM il_libraryoperations WHERE  lo_status = 'Damanged' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($damanged_books);
@@ -78,7 +78,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.3.2 : Number of all returned books no matter what category
-$result = "SELECT count(*) FROM iL_LibraryOperations WHERE lo_status = 'Returned'  ";
+$result = "SELECT count(*) FROM il_libraryoperations WHERE lo_status = 'Returned'  ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($Returned);
@@ -98,20 +98,20 @@ $stmt->fetch();
 $stmt->close();
 
 //2.1 : Number of all Enrolled Students
-$result = "SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Active' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($students);
-$stmt->fetch();
-$stmt->close();
+// $result = "SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Active' ";
+// $stmt = $mysqli->prepare($result);
+// $stmt->execute();
+// $stmt->bind_result($students);
+// $stmt->fetch();
+// $stmt->close();
 
-//2.2 : Number of all Enrolled Students with pending account activation
-$result = "SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Pending' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($pending_students);
-$stmt->fetch();
-$stmt->close();
+// //2.2 : Number of all Enrolled Students with pending account activation
+// $result = "SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Pending' ";
+// $stmt = $mysqli->prepare($result);
+// $stmt->execute();
+// $stmt->bind_result($pending_students);
+// $stmt->fetch();
+// $stmt->close();
 
 //2.3 : Number of all Employed Librarians with pending accounts activations
 $result = "SELECT count(*) FROM fmoj_staff WHERE acc_status = 'Pending' ";
@@ -124,7 +124,7 @@ $stmt->close();
 // 3.Misc
 
 //3.0 : Number of all Librarians requestings for Password Resets
-$result = "SELECT count(*) FROM iL_PasswordResets WHERE pr_usertype = 'Librarian' AND pr_status='Pending' ";
+$result = "SELECT count(*) FROM il_passwordresets WHERE pr_usertype = 'Librarian' AND pr_status='Pending' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($pending_librarians_pwd_resets);
@@ -132,7 +132,7 @@ $stmt->fetch();
 $stmt->close();
 
 //3.1 : Number of all students requesting for password resets
-$result = "SELECT count(*) FROM iL_PasswordResets WHERE pr_usertype = 'Student' AND pr_status='Pending' ";
+$result = "SELECT count(*) FROM il_passwordresets WHERE pr_usertype = 'Student' AND pr_status='Pending' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($pending_student_pwd_resets);
@@ -140,13 +140,13 @@ $stmt->fetch();
 $stmt->close();
 
 //3.2 : Number of Subcribed media in the system
-$result = "SELECT count(*) FROM iL_Subscriptions ";
-$stmt = $mysqli->prepare($result);
-//$stmt->bind_param('i', $id);
-$stmt->execute();
-$stmt->bind_result($subscriptions);
-$stmt->fetch();
-$stmt->close();
+// $result = "SELECT count(*) FROM iL_Subscriptions ";
+// $stmt = $mysqli->prepare($result);
+// //$stmt->bind_param('i', $id);
+// $stmt->execute();
+// $stmt->bind_result($subscriptions);
+// $stmt->fetch();
+// $stmt->close();
 
 //3.3 : Number of all amount paid by students as a fine of loosing  any book
 
@@ -184,7 +184,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.1.0 : Number of Borrowed Books Per Books in Non-fiction Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM iL_LibraryOperations WHERE bc_name = 'Non-fiction' AND lo_type ='Borrow' ";
+$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Non-fiction' AND lo_type ='Borrow' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($borrowed_non_fiction);
@@ -192,7 +192,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.1.1 : Number of Borrowed Books Per Books in fiction Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM iL_LibraryOperations WHERE bc_name = 'Fiction' AND lo_type ='Borrow' ";
+$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Fiction' AND lo_type ='Borrow' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($borrowed_fiction);
@@ -200,7 +200,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.1.2 : Number of Borrowed Books Per Books in References Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM iL_LibraryOperations WHERE bc_name = 'References' AND lo_type ='Borrow' ";
+$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'References' AND lo_type ='Borrow' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($borrowed_references);

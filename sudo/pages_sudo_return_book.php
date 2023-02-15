@@ -24,9 +24,9 @@
         $user_id = $_SESSION['id'];
 
         //Insert Captured information to a database table -->insert to library operations table
-        $query="UPDATE  iL_LibraryOperations SET lo_status = ? WHERE lo_id = ? ";
+        $query="UPDATE  il_libraryoperations SET lo_status = ? WHERE lo_id = ? ";
         //update book table and add one book
-        $book_borrow = "UPDATE iL_Books SET b_copies = ? WHERE  b_id = ?";
+        $book_borrow = "UPDATE tbl_treaties SET b_copies = ? WHERE  b_id = ?";
         //give a notification that some one has borrowed a book
         $notif = "INSERT INTO iL_notifications (content,user_id) VALUES(?,?)";
 
@@ -92,7 +92,7 @@
                     <hr>
                     <?php
                         $b_id = $_GET['b_id'];
-                        $ret="SELECT * FROM  iL_Books WHERE b_id =?"; 
+                        $ret="SELECT * FROM  tbl_treaties WHERE b_id =?"; 
                         $stmt= $mysqli->prepare($ret) ;
                         $stmt->bind_param('i', $b_id);
                         $stmt->execute() ;//ok
@@ -129,7 +129,7 @@
 
                                 <?php
                                     $lo_id = $_GET['lo_id'];
-                                    $ret="SELECT * FROM  iL_LibraryOperations WHERE lo_id =?"; 
+                                    $ret="SELECT * FROM  il_libraryoperations WHERE lo_id =?"; 
                                     $stmt= $mysqli->prepare($ret) ;
                                     $stmt->bind_param('i', $lo_id);
                                     $stmt->execute() ;//ok

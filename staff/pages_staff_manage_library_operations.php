@@ -51,7 +51,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_LibraryOperations  "; 
+                                $ret="SELECT * FROM  il_libraryoperations  "; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

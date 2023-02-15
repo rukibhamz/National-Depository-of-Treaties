@@ -20,7 +20,7 @@
         $l_acc_status = $_POST['l_acc_status'];
         
         //Insert Captured information to a database table
-        $query="UPDATE  iL_Librarians SET l_name = ?, l_phone = ?, l_email = ?, l_adr = ?, l_bio = ?, l_acc_status = ? WHERE l_number = ? ";
+        $query="UPDATE  fmoj_staff SET staff_name = ?, phone = ?, email = ?, adr = ?, bio = ?, acc_status = ? WHERE staff_number = ? ";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
         $rc=$stmt->bind_param('sssssss', $l_name, $l_phone, $l_email, $l_adr, $l_bio, $l_acc_status, $librarian_number);
@@ -29,11 +29,11 @@
         //declare a varible which will be passed to alert function
         if($stmt)
         {
-            $success = 'Librarian Account Updated' && header("refresh:1;url=pages_sudo_manage_librarians.php"); 
+            $success = 'Librarian Account Updated' && header("refresh:1;url=treaty_sudo_upload_manage_access.php"); 
         }
         else 
         {
-            $err = "Please Try Again Or Try Later" && header("refresh:1;url=pages_sudo_manage_librarians.php"); ;
+            $err = "Please Try Again Or Try Later" && header("refresh:1;url=treaty_sudo_upload_manage_access.php"); ;
         }      
     }
 ?>
@@ -57,7 +57,7 @@
     <!-- main sidebar end -->
     <?php
         $librarian_number = $_GET['librarian_number'];
-        $ret="SELECT * FROM  iL_Librarians WHERE l_number = ?"; 
+        $ret="SELECT * FROM  fmoj_staff WHERE staff_number = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $librarian_number);
         $stmt->execute() ;//ok

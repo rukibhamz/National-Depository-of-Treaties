@@ -23,8 +23,8 @@
         ?>
     <!-- main sidebar end -->
     <?php
-        $librarian_number = $_GET['librarian_number'];
-        $ret="SELECT * FROM  iL_Librarians WHERE l_number = ?"; 
+        $librarian_number = $_GET['staff_id'];
+        $ret="SELECT * FROM  fmoj_staff WHERE staff_number = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $librarian_number);
         $stmt->execute() ;//ok
@@ -32,29 +32,29 @@
         while($row=$res->fetch_object())
         {
             //display default profile picture
-            if($row->l_dpic == '')
+            if($row->pic == '')
             {
                 $profile_pic = "<img src='assets/img/avatars/user_icon.png' alt='user avatar'/>";
             }
             else
             {
-                $profile_pic = "<img src='assets/img/avatars/librarians/$row->l_dpic' alt='user avatar'/>";
+                $profile_pic = "<img src='assets/img/avatars/librarians/$row->pic' alt='user avatar'/>";
             }
 
             //use .danger, .warning, .success according to account status
-            if($row->l_acc_status == 'Active')
+            if($row->acc_status == 'Active')
             {
-               $account_status = "<span class='md-list-heading uk-text-success'>$row->l_acc_status</span>";
+               $account_status = "<span class='md-list-heading uk-text-success'>$row->acc_status</span>";
                
 
             }
-            elseif($row->l_acc_status == 'Pending')
+            elseif($row->acc_status == 'Pending')
             {
-                $account_status = "<span class='md-list-heading uk-text-warning'>$row->l_acc_status</span>";
+                $account_status = "<span class='md-list-heading uk-text-warning'>$row->acc_status</span>";
             }
             else
             {
-                $account_status = "<span class='md-list-heading uk-text-danger'>$row->l_acc_status</span>";
+                $account_status = "<span class='md-list-heading uk-text-danger'>$row->acc_status</span>";
             }
     ?>
         <div id="page_content">
@@ -64,7 +64,7 @@
                         <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
                         <li><a href="#">Librarians</a></li>
                         <li><a href="pages_sudo_manage_librarians.php">Manage Librarians</a></li>
-                        <li><span><?php echo $row->l_name;?> Account</span></li>
+                        <li><span><?php echo $row->staff_name;?> Account</span></li>
                     </ul>
                 </div>
             <div id="page_content_inner">
@@ -79,12 +79,12 @@
                                     <div class="user_heading_avatar">
                                         <div class="thumbnail">
                                             <?php
-                                                echo $profile_pic;
+                                                echo $pic;
                                             ?>
                                         </div>
                                     </div>
                                     <div class="user_heading_content">
-                                        <h2 class="heading_b uk-margin-bottom"><span class="uk-text-truncate"><?php echo $row->l_name;?></span><span class="sub-heading">Librarian @iLibrary</span></h2>
+                                        <h2 class="heading_b uk-margin-bottom"><span class="uk-text-truncate"><?php echo $row->staff_name;?></span><span class="sub-heading">Librarian @iLibrary</span></h2>
                                         
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="user_content">
                                 <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
-                                    <li class="uk-active"><a href="#"><?php echo $row->l_name;?> Profile</a></li>
+                                    <li class="uk-active"><a href="#"><?php echo $row->staff_name;?> Profile</a></li>
                                     <!--
                                     <li><a href="#">Photos</a></li>
                                     <li><a href="#">Posts</a></li>
@@ -107,7 +107,7 @@
                                 </ul>
                                 <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
                                     <li>
-                                        <?php echo $row->l_bio;?>
+                                        <?php echo $row->bio;?>
                                         <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
                                             <div class="uk-width-large-1-2">
                                                 <h4 class="heading_c uk-margin-small-bottom">Contact And Personal Info</h4>
@@ -117,7 +117,7 @@
                                                             <i class="md-list-addon-icon material-icons">&#xE158;</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->l_email;?></span>
+                                                            <span class="md-list-heading"><?php echo $row->email;?></span>
                                                             <span class="uk-text-small uk-text-muted">Email</span>
                                                         </div>
                                                     </li>
@@ -126,7 +126,7 @@
                                                             <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->l_phone;?></span>
+                                                            <span class="md-list-heading"><?php echo $row->phone;?></span>
                                                             <span class="uk-text-small uk-text-muted">Phone</span>
                                                         </div>
                                                     </li>
@@ -135,7 +135,7 @@
                                                             <i class="md-list-addon-icon material-icons">add_location</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->l_adr;?></span>
+                                                            <span class="md-list-heading"><?php echo $row->adr;?></span>
                                                             <span class="uk-text-small uk-text-muted">Address</span>
                                                         </div>
                                                     </li>
@@ -152,7 +152,7 @@
                                                             <i class="md-list-addon-icon material-icons">verified_user</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->l_number;?></span>
+                                                            <span class="md-list-heading"><?php echo $row->staff_number;?></span>
                                                             <span class="uk-text-small uk-text-muted">iLibrary Number</span>
                                                         </div>
                                                     </li>
@@ -161,7 +161,7 @@
                                                             <i class="md-list-addon-icon material-icons">settings</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <?php echo $account_status;?>
+                                                            <?php echo $acc_status;?>
                                                             <span class="uk-text-small uk-text-muted">Account Status</span>
                                                         </div>
                                                     </li>
@@ -718,7 +718,7 @@
     <!--Footer-->
 
     <!-- google web fonts -->
-    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <!-- <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         WebFontConfig = {
             google: {
                 families: [
@@ -736,17 +736,17 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(wf, s);
         })();
-    </script>
+    </script> -->
 
     <!-- common functions -->
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
-    <script src="assets/js/altair_admin_common.min.js"></script>
+    <!-- <script src="assets/js/altair_admin_common.min.js"></script> -->
 
 
-    <script>
+    <!-- <script>
         $(function() {
             if(isHighDensity()) {
                 $.getScript( "assets/js/custom/dense.min.js", function(data) {
@@ -763,223 +763,7 @@
             // ie fixes
             altair_helpers.ie_fix();
         });
-    </script>
-
-    <div id="style_switcher" style="display: none;">
-        <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>
-        <div class="uk-margin-medium-bottom">
-            <h4 class="heading_c uk-margin-bottom">Colors</h4>
-            <ul class="switcher_app_themes" id="theme_switcher">
-                <li class="app_style_default active_theme" data-app-theme="">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_a" data-app-theme="app_theme_a">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_b" data-app-theme="app_theme_b">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_c" data-app-theme="app_theme_c">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_d" data-app-theme="app_theme_d">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_e" data-app-theme="app_theme_e">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_f" data-app-theme="app_theme_f">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_g" data-app-theme="app_theme_g">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_h" data-app-theme="app_theme_h">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_i" data-app-theme="app_theme_i">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-                <li class="switcher_theme_dark" data-app-theme="app_theme_dark">
-                    <span class="app_color_main"></span>
-                    <span class="app_color_accent"></span>
-                </li>
-            </ul>
-        </div>
-        <div class="uk-visible-large uk-margin-medium-bottom">
-            <h4 class="heading_c">Sidebar</h4>
-            <p>
-                <input type="checkbox" name="style_sidebar_mini" id="style_sidebar_mini" data-md-icheck />
-                <label for="style_sidebar_mini" class="inline-label">Mini Sidebar</label>
-            </p>
-            <p>
-                <input type="checkbox" name="style_sidebar_slim" id="style_sidebar_slim" data-md-icheck />
-                <label for="style_sidebar_slim" class="inline-label">Slim Sidebar</label>
-            </p>
-        </div>
-        <div class="uk-visible-large uk-margin-medium-bottom">
-            <h4 class="heading_c">Layout</h4>
-            <p>
-                <input type="checkbox" name="style_layout_boxed" id="style_layout_boxed" data-md-icheck />
-                <label for="style_layout_boxed" class="inline-label">Boxed layout</label>
-            </p>
-        </div>
-        <div class="uk-visible-large">
-            <h4 class="heading_c">Main menu accordion</h4>
-            <p>
-                <input type="checkbox" name="accordion_mode_main_menu" id="accordion_mode_main_menu" data-md-icheck />
-                <label for="accordion_mode_main_menu" class="inline-label">Accordion mode</label>
-            </p>
-        </div>
-    </div>
-
-    <script>
-        $(function() {
-            var $switcher = $('#style_switcher'),
-                $switcher_toggle = $('#style_switcher_toggle'),
-                $theme_switcher = $('#theme_switcher'),
-                $mini_sidebar_toggle = $('#style_sidebar_mini'),
-                $slim_sidebar_toggle = $('#style_sidebar_slim'),
-                $boxed_layout_toggle = $('#style_layout_boxed'),
-                $accordion_mode_toggle = $('#accordion_mode_main_menu'),
-                $html = $('html'),
-                $body = $('body');
-
-
-            $switcher_toggle.click(function(e) {
-                e.preventDefault();
-                $switcher.toggleClass('switcher_active');
-            });
-
-            $theme_switcher.children('li').click(function(e) {
-                e.preventDefault();
-                var $this = $(this),
-                    this_theme = $this.attr('data-app-theme');
-
-                $theme_switcher.children('li').removeClass('active_theme');
-                $(this).addClass('active_theme');
-                $html
-                    .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g app_theme_h app_theme_i app_theme_dark')
-                    .addClass(this_theme);
-
-                if(this_theme == '') {
-                    localStorage.removeItem('altair_theme');
-                    $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
-                } else {
-                    localStorage.setItem("altair_theme", this_theme);
-                    if(this_theme == 'app_theme_dark') {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.materialblack.min.css')
-                    } else {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
-                    }
-                }
-
-            });
-
-            // hide style switcher
-            $document.on('click keyup', function(e) {
-                if( $switcher.hasClass('switcher_active') ) {
-                    if (
-                        ( !$(e.target).closest($switcher).length )
-                        || ( e.keyCode == 27 )
-                    ) {
-                        $switcher.removeClass('switcher_active');
-                    }
-                }
-            });
-
-            // get theme from local storage
-            if(localStorage.getItem("altair_theme") !== null) {
-                $theme_switcher.children('li[data-app-theme='+localStorage.getItem("altair_theme")+']').click();
-            }
-
-
-        // toggle mini sidebar
-
-            // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
-                $mini_sidebar_toggle.iCheck('check');
-            }
-
-            $mini_sidebar_toggle
-                .on('ifChecked', function(event){
-                    $switcher.removeClass('switcher_active');
-                    localStorage.setItem("altair_sidebar_mini", '1');
-                    localStorage.removeItem('altair_sidebar_slim');
-                    location.reload(true);
-                })
-                .on('ifUnchecked', function(event){
-                    $switcher.removeClass('switcher_active');
-                    localStorage.removeItem('altair_sidebar_mini');
-                    location.reload(true);
-                });
-
-        // toggle slim sidebar
-
-            // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
-                $slim_sidebar_toggle.iCheck('check');
-            }
-
-            $slim_sidebar_toggle
-                .on('ifChecked', function(event){
-                    $switcher.removeClass('switcher_active');
-                    localStorage.setItem("altair_sidebar_slim", '1');
-                    localStorage.removeItem('altair_sidebar_mini');
-                    location.reload(true);
-                })
-                .on('ifUnchecked', function(event){
-                    $switcher.removeClass('switcher_active');
-                    localStorage.removeItem('altair_sidebar_slim');
-                    location.reload(true);
-                });
-
-        // toggle boxed layout
-
-            if((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
-                $boxed_layout_toggle.iCheck('check');
-                $body.addClass('boxed_layout');
-                $(window).resize();
-            }
-
-            $boxed_layout_toggle
-                .on('ifChecked', function(event){
-                    $switcher.removeClass('switcher_active');
-                    localStorage.setItem("altair_layout", 'boxed');
-                    location.reload(true);
-                })
-                .on('ifUnchecked', function(event){
-                    $switcher.removeClass('switcher_active');
-                    localStorage.removeItem('altair_layout');
-                    location.reload(true);
-                });
-
-        // main menu accordion mode
-            if($sidebar_main.hasClass('accordion_mode')) {
-                $accordion_mode_toggle.iCheck('check');
-            }
-
-            $accordion_mode_toggle
-                .on('ifChecked', function(){
-                    $sidebar_main.addClass('accordion_mode');
-                })
-                .on('ifUnchecked', function(){
-                    $sidebar_main.removeClass('accordion_mode');
-                });
-
-
-        });
-    </script>
+    </script> -->
 </body>
 
 </html>

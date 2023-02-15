@@ -7,7 +7,7 @@
     if(isset($_GET['deleteBookCategory']))
    {
          $id=intval($_GET['deleteBookCategory']);
-         $adn="DELETE FROM  iL_BookCategories  WHERE bc_id = ?";
+         $adn="DELETE FROM  tbl_treatiescategory  WHERE bc_id = ?";
          $stmt= $mysqli->prepare($adn);
          $stmt->bind_param('i',$id);
          $stmt->execute();
@@ -66,7 +66,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_BookCategories"; 
+                                $ret="SELECT * FROM  tbl_treatiescategory"; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

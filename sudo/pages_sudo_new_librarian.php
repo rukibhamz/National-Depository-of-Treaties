@@ -29,7 +29,7 @@ if (isset($_POST['add_librarian'])) {
         $err = "Librarian email cannot be empty";
     }
     if (!$error) {
-        $sql = "SELECT * FROM  iL_Librarians WHERE  l_number='$l_number' || l_email ='$l_email' ";
+        $sql = "SELECT * FROM  fmoj_staff WHERE  l_number='$l_number' || l_email ='$l_email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
@@ -50,7 +50,7 @@ if (isset($_POST['add_librarian'])) {
             $l_acc_status = $_POST['l_acc_status'];
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO iL_Librarians (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO fmoj_staff (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
             //bind paramaters
             $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);

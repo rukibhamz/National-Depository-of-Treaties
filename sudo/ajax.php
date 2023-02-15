@@ -4,7 +4,7 @@ if(!empty($_POST["bookCategoryName"]))
 {	
     //get instructor id
     $id=$_POST['bookCategoryName'];
-    $stmt = $DB_con->prepare("SELECT * FROM iL_BookCategories WHERE  bc_name = :id");
+    $stmt = $DB_con->prepare("SELECT * FROM tbl_treatiescategory WHERE  bc_name = :id");
     $stmt->execute(array(':id' => $id));
 ?>
 <?php

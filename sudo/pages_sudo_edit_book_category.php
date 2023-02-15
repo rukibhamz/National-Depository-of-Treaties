@@ -12,7 +12,7 @@
         $bc_desc = $_POST['bc_desc'];
         
         //Insert Captured information to a database table
-        $query="UPDATE iL_BookCategories SET bc_name=?, bc_desc=? WHERE bc_code =?";
+        $query="UPDATE tbl_treatiescategory SET bc_name=?, bc_desc=? WHERE bc_code =?";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
         $rc=$stmt->bind_param('sss',  $bc_name, $bc_desc, $category_code);

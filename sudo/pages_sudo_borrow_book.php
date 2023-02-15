@@ -33,9 +33,9 @@
         $content = $_POST['content'];
         $user_id = $_SESSION['id'];
         //Insert Captured information to a database table -->insert to library operations table
-        $query="INSERT INTO iL_LibraryOperations (b_title, b_isbn_no, bc_id, bc_name, lo_type, b_id, lo_number, s_id, s_name, s_number, lo_checksum, lo_return_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        $query="INSERT INTO il_libraryoperations (b_title, b_isbn_no, bc_id, bc_name, lo_type, b_id, lo_number, s_id, s_name, s_number, lo_checksum, lo_return_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         //update book table and minus one book
-        $book_borrow = "UPDATE iL_Books SET b_copies = ? WHERE  b_id = ?";
+        $book_borrow = "UPDATE tbl_treaties SET b_copies = ? WHERE  b_id = ?";
         //give a notification that some one has borrowed a book
         $notif = "INSERT INTO iL_notifications (content,user_id) VALUES(?,?)";
         $stmt1= $mysqli->prepare($book_borrow);
@@ -98,7 +98,7 @@
                     <hr>
                     <?php
                         $b_id = $_GET['b_id'];
-                        $ret="SELECT * FROM  iL_Books WHERE b_id =?"; 
+                        $ret="SELECT * FROM  tbl_treaties WHERE b_id =?"; 
                         $stmt= $mysqli->prepare($ret) ;
                         $stmt->bind_param('i', $b_id);
                         $stmt->execute() ;//ok

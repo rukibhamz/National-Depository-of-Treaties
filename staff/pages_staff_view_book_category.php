@@ -23,7 +23,7 @@
     <!-- main sidebar end -->
     <?php
         $category_code = $_GET['category_code'];
-        $ret="SELECT * FROM  iL_BookCategories WHERE bc_code = ?"; 
+        $ret="SELECT * FROM  tbl_treatiescategory WHERE bc_code = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $category_code);
         $stmt->execute() ;//ok
