@@ -70,13 +70,13 @@ include("assets/inc/head.php");
                                     <td><?php echo $row->staff_name; ?></td>
                                     <td><?php echo $row->acc_status; ?></td>
                                     <td>
-                                        <a href="pages_sudo_view_book.php?staff_id=<?php echo $row->b_id; ?>">
+                                        <a href="pages_sudo_view_book.php?staff_id=<?php echo $row->staff_number; ?>">
                                             <span class='uk-badge uk-badge-black'>View</span>
                                         </a>
-                                        <a href="pages_sudo_view_librarian.php?staff_id=<?php echo $row->b_id; ?>">
+                                        <a href="pages_sudo_view_librarian.php?staff_id=<?php echo $row->staff_number; ?>">
                                             <span class='uk-badge uk-badge-success'>Update</span>
                                         </a>
-                                        <a href="pages_sudo_view_librarian.php?staff_id=<?php echo $row->b_id; ?>">
+                                        <a href="pages_sudo_view_librarian.php?staff_id=<?php echo $row->staff_number; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>
