@@ -1,6 +1,6 @@
 <?php
         $sm_receiverNo = $_GET['sm_receiverNo'];
-        $ret="SELECT * FROM  fmoj_staff WHERE l_number = ?"; 
+        $ret="SELECT * FROM  fmoj_staff WHERE number = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $sm_receiverNo);
         $stmt->execute() ;//ok

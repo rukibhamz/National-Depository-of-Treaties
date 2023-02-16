@@ -23,8 +23,8 @@
         ?>
     <!-- main sidebar end -->
     <?php
-        $librarian_number = $_GET['staff_id'];
-        $ret="SELECT * FROM  fmoj_staff WHERE staff_number = ?"; 
+        $librarian_number = $_GET['id'];
+        $ret="SELECT * FROM  fmoj_staff WHERE number = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $librarian_number);
         $stmt->execute() ;//ok
@@ -152,7 +152,7 @@
                                                             <i class="md-list-addon-icon material-icons">verified_user</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->staff_number;?></span>
+                                                            <span class="md-list-heading"><?php echo $row->number;?></span>
                                                             <span class="uk-text-small uk-text-muted">iLibrary Number</span>
                                                         </div>
                                                     </li>

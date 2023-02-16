@@ -724,12 +724,12 @@ include("assets/inc/head.php");
                                         }
                                     ?>
                                         <tr>
-                                            <td><?php echo $row->l_name; ?></td>
-                                            <td><?php echo $row->l_number; ?></td>
-                                            <td><?php echo $row->l_phone; ?></td>
-                                            <td><?php echo $row->l_email; ?></td>
-                                            <td><?php echo $row->l_adr; ?></td>
-                                            <?php echo $account_status; ?>
+                                            <td><?php echo $row->name; ?></td>
+                                            <td><?php echo $row->number; ?></td>
+                                            <td><?php echo $row->phone; ?></td>
+                                            <td><?php echo $row->email; ?></td>
+                                            <td><?php echo $row->adr; ?></td>
+                                            <?php echo $acc_status; ?>
                                         </tr>
 
                                     <?php } ?>

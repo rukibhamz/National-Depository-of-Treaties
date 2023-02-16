@@ -4,7 +4,7 @@
     */
 
     $id = $_SESSION['l_id'];
-    $ret="SELECT * FROM  fmoj_staff  WHERE staff_id = ? "; 
+    $ret="SELECT * FROM  fmoj_staff  WHERE id = ? "; 
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i', $id);
     $stmt->execute() ;//ok
@@ -20,7 +20,7 @@
         }
         else
         {
-            $profile_picture = "<img src='../sudo/assets/img/avatars/librarians/$row->l_dpic' class='md-user-image' alt='User Image'>
+            $profile_picture = "<img src='../sudo/assets/img/avatars/librarians/$row->pic' class='md-user-image' alt='User Image'>
             ";
         }
 

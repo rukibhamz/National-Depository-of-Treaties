@@ -29,25 +29,25 @@ if (isset($_POST['add_librarian'])) {
         $err = "Librarian email cannot be empty";
     }
     if (!$error) {
-        $sql = "SELECT * FROM  fmoj_staff WHERE  l_number='$l_number' || l_email ='$l_email' ";
+        $sql = "SELECT * FROM  fmoj_staff WHERE  l_number='$number' || l_email ='$email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($l_number == $row['l_number']) {
+            if ($l_number == $row['number']) {
                 $err = "Librarian number already exists";
             } else {
                 $err = "Librarian email already exists";
             }
         } else {
 
-            $l_number = $_POST['l_number'];
-            $l_name = $_POST['l_name'];
-            $l_phone = $_POST['l_phone'];
-            $l_email = $_POST['l_email'];
-            $l_pwd = sha1(md5($_POST['l_pwd']));
-            $l_adr = $_POST['l_adr'];
-            $l_bio = $_POST['l_bio'];
-            $l_acc_status = $_POST['l_acc_status'];
+            $l_number = $_POST['number'];
+            $l_name = $_POST['name'];
+            $l_phone = $_POST['phone'];
+            $l_email = $_POST['email'];
+            $l_pwd = sha1(md5($_POST['pwd']));
+            $l_adr = $_POST['adr'];
+            $l_bio = $_POST['bio'];
+            $l_acc_status = $_POST['acc_status'];
 
             //Insert Captured information to a database table
             $query = "INSERT INTO fmoj_staff (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";

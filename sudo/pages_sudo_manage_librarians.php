@@ -77,26 +77,26 @@
                                 while($row=$res->fetch_object())
                                 {
                                      //use .danger, .warning, .success according to account status
-                                     if($row->l_acc_status == 'Active')
+                                     if($row->acc_status == 'Active')
                                      {
-                                        $account_status = "<td class='uk-text-success'>$row->l_acc_status</td>";
+                                        $account_status = "<td class='uk-text-success'>$row->acc_status</td>";
                                      }
-                                     elseif($row->l_acc_status == 'Pending')
+                                     elseif($row->acc_status == 'Pending')
                                      {
-                                         $account_status = "<td class='uk-text-warning'>$row->l_acc_status</td>";
+                                         $account_status = "<td class='uk-text-warning'>$row->acc_status</td>";
                                      }
                                      else
                                      {
-                                         $account_status = "<td class='uk-text-danger'>$row->l_acc_status</td>";
+                                         $account_status = "<td class='uk-text-danger'>$row->acc_status</td>";
                                      }
                             ?>
                                 <tr>
-                                    <td><?php echo $row->l_name;?></td>
-                                    <td><?php echo $row->l_number;?></td>
-                                    <td><?php echo $row->l_phone;?></td>
-                                    <td><?php echo $row->l_email;?></td>
-                                    <td><?php echo $row->l_adr;?></td>
-                                    <?php echo $account_status;?>
+                                    <td><?php echo $row->name;?></td>
+                                    <td><?php echo $row->number;?></td>
+                                    <td><?php echo $row->phone;?></td>
+                                    <td><?php echo $row->email;?></td>
+                                    <td><?php echo $row->adr;?></td>
+                                    <?php echo $acc_status;?>
                                     <td>
                                         
                                         <a href="pages_sudo_view_librarian.php?librarian_number=<?php echo $row->l_number;?>">

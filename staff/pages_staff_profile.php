@@ -24,7 +24,7 @@
     <!-- main sidebar end -->
     <?php
         $id = $_SESSION['l_id'];
-        $ret="SELECT * FROM  fmoj_staff WHERE l_id = ?"; 
+        $ret="SELECT * FROM  fmoj_staff WHERE id = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $id);
         $stmt->execute() ;//ok
@@ -32,13 +32,13 @@
         while($row=$res->fetch_object())
         {
             //display default profile picture
-            if($row->l_dpic == '')
+            if($row->pic == '')
             {
                 $profile_pic = "<img src='../sudo/assets/img/avatars/user_icon.png' alt='user avatar'/>";
             }
             else
             {
-                $profile_pic = "<img src='../sudo/assets/img/avatars/librarians/$row->l_dpic' alt='user avatar'/>";
+                $profile_pic = "<img src='../sudo/assets/img/avatars/librarians/$row->pic' alt='user avatar'/>";
             }
 
             //use .danger, .warning, .success according to account status

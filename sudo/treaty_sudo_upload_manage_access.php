@@ -65,18 +65,18 @@ include("assets/inc/head.php");
                             while ($row = $res->fetch_object()) {
                             ?>
                                 <tr>
-                                    <td class="uk-text-truncate"><?php echo $row->staff_id; ?></td>
-                                    <td><?php echo $row->staff_number; ?></td>
-                                    <td><?php echo $row->staff_name; ?></td>
+                                    <td class="uk-text-truncate"><?php echo $row->id; ?></td>
+                                    <td><?php echo $row->number; ?></td>
+                                    <td><?php echo $row->name; ?></td>
                                     <td><?php echo $row->acc_status; ?></td>
                                     <td>
-                                        <a href="pages_sudo_view_book.php?staff_id=<?php echo $row->staff_number; ?>">
+                                        <a href="pages_sudo_view_book.php?id=<?php echo $row->number; ?>">
                                             <span class='uk-badge uk-badge-black'>View</span>
                                         </a>
-                                        <a href="pages_sudo_view_librarian.php?staff_id=<?php echo $row->staff_number; ?>">
+                                        <a href="pages_sudo_view_librarian.php?id=<?php echo $row->number; ?>">
                                             <span class='uk-badge uk-badge-success'>Update</span>
                                         </a>
-                                        <a href="pages_sudo_view_librarian.php?staff_id=<?php echo $row->staff_number; ?>">
+                                        <a href="pages_sudo_view_librarian.php?id=<?php echo $row->number; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>

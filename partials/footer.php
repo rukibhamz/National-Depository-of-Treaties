@@ -68,7 +68,7 @@
             <!--  -->
             <div class="col-12 text-center text_rights">
                 <div class="space-20"></div>
-                <p>&copy 2019-<?php echo date("Y"); ?> Ministry Of Justice , National depository of treaties. All rights reserved.</p>
+                <p>&copy 2019-<?php echo date("Y"); ?> Ministry Of Justice, National depository of treaties. All rights reserved.</p>
             </div>
         </div>
         <div class="space-60"></div>

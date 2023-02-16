@@ -478,8 +478,8 @@ include("assets/inc/head.php");
                                         }
                                     ?>
                                         <tr>
-                                            <td><?php echo $row->staff_name; ?></td>
-                                            <td><?php echo $row->staff_number; ?></td>
+                                            <td><?php echo $row->name; ?></td>
+                                            <td><?php echo $row->number; ?></td>
                                             <td><?php echo $row->phone; ?></td>
                                             <td><?php echo $row->email; ?></td>
                                             <td><?php echo $row->adr; ?></td>

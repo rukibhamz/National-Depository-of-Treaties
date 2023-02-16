@@ -20,7 +20,7 @@
         $l_acc_status = $_POST['l_acc_status'];
         
         //Insert Captured information to a database table
-        $query="UPDATE  fmoj_staff SET staff_name = ?, phone = ?, email = ?, adr = ?, bio = ?, acc_status = ? WHERE staff_number = ? ";
+        $query="UPDATE  fmoj_staff SET staff_name = ?, phone = ?, email = ?, adr = ?, bio = ?, acc_status = ? WHERE number = ? ";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
         $rc=$stmt->bind_param('sssssss', $l_name, $l_phone, $l_email, $l_adr, $l_bio, $l_acc_status, $librarian_number);
@@ -57,7 +57,7 @@
     <!-- main sidebar end -->
     <?php
         $librarian_number = $_GET['librarian_number'];
-        $ret="SELECT * FROM  fmoj_staff WHERE staff_number = ?"; 
+        $ret="SELECT * FROM  fmoj_staff WHERE number = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $librarian_number);
         $stmt->execute() ;//ok

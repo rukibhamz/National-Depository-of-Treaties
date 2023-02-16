@@ -22,14 +22,14 @@ if (isset($_POST['add_staff'])) {
         $error = 1;
         $err = "Staff email cannot be empty";
     }
-    if (isset($_POST['staff_number']) && !empty($_POST['staff_number'])) {
-        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['staff_number']));
+    if (isset($_POST['number']) && !empty($_POST['number'])) {
+        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
     } else {
         $error = 1;
         $err = "Staff number cannot be empty";
     }
     if (!$error) {
-        $sql = "SELECT * FROM  fmoj_staff WHERE  staff_number='$l_number' || email ='$l_email' ";
+        $sql = "SELECT * FROM  fmoj_staff WHERE  number='$l_number' || email ='$l_email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
@@ -40,7 +40,7 @@ if (isset($_POST['add_staff'])) {
             }
         } else {
 
-            $l_number = $_POST['staff_number'];
+            $l_number = $_POST['number'];
             $l_name = $_POST['staff_name'];
             $l_phone = $_POST['phone'];
             $l_email = $_POST['email'];
@@ -50,7 +50,7 @@ if (isset($_POST['add_staff'])) {
             $l_acc_status = $_POST['acc_status'];
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO fmoj_staff (staff_number, staff_name, phone, email, pwd, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO fmoj_staff (number, staff_name, phone, email, pwd, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
             //bind paramaters
             $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
@@ -126,7 +126,7 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Staff ID Number</label>
-                                    <input type="text" required readonly value="FMOJ-<?php echo $Number; ?>" name="staff_number" class="md-input label-fixed" />
+                                    <input type="text" required readonly value="FMOJ-<?php echo $Number; ?>" name="number" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>User Address</label>

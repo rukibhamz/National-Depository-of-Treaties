@@ -71,12 +71,12 @@
                                      }
                             ?>
                                 <tr>
-                                    <td><?php echo $row->l_name;?></td>
-                                    <td><?php echo $row->l_number;?></td>
-                                    <td><?php echo $row->l_email;?></td>
-                                    <?php echo $account_status;?>
+                                    <td><?php echo $row->name;?></td>
+                                    <td><?php echo $row->number;?></td>
+                                    <td><?php echo $row->email;?></td>
+                                    <?php echo $acc_status;?>
                                     <td>
-                                        <a href="pages_sudo_new_mail.php?sm_senderName=System Admin&sm_receiverName=<?php echo $row->l_name;?>&sm_receiverNo=<?php echo $row->l_number;?>">
+                                        <a href="pages_sudo_new_mail.php?sm_senderName=System Admin&sm_receiverName=<?php echo $row->name;?>&sm_receiverNo=<?php echo $row->number;?>">
                                             <span class='uk-badge uk-badge-success'>Sent Mail</span>
                                         </a>
                                     </td>
