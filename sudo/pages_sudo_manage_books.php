@@ -80,7 +80,7 @@
                                     <td><?php echo $row->bc_name;?></td>
                                     <td><?php echo $row->b_copies;?> Copies</td>
                                     <td>
-                                        <a href="pages_sudo_view_book.php?docs_id=<?php echo $row->b_id;?>">
+                                        <a href="pages_sudo_view_book.php?doc_id=<?php echo $row->b_id;?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
                                         <a href="pages_sudo_edit_book.php?book_id=<?php echo $row->b_id;?>">

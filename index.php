@@ -104,9 +104,9 @@ require_once('sudo/assets/config/config.php');
                     <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
                         <div class="jumbotron">
                             <h1 class="text-white">National Depository Of Treaties</h1>
-                            <p class="text-white" style="text-align: center;">The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for 
-                        the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with 
-                        other countries and international organizations. </p>
+                            <p class="text-white" style="text-align: center;">The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for
+                                the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with
+                                other countries and international organizations. </p>
                         </div>
                         <div class="title-bar white">
                             <ul class="list-inline list-unstyled">
@@ -182,11 +182,11 @@ require_once('sudo/assets/config/config.php');
                         </ul>
                     </div>
                     <div class="space-30"></div>
-                    <p class="text-left text_lg" style="text-align: center;" >The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for 
-                        the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with 
-                        other countries and international organizations. The depository serves as a repository of all the official documents related to these 
-                        agreements and ensures that they are easily accessible to relevant stakeholders, including government officials, researchers, and the 
-                        general public. Its primary function is to promote transparency, accountability, and the rule of law in the conduct of international 
+                    <p class="text-left text_lg" style="text-align: center;">The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for
+                        the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with
+                        other countries and international organizations. The depository serves as a repository of all the official documents related to these
+                        agreements and ensures that they are easily accessible to relevant stakeholders, including government officials, researchers, and the
+                        general public. Its primary function is to promote transparency, accountability, and the rule of law in the conduct of international
                         relations by the Nigerian government.
                     </p>
                 </div>
@@ -223,7 +223,7 @@ require_once('sudo/assets/config/config.php');
                                     <div class="space-10"></div>
                                 </div>
                             </div>
-                            <a href="treaties.php"><button class="btn btn-success">View Documents <img src="sudo/assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></button></a>
+                            <a href="category.php?id=<?= $row->id ?>"><button class="btn btn-success">View Documents <img src="sudo/assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></button></a>
                         </div>
                     </div>
                 <?php } ?>
@@ -231,7 +231,7 @@ require_once('sudo/assets/config/config.php');
             </div>
             <div class="space-20"></div>
             <div class="row">
-                
+
             </div>
             <div class="space-40"></div>
         </div>

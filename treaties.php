@@ -7,7 +7,7 @@ require_once('sudo/assets/config/config.php');
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Home - National Depository Of Treaties</title>
+    <title>Treaties - National Depository Of Treaties</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

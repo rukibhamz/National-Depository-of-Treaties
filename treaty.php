@@ -20,7 +20,7 @@ while ($row = $res->fetch_object()) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Home - National Depository Of Treaties</title>
+        <title>Treaty - National Depository Of Treaties</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -47,9 +47,9 @@ while ($row = $res->fetch_object()) {
 
     <style>
         div.pdfobject-container {
-    height: 50rem;
-    border: 1rem solid rgba(0, 0, 0, .1);
-}
+            height: 50rem;
+            border: 1rem solid rgba(0, 0, 0, .1);
+        }
     </style>
 
     <body data-spy="scroll" data-target="#mainmenu" data-offset="50">
@@ -125,6 +125,11 @@ while ($row = $res->fetch_object()) {
             <div class="space-80"></div>
             <div class="container">
                 <div class="row">
+                    <div class="col-6 pull-right">
+                        <a href="treaties.php" class="btn btn-primary"> Back</a>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-xs-12 col-md-12">
                         <div class="space-30"></div>
                         <div class="row">
@@ -192,7 +197,7 @@ while ($row = $res->fetch_object()) {
         <script src="js/main.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
-            const docsContainer = document.getElementById('<?= 'preview-', $_GET['docs_id'] ?>')
+            const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
             const fileName = docsContainer.getAttribute('data-value');
             const fileExt = fileName.split(".").pop();
             // console.log(fileExt, fileName, docsContainer, 'hello =>', typeof fileExt)
