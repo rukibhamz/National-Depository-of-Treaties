@@ -29,12 +29,12 @@
             <ul id="breadcrumbs">
                 <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
                 <li><a href="#">Audits</a></li>
-                <li><span>Books Records</span></li>
+                <li><span>Documents Records</span></li>
             </ul>
         </div>
         <div id="page_content_inner">
 
-            <h4 class="heading_a uk-margin-bottom">iLibrary Books Catalog</h4>
+            <h4 class="heading_a uk-margin-bottom">Documents Catalog</h4>
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                     <div class="dt_colVis_buttons"></div>
@@ -57,9 +57,9 @@
                                 {
                             ?>
                                 <tr>
-                                    <td class="uk-text-truncate"><?php echo $row->b_title;?></td>
+                                    <td class="uk-text-truncate"><?php echo $row->title;?></td>
                                     <td><?php echo $row->b_author;?></td>
-                                    <td><?php echo $row->bc_name;?></td>
+                                    <td><?php echo $row->treaty_name;?></td>
                                     <td><?php echo $row->b_copies;?> Copies</td>
                                     <td>
                                         <a href="pages_staff_view_book.php?book_id=<?php echo $row->b_id;?>">

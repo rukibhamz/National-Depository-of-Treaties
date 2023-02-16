@@ -23,7 +23,7 @@
     <!-- main sidebar end -->
     <?php
         $category_code = $_GET['category_code'];
-        $ret="SELECT * FROM  tbl_treatiescategory WHERE bc_code = ?"; 
+        $ret="SELECT * FROM  tbl_treatiescategory WHERE code = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $category_code);
         $stmt->execute() ;//ok
@@ -37,7 +37,7 @@
                 <ul id="breadcrumbs">
                     <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
                     <li><a href="#">Books Inventory</a></li>
-                    <li><span><?php echo $row->bc_name;?></span></li>
+                    <li><span><?php echo $row->name;?></span></li>
                 </ul>
             </div>
             <div id="page_content_inner">
@@ -50,7 +50,7 @@
                                         <div class="uk-display-inline-block"><i class="md-icon md-icon-light material-icons" id="page_print">&#xE8ad;</i></div>
                                     </div>
                                     <div class="user_heading_content">
-                                        <h2 class="heading_b uk-margin-bottom"><span class="uk-text-truncate"><?php echo $row->bc_name;?></span><span class="sub-heading"><?php echo $row->bc_code;?></span></h2>
+                                        <h2 class="heading_b uk-margin-bottom"><span class="uk-text-truncate"><?php echo $row->name;?></span><span class="sub-heading"><?php echo $row->code;?></span></h2>
                                         
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="user_content">
                                 <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
-                                    <li class="uk-active"><a href="#"><?php echo $row->bc_name;?> Details</a></li>
+                                    <li class="uk-active"><a href="#"><?php echo $row->name;?> Details</a></li>
                                     <!--
                                     <li><a href="#">Photos</a></li>
                                     <li><a href="#">Posts</a></li>
@@ -73,7 +73,7 @@
                                 </ul>
                                 <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
                                     <li>
-                                        <?php echo $row->bc_desc;?>
+                                        <?php echo $row->desc;?>
                                         
                                     </li>
 

@@ -62,11 +62,8 @@
                     <span class="menu_title">Audits</span>
                 </a>
                 <ul>
-                    <li><a href="pages_staff_audit_book_categories.php">Book Categories</a></li>
-                    <li><a href="pages_staff_audit_books_records.php">Books Records</a></li>
-                    <li><a href="pages_staff_audit_library_operations.php">Library Operations</a></li>
-                    <li><a href="pages_staff_audit_subscriptions.php">Subscription Records</a></li>
-                    <li><a href="pages_staff_audit_fines_payments.php">Fines Payment Records</a></li>
+                    <li><a href="pages_staff_audit_treaty_categories.php">Treaty Categories</a></li>
+                    <li><a href="pages_staff_audit_books_records.php">Treaty Records</a></li>
 
 
                 </ul>
