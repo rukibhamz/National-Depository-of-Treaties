@@ -18,7 +18,7 @@
         $b_publisher = $_POST['b_publisher'];
         $bc_id = $_POST['bc_id'];
         $bc_name = $_POST['bc_name'];
-        $b_status = $_POST['b_status'];
+        $s_status = $_POST['s_status'];
         $b_summary = $_POST['b_summary'];
         
         $b_coverimage = $_FILES["b_coverimage"]["name"];
@@ -26,10 +26,10 @@
         
         
         //Insert Captured information to a database table
-        $query="UPDATE  tbl_treaties  SET b_title=?, b_author=?, b_isbn_no=?, b_publisher=?, bc_id=?, bc_name=?, b_status=?, b_summary =?, b_coverimage=? WHERE b_id =?";
+        $query="UPDATE  tbl_treaties  SET b_title=?, b_author=?, b_isbn_no=?, b_publisher=?, bc_id=?, bc_name=?, s_status=?, b_summary =?, b_coverimage=? WHERE b_id =?";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
-        $rc=$stmt->bind_param('ssssssssssi', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_coverimage, $book_id);
+        $rc=$stmt->bind_param('ssssssssssi', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $s_status, $b_summary, $b_coverimage, $book_id);
         $stmt->execute();
   
         //declare a varible which will be passed to alert function
@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="uk-form-row" style="display:none">
                                         <label>Book Status</label>
-                                        <input type="text" required name="b_status" value="Available" class="md-input"  />
+                                        <input type="text" required name="s_status" value="Available" class="md-input"  />
                                     </div>
                                 </div>
 

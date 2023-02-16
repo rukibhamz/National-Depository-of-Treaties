@@ -35,11 +35,17 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty signatory cannot be empty";
     }
-    if (isset($_POST['b_status']) && !empty($_POST['b_status'])) {
-        $b_status = mysqli_real_escape_string($mysqli, trim($_POST['b_status']));
+    if (isset($_POST['s_status']) && !empty($_POST['s_status'])) {
+        $s_status = mysqli_real_escape_string($mysqli, trim($_POST['s_status']));
     } else {
         $error = 1;
         $err = "Treaty status cannot be empty";
+    }
+    if (isset($_POST['tc_name']) && !empty($_POST['tc_name'])) {
+        $tc_name = mysqli_real_escape_string($mysqli, trim($_POST['tc_name']));
+    } else {
+        $error = 1;
+        $err = "Treaty category cannot be empty";
     }
 
     if (!$error) { {
@@ -50,19 +56,20 @@ if (isset($_POST['add_treaty'])) {
             $tc_name = $_POST['tc_name'];
             $b_summary = $_POST['b_summary'];
             $treaty_year = $_POST['treaty_year'];
-            $b_status = $_POST['b_status'];
+            $s_status = $_POST['s_status'];
+            $s_id = $_POST['s_id'];
 
             $b_file = $_FILES["b_file"]["name"];
             move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, b_status) VALUES (?,?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
-            //bind paramaters
-            $rc = $stmt->bind_param('sssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $b_status);
+            //bind parameters
+            $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
             $stmt->execute();
 
-            //declare a varible which will be passed to alert function
+            //declare a variable which will be passed to alert function
             if ($stmt) {
                 $success = "Treaty Created Successfully";
             } else {
@@ -124,19 +131,23 @@ include("assets/inc/head.php");
 
                                 <div class="uk-form-row">
                                     <label>Treaty Status</label>
-                                    <select required name="b_status" id="b_status" class="md-input">
+                                    <select required name="s_status" onChange="getStatusId(this.value);" id="s_status" class="md-input">
                                         <option>Select Treaty Status</option>
                                         <?php
-                                        $ret = "SELECT DISTINCT b_status FROM tbl_treaties";
+                                        $ret = "SELECT * FROM  tbl_status";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute();
                                         $res = $stmt->get_result();
-                                        while ($row = $res->fetch_object()) {
+                                        while ($row2 = $res->fetch_object()) {
                                         ?>
-                                            <option value="<?= $row->b_status; ?>"><?= $row->b_status; ?></option>
+                                            <option value="<?= $row2->name; ?>"><?= $row2->name; ?></option>
                                         <?php } ?>
                                     </select>
 
+                                </div>
+                                <div class="uk-form-row" style="display:none">
+                                    <label>Treaty Status ID</label>
+                                    <input type="text" id="TreatyStatusID" required name="s_id" class="md-input" readonly />
                                 </div>
                             </div>
 
@@ -149,6 +160,7 @@ include("assets/inc/head.php");
                                 <div class="uk-form-row">
                                     <label>Treaty Category</label>
                                     <select required onChange="getTreatyId(this.value);" name="tc_name" id="tc_name" class="md-input" />
+                                    <option value="">Select Category</option>
                                     <?php
                                     $ret = "SELECT * FROM  tbl_treatiescategory";
                                     $stmt = $mysqli->prepare($ret);
@@ -232,28 +244,6 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
-    <!-- altair common functions/helpers -->
-    <script src="assets/js/altair_admin_common.min.js"></script>
-
-
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
 
 </body>
 

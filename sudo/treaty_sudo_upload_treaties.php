@@ -3,62 +3,75 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
+
+if (isset($_SESSION['id'])) {
+    // Get the user's ID and other details from the session
+    $user_id = $_SESSION['id'];
+    $result = "SELECT * FROM il_sudo WHERE id = ?";
+    $stmt = $mysqli->prepare($result);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_object();
+    $stmt->close();
+}
+
 //generate random librarian number
 $length = 5;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
-//create a librarian account
-if (isset($_POST['add_librarian'])) {
+//add new book
+if (isset($_POST['add_treaty'])) {
     $error = 0;
-    if (isset($_POST['l_name']) && !empty($_POST['l_name'])) {
-        $l_name = mysqli_real_escape_string($mysqli, trim($_POST['l_name']));
+    if (isset($_POST['title']) && !empty($_POST['title'])) {
+        $title = mysqli_real_escape_string($mysqli, trim($_POST['title']));
     } else {
         $error = 1;
-        $err = "Librarian name cannot be empty";
+        $err = "Treaty title cannot be empty";
     }
-    if (isset($_POST['l_email']) && !empty($_POST['l_email'])) {
-        $l_email = mysqli_real_escape_string($mysqli, trim($_POST['l_email']));
+    if (isset($_POST['signatory']) && !empty($_POST['signatory'])) {
+        $signatory = mysqli_real_escape_string($mysqli, trim($_POST['signatory']));
     } else {
         $error = 1;
-        $err = "Librarian email cannot be empty";
+        $err = "Treaty signatory cannot be empty";
     }
-    if (isset($_POST['l_number']) && !empty($_POST['l_number'])) {
-        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['l_number']));
+    if (isset($_POST['s_status']) && !empty($_POST['s_status'])) {
+        $s_status = mysqli_real_escape_string($mysqli, trim($_POST['s_status']));
     } else {
         $error = 1;
-        $err = "Librarian email cannot be empty";
+        $err = "Treaty status cannot be empty";
     }
-    if (!$error) {
-        $sql = "SELECT * FROM  fmoj_staff WHERE  l_number='$l_number' || l_email ='$l_email' ";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($l_number == $row['l_number']) {
-                $err = "Librarian number already exists";
-            } else {
-                $err = "Librarian email already exists";
-            }
-        } else {
+    if (isset($_POST['tc_name']) && !empty($_POST['tc_name'])) {
+        $tc_name = mysqli_real_escape_string($mysqli, trim($_POST['tc_name']));
+    } else {
+        $error = 1;
+        $err = "Treaty category cannot be empty";
+    }
 
-            $l_number = $_POST['l_number'];
-            $l_name = $_POST['l_name'];
-            $l_phone = $_POST['l_phone'];
-            $l_email = $_POST['l_email'];
-            $l_pwd = sha1(md5($_POST['l_pwd']));
-            $l_adr = $_POST['l_adr'];
-            $l_bio = $_POST['l_bio'];
-            $l_acc_status = $_POST['l_acc_status'];
+    if (!$error) { {
+            $title  = $_POST['title'];
+            $signatory = $_POST['signatory'];
+            $b_publisher = $_POST['b_publisher'];
+            $tc_id = $_POST['tc_id'];
+            $tc_name = $_POST['tc_name'];
+            $b_summary = $_POST['b_summary'];
+            $treaty_year = $_POST['treaty_year'];
+            $s_status = $_POST['s_status'];
+            $s_id = $_POST['s_id'];
+
+            $b_file = $_FILES["b_file"]["name"];
+            move_uploaded_file($_FILES["b_file"]["tmp_name"], "./assets/magazines/" . $_FILES["b_file"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO fmoj_staff (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
-            //bind paramaters
-            $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
+            //bind parameters
+            $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
             $stmt->execute();
 
-            //declare a varible which will be passed to alert function
+            //declare a variable which will be passed to alert function
             if ($stmt) {
-                $success = "Librarian Account Created";
+                $success = "Treaty Created Successfully";
             } else {
                 $err = "Please Try Again Or Try Later";
             }
@@ -98,76 +111,100 @@ include("assets/inc/head.php");
         </div>
 
         <div id="page_content_inner">
-            <h3 class="heading_a text">Treaty Upload Form</h3>
+            <div class="space-40"></div>
+
             <div class="md-card">
                 <div class="md-card-content">
-                    <form method="post">
+                    <h3 class="heading_a">Please Fill All Fields</h3>
+                    <hr>
+                    <form method="post" enctype="multipart/form-data">
                         <div class="uk-grid" data-uk-grid-margin>
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
-                                    <label>Treaty Name, Title, Keywords</label>
-                                    <input type="text" required name="staff_name" class="md-input" />
+                                    <label>Treaty Title</label>
+                                    <input type="text" required name="title" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
-                                    <label>Treaty Signatories</label>
-                                    <input type="email" required name="email" class="md-input" />
+                                    <label>Treaty Signatory</label>
+                                    <input type="text" required name="signatory" class="md-input" />
                                 </div>
+
                                 <div class="uk-form-row">
                                     <label>Treaty Status</label>
-                                    <select required onChange="getTreatyId(this.value);" name="treaty_name" class="md-input" />
-                                    <option>Select Treaty Category</option>
+                                    <select required name="s_status" onChange="getStatusId(this.value);" id="s_status" class="md-input">
+                                        <option value="">Select Treaty Status</option>
+                                        <?php
+                                        $ret = "SELECT * FROM  tbl_status";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute();
+                                        $res = $stmt->get_result();
+                                        while ($row2 = $res->fetch_object()) {
+                                        ?>
+                                            <option value="<?= $row2->name; ?>"><?= $row2->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+
+                                </div>
+                                <div class="uk-form-row" style="display:none">
+                                    <label>Treaty Status ID</label>
+                                    <input type="text" id="sudoTreatyStatusID" required name="s_id" class="md-input" readonly />
+                                </div>
+                            </div>
+
+                            <div class="uk-width-medium-1-2">
+                                <div class="uk-form-row">
+                                    <label>Treaty Publisher</label>
+                                    <input type="text" required class="md-input" name="b_publisher" value="<?= $user->username ?>" readonly />
+                                </div>
+
+                                <div class="uk-form-row">
+                                    <label>Treaty Category</label>
+                                    <select required onChange="getTreatyId(this.value);" name="tc_name" id="tc_name" class="md-input" />
+                                    <option value="">Select Category</option>
                                     <?php
-                                    $ret = "SELECT * FROM  	tbl_treatiescategory";
+                                    $ret = "SELECT * FROM  tbl_treatiescategory";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
                                     while ($row = $res->fetch_object()) {
                                     ?>
-                                        <option value="<?php echo $row->treaty_name; ?>"><?php echo $row->treaty_name; ?></option>
+                                        <option value="<?= $row->name; ?>"><?= $row->code; ?> - <?= $row->name; ?></option>
                                     <?php } ?>
                                     </select>
                                 </div>
-                            </div>
+                                <div class="uk-form-row" style="display:none">
+                                    <label>Treaty Category ID</label>
+                                    <input type="text" id="sudoTreatyCategoryID" required name="tc_id" class="md-input" readonly />
+                                </div>
 
-                            <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
-                                    <label>Treaty Definition</label>
-                                    <input type="text" required readonly name="treaty_number" class="md-input" />
+                                    <label>Treaty Year</label>
+                                    <input type="text" id="treaty_year" required name="treaty_year" class="md-input" />
                                 </div>
-                                <div class="uk-form-row">
-                                    <label>Treaty Date</label>
-                                    <input type="date" required name="date" class="md-input label-fixed" />
-                                </div>
-                                <div class="uk-form-row">
-                                    <label>Minutes Of Negotiation</label>
-                                    <input type="text" required name="bio" class="md-input" />
-                                    <!-- <textarea cols="30" required rows="3" class="md-input" name="l_bio"></textarea> -->
-                                </div>
-                            </div>
 
-                            <div class="uk-width-medium-2-2">
-                                <div class="uk-form-row">
-                                    <label>Brief of Discussion</label>
-                                    <textarea cols="30" required rows="3" class="md-input" name="l_desc"></textarea>
-                                </div>
                             </div>
 
                             <div class="uk-width-medium-2-2">
                                 <div id="file_upload-drop" class="uk-file-upload">
-                                    <p class="uk-text">Upload Treaty Document</p>
+                                    <p class="uk-text">Drop Treaty Document</p>
                                     <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_coverimage" type="file"></a>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*, .pdf"></a>
                                 </div>
                                 <div id="file_upload-progressbar" class="uk-progress uk-hidden">
                                     <div class="uk-progress-bar" style="width:0">0%</div>
                                 </div>
                             </div>
 
-
+                            <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <label>Treaty Description</label>
+                                    <textarea cols="30" rows="10" class="md-input" name="b_summary"></textarea>
+                                </div>
+                            </div>
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <div class="uk-input-group">
-                                        <input type="submit" class="md-btn md-btn-success" name="upload_treaty" value="Upload Treaty" />
+                                        <input type="submit" class="md-btn md-btn-success" name="add_treaty" value="Add Treaty" />
                                     </div>
                                 </div>
                             </div>
@@ -207,28 +244,6 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
-    <!-- altair common functions/helpers -->
-    <script src="assets/js/altair_admin_common.min.js"></script>
-
-
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
 </body>
 
 </html>

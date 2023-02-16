@@ -30,17 +30,17 @@ if (isset($_POST['update_treaty'])) {
     $tc_name = $_POST['tc_name'];
     $b_summary = $_POST['b_summary'];
     $treaty_year = $_POST['treaty_year'];
-    $b_status = $_POST['b_status'];
+    $s_status = $_POST['s_status'];
 
 
     // $b_file = $_FILES["b_file"]["name"];
     // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
     //Insert Captured information to a database table
-    $query = "UPDATE tbl_treaties SET title=?, signatory=?, b_publisher=?, tc_id=?, tc_name=?, b_summary=?, treaty_year=?, b_status=? WHERE id =?";
+    $query = "UPDATE tbl_treaties SET title=?, signatory=?, b_publisher=?, tc_id=?, tc_name=?, b_summary=?, treaty_year=?, s_status=? WHERE id =?";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
-    $rc = $stmt->bind_param('ssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $b_status, $doc_id);
+    $rc = $stmt->bind_param('ssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $doc_id);
     $stmt->execute();
 
     //declare a varible which will be passed to alert function
@@ -110,17 +110,17 @@ include("assets/inc/head.php");
                                     </div>
                                     <div class="uk-form-row">
                                         <label>Treaty Status</label>
-                                        <select required name="b_status" id="b_status" class="md-input">
+                                        <select required name="s_status" id="s_status" class="md-input">
                                             <?php
-                                            $ret = "SELECT DISTINCT b_status FROM tbl_treaties";
+                                            $ret = "SELECT DISTINCT s_status FROM tbl_treaties";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            $selected_status = $row->b_status ? $row->b_status : '';
+                                            $selected_status = $row->s_status ? $row->s_status : '';
                                             while ($row1 = $res->fetch_object()) {
-                                                $selected = ($row1->b_status == $selected_status) ? 'selected' : '';
+                                                $selected = ($row1->s_status == $selected_status) ? 'selected' : '';
                                             ?>
-                                                <option value="<?= $row1->b_status ?>" <?= $selected ?>><?= $row1->b_status ?></option>
+                                                <option value="<?= $row1->s_status ?>" <?= $selected ?>><?= $row1->s_status ?></option>
                                             <?php } ?>
                                         </select>
 

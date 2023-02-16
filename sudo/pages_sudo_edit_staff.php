@@ -6,7 +6,6 @@
     //generate random student number
     $length = 5;    
     $Number =  substr(str_shuffle('0123456789'),1,$length);
-
     //create a librarian account
     if(isset($_POST['update_librarian']))
     {

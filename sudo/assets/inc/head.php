@@ -88,13 +88,27 @@
 
         {
             $.ajax({
-                //get book ID
+                //get treaty ID
                 type: "POST",
                 url: "ajax.php",
-                data: 'bookCategoryName=' + val,
+                data: 'sudoTreatyCategoryName=' + val,
                 success: function(data) {
-                    //alert(data);
-                    $('#BookCategoryID').val(data);
+                    $('#sudoTreatyCategoryID').val(data);
+                }
+            });
+
+        }
+
+        function getStatusId(val)
+
+        {
+            $.ajax({
+                //get status ID
+                type: "POST",
+                url: "ajax.php",
+                data: 'sudoTreatyStatusName=' + val,
+                success: function(data) {
+                    $('#sudoTreatyStatusID').val(data);
                 }
             });
 

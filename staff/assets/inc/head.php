@@ -97,6 +97,21 @@
 
         }
 
+        function getStatusId(val)
+
+        {
+            $.ajax({
+                //get book ID
+                type: "POST",
+                url: "ajax.php",
+                data: 'treatyStatusName=' + val,
+                success: function(data) {
+                    $('#TreatyStatusID').val(data);
+                }
+            });
+
+        }
+
         // function getStudentDetails(val)
 
         // {

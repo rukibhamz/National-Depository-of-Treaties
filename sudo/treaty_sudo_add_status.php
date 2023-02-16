@@ -10,14 +10,14 @@ $Number =  substr(str_shuffle('QWERTYUIOPLKJHGFDSAZXCVBNM'), 1, $length);
 //create a Treaty Status
 if (isset($_POST['add_status'])) {
     $error = 0;
-    if (isset($_POST['s_name']) && !empty($_POST['s_name'])) {
-        $s_name = mysqli_real_escape_string($mysqli, trim($_POST['s_name']));
+    if (isset($_POST['name']) && !empty($_POST['name'])) {
+        $s_name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
     } else {
         $error = 1;
         $err = "Treaty status name cannot be empty";
     }
-    if (isset($_POST['s_desc']) && !empty($_POST['s_desc'])) {
-        $s_desc = mysqli_real_escape_string($mysqli, trim($_POST['s_desc']));
+    if (isset($_POST['desc']) && !empty($_POST['desc'])) {
+        $s_desc = mysqli_real_escape_string($mysqli, trim($_POST['desc']));
     } else {
         $error = 1;
         $err = "Treaty status description cannot be empty";
@@ -34,8 +34,8 @@ if (isset($_POST['add_status'])) {
                 $err =  "Treaty Status code already exists";
             }
         } else {
-            $s_name = $_POST['s_name'];
-            $s_desc = $_POST['s_desc'];
+            $s_name = $_POST['name'];
+            $s_desc = $_POST['desc'];
 
             //Insert Captured information to a database table
             $query = "INSERT INTO tbl_status (name, description) VALUES (?,?)";
@@ -84,7 +84,6 @@ include("assets/inc/head.php");
                 <li><span>Manage Treaty Status</span></li>
             </ul>
         </div>
-
         <div id="page_content_inner">
             <div class="space-50"></div>
             <div class="md-card">
@@ -96,12 +95,12 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Status Name</label>
-                                    <input type="text" required name="s_name" class="md-input" />
+                                    <input type="text" required name="name" class="md-input" />
                                 </div>
 
                                 <div class="uk-form-row">
                                     <label>Status Description</label>
-                                    <textarea cols="30" rows="4" class="md-input" name="s_desc"></textarea>
+                                    <textarea cols="30" rows="4" class="md-input" name="desc"></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">

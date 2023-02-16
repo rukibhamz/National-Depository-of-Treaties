@@ -54,17 +54,17 @@
                 $b_publisher = $_POST['b_publisher'];
                 $bc_id = $_POST['bc_id'];
                 $bc_name = $_POST['bc_name'];
-                $b_status = $_POST['b_status'];
+                $s_status = $_POST['s_status'];
                 $b_summary = $_POST['b_summary'];   
 
                 $b_coverimage = $_FILES["b_coverimage"]["name"];
                 move_uploaded_file($_FILES["b_coverimage"]["tmp_name"],"assets/img/books/".$_FILES["b_coverimage"]["name"]); 
                 
                 //Insert Captured information to a database table
-                $query="INSERT INTO tbl_treaties (b_title, b_author, b_isbn_no, b_publisher, bc_id, bc_name, b_status, b_summary, b_coverimage) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                $query="INSERT INTO tbl_treaties (b_title, b_author, b_isbn_no, b_publisher, bc_id, bc_name, s_status, b_summary, b_coverimage) VALUES (?,?,?,?,?,?,?,?,?,?)";
                 $stmt = $mysqli->prepare($query);
                 //bind paramaters
-                $rc=$stmt->bind_param('ssssssssss', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_coverimage);
+                $rc=$stmt->bind_param('ssssssssss', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $s_status, $b_summary, $b_coverimage);
                 $stmt->execute();
         
                 //declare a varible which will be passed to alert function
@@ -134,7 +134,7 @@
                                 
                                 <div class="uk-form-row" style="display:none">
                                     <label>Book Status</label>
-                                    <input type="text" required name="b_status" value="Available" class="md-input"  />
+                                    <input type="text" required name="s_status" value="Available" class="md-input"  />
                                 </div>
 
                                 
