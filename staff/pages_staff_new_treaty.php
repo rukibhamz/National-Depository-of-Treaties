@@ -35,8 +35,8 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty signatory cannot be empty";
     }
-    if (isset($_POST['status']) && !empty($_POST['status'])) {
-        $status = mysqli_real_escape_string($mysqli, trim($_POST['status']));
+    if (isset($_POST['b_status']) && !empty($_POST['b_status'])) {
+        $b_status = mysqli_real_escape_string($mysqli, trim($_POST['b_status']));
     } else {
         $error = 1;
         $err = "Treaty status cannot be empty";
@@ -53,7 +53,7 @@ if (isset($_POST['add_treaty'])) {
             $b_status = $_POST['b_status'];
 
             $b_file = $_FILES["b_file"]["name"];
-            move_uploaded_file($_FILES["b_coverimage"]["tmp_name"],"../sudo/assets/magazines/".$_FILES["b_file"]["name"]); 
+            move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
             //Insert Captured information to a database table
             $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, b_status) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -64,15 +64,9 @@ if (isset($_POST['add_treaty'])) {
 
             //declare a varible which will be passed to alert function
             if ($stmt) {
-                $success = `<div class="uk-alert success" data-uk-alert>
-                <a href="" class="uk-alert-close uk-close"></a>
-                <p>Treaty Created Successfully</p>
-            </div>`;
+                $success = "Treaty Created Successfully";
             } else {
-                $err = `<div class="uk-alert danger" data-uk-alert>
-                <a href="" class="uk-alert-close uk-close"></a>
-                <p>Please Try Again Or Try Later</p>
-            </div>`;
+                $err = "Please Try Again Or Try Later";
             }
         }
     }
@@ -130,7 +124,7 @@ include("assets/inc/head.php");
 
                                 <div class="uk-form-row">
                                     <label>Treaty Status</label>
-                                    <select required onChange="getTreatyId(this.value);" name="bc_name" class="md-input">
+                                    <select required name="b_status" id="b_status" class="md-input">
                                         <option>Select Treaty Status</option>
                                         <?php
                                         $ret = "SELECT DISTINCT b_status FROM tbl_treaties";
@@ -144,8 +138,6 @@ include("assets/inc/head.php");
                                     </select>
 
                                 </div>
-
-
                             </div>
 
                             <div class="uk-width-medium-1-2">
@@ -156,8 +148,8 @@ include("assets/inc/head.php");
 
                                 <div class="uk-form-row">
                                     <label>Treaty Category</label>
-                                    <select required onChange="getTreatyId(this.value);" name="bc_name" class="md-input" />
-                                    <option>Select Treaty Category</option>
+                                    <select required onChange="getTreatyId(this.value);" name="tc_name" id="tc_name" class="md-input" />
+                                    <option value="">Select Treaty Category</option>
                                     <?php
                                     $ret = "SELECT * FROM  tbl_treatiescategory";
                                     $stmt = $mysqli->prepare($ret);
@@ -170,13 +162,13 @@ include("assets/inc/head.php");
                                     </select>
                                 </div>
                                 <div class="uk-form-row" style="display:none">
-                                    <label>Book Treaty ID</label>
+                                    <label>Treaty Category ID</label>
                                     <input type="text" id="TreatyCategoryID" required name="tc_id" class="md-input" readonly />
                                 </div>
 
                                 <div class="uk-form-row">
                                     <label>Treaty Year</label>
-                                    <input type="text" id="year" required name="year" class="md-input" />
+                                    <input type="text" id="treaty_year" required name="treaty_year" class="md-input" />
                                 </div>
 
                             </div>
