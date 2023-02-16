@@ -61,7 +61,6 @@
                             <th>Title</th>
                             <th>Author</th>
                             <th>Category</th>
-                            <th>Available Copies</th>
                             <th>Action</th>
                         </thead>    
                       
@@ -78,7 +77,6 @@
                                     <td class="uk-text-truncate"><?php echo $row->b_title;?></td>
                                     <td><?php echo $row->b_author;?></td>
                                     <td><?php echo $row->bc_name;?></td>
-                                    <td><?php echo $row->b_copies;?> Copies</td>
                                     <td>
                                         <a href="pages_sudo_view_book.php?doc_id=<?php echo $row->b_id;?>">
                                             <span class='uk-badge uk-badge-success'>View</span>

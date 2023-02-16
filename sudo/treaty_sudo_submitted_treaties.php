@@ -52,7 +52,6 @@ include("assets/inc/head.php");
                             <th>Name</th>
                             <th>Identification No</th>
                             <th>Email Address</th>
-                            <th>Treaty File</th>
                             <th>Date submitted</th>
                             <th>Action</th>
                         </thead>
@@ -69,7 +68,6 @@ include("assets/inc/head.php");
                                     <td class="uk-text-truncate"><?= $row->title; ?></td>
                                     <td><?= $row->signatory; ?></td>
                                     <td><?= $row->tc_name; ?></td>
-                                    <td><?= $row->b_copies; ?> Copies</td>
                                     <td><?= $row->b_publisher; ?> Copies</td>
                                     <td>
                                         <a href="pages_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">

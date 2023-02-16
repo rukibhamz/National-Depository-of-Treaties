@@ -45,7 +45,6 @@ include("assets/inc/head.php");
                             <th>Title</th>
                             <th>Author</th>
                             <th>Category</th>
-                            <th>Available Copies</th>
                             <th>Action</th>
                         </thead>
 
@@ -59,9 +58,8 @@ include("assets/inc/head.php");
                             ?>
                                 <tr>
                                     <td class="uk-text-truncate"><?php echo $row->title; ?></td>
-                                    <td><?php echo $row->b_publisher; ?></td>
-                                    <td><?php echo $row->tc_name; ?></td>
-                                    <td><?php echo $row->b_copies; ?> Copies</td>
+                                    <td><?= $row->b_publisher; ?></td>
+                                    <td><?= $row->tc_name; ?></td>
                                     <td>
                                         <a href="pages_staff_view_treaty.php?doc_id=<?php echo $row->id; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>

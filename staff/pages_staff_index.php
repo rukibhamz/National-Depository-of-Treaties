@@ -22,7 +22,7 @@ if (isset($_POST['staff_login'])) {
     $stmt->execute(); //execute bind
     $stmt->bind_result($l_email, $l_email, $l_pwd, $id); //bind result
     $rs = $stmt->fetch();
-    $_SESSION['l_id'] = $id; //assaign session to sudo id
+    $_SESSION['id'] = $id; //assaign session to sudo id
 
     if ($rs) {
         //if its sucessfull

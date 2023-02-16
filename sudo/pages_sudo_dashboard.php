@@ -46,7 +46,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.1 : Number of all books no matter what category
-$result = "SELECT SUM(b_copies) FROM tbl_treaties";
+$result = "SELECT COUNT(*) FROM tbl_treaties";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($books);

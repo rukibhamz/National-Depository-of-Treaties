@@ -82,21 +82,21 @@
 
     <?php } ?>
     <script>
-        // function getTreatyId(val)
+        function getTreatyId(val)
 
-        // {
-        //     $.ajax({
-        //         //get book ID
-        //         type: "POST",
-        //         url: "ajax.php",
-        //         data: 'bookCategoryName=' + val,
-        //         success: function(data) {
-        //             //alert(data);
-        //             $('#BookCategoryID').val(data);
-        //         }
-        //     });
+        {
+            $.ajax({
+                //get book ID
+                type: "POST",
+                url: "ajax.php",
+                data: 'bookCategoryName=' + val,
+                success: function(data) {
+                    //alert(data);
+                    $('#BookCategoryID').val(data);
+                }
+            });
 
-        // }
+        }
 
         // function getStudentDetails(val)
 

@@ -118,10 +118,6 @@
                                                         <div class="md-list-addon-element">
                                                             <i class="md-list-addon-icon uk-text-primary material-icons">spellcheck</i>
                                                         </div>
-                                                        <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->b_copies;?></span>
-                                                            <span class="uk-text-small uk-text-muted">Number Of Copies Available</span>
-                                                        </div>
                                                     </li>
                                                     <li>
                                                         <div class="md-list-addon-element">

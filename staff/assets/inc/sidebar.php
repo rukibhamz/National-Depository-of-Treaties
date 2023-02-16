@@ -25,19 +25,24 @@
                 </a>
 
             </li>
-
-            <!--Book Inventory-->
-            <li title="Books Inventory">
-                <a href="#">
+            <li title="Upload Treaty">
+                <a href="pages_staff_new_treaty.php">
                     <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
-                    <span class="menu_title">Treaty Inventory</span>
+                    <span class="menu_title">Upload Treaty</span>
                 </a>
-                <ul>
-                    <li><a href="pages_staff_new_treaty.php">Upload Treaty</a></li>
-                    <li><a href="pages_staff_manage_treaty.php">Manage Treaty</a></li>
-                    <li><a href="pages_staff_audit_treaty_categories.php">Treaty Categories</a></li>
-                </ul>
+            </li>
+            <li title="Manage Treaty">
+                <a href="pages_staff_manage_treaty.php">
+                    <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                    <span class="menu_title">Manage Treaty</span>
+                </a>
 
+            </li>
+            <li title="Treaty Categories">
+                <a href="pages_staff_audit_treaty_categories.php">
+                    <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                    <span class="menu_title">Treaty Categories</span>
+                </a>
             </li>
         </ul>
     </div>

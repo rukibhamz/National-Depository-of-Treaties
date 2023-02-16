@@ -3,7 +3,7 @@
     *Load naviagation partial with logged in sudo session
     */
 
-    $id = $_SESSION['l_id'];
+    $id = $_SESSION['id'];
     $ret="SELECT * FROM  fmoj_staff  WHERE id = ? "; 
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i', $id);

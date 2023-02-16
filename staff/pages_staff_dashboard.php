@@ -77,12 +77,12 @@ include("assets/inc/head.php");
         <div id="page_content_inner">
 
             <!--1.Treaty-->
-            <div class="uk-grid uk-grid-width-large-1-5 uk-grid-width-medium-1-3 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-5 uk-grid-width-medium-1-3 uk-grid-medium uk-sortable sortable-handler hierarchical_show text-center" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Documents Categories</span>
+                            <span class="uk-text-muted uk-text-small">Treaty Categories</span>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ include("assets/inc/head.php");
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Documents</span>
+                            <span class="uk-text-muted uk-text-small">Treaty</span>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $books; ?></noscript></span></h2>
                         </div>
                     </div>
@@ -148,7 +148,7 @@ include("assets/inc/head.php");
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">Documents</h4>
+                    <h4 class="heading_a uk-margin-bottom">Treaty</h4>
                     <div class="md-card">
                         <div class="md-card-content">
                             <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
@@ -156,7 +156,6 @@ include("assets/inc/head.php");
                                     <th>Title</th>
                                     <th>Publisher</th>
                                     <th>Category</th>
-                                    <th>Available Copies</th>
                                 </thead>
                                 <tbody>
                                     <?php
@@ -165,22 +164,11 @@ include("assets/inc/head.php");
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
                                     while ($row = $res->fetch_object()) {
-                                        //use .success, .warning, . danger on book copies
-                                        if ($row->b_copies >= '200') {
-                                            $copies = "<td class='uk-text-success'>$row->b_copies Copies</td>";
-                                        } elseif ($row->b_copies > '100' && $row->b_copies < '200') {
-                                            $copies = "<td class='uk-text-primary'>$row->b_copies Copies</td>";
-                                        } elseif ($row->b_copies > '45' && $row->b_copies < '100') {
-                                            $copies = "<td class='uk-text-warning'>$row->b_copies Copies</td>";
-                                        } else {
-                                            $copies = "<td class='uk-text-danger'>$row->b_copies Copies</td>";
-                                        }
                                     ?>
                                         <tr>
                                             <td class="uk-text-truncate"><?php echo $row->title; ?></td>
                                             <td class="uk-text-primary"><?php echo $row->b_publisher; ?></td>
                                             <td><?php echo $row->tc_name; ?></td>
-                                            <td> <?php echo $copies; ?></td>
                                         </tr>
 
                                     <?php } ?>
@@ -228,7 +216,7 @@ include("assets/inc/head.php");
                 exportEnabled: false,
                 animationEnabled: true,
                 title: {
-                    text: "Percentage Number Of Books Per Category"
+                    text: "Percentage Of Treaties Per Category"
                 },
                 legend: {
                     cursor: "pointer",

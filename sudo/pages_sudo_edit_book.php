@@ -20,17 +20,16 @@
         $bc_name = $_POST['bc_name'];
         $b_status = $_POST['b_status'];
         $b_summary = $_POST['b_summary'];
-        $b_copies = $_POST['b_copies'];
         
         $b_coverimage = $_FILES["b_coverimage"]["name"];
         move_uploaded_file($_FILES["b_coverimage"]["tmp_name"],"assets/img/books/".$_FILES["b_coverimage"]["name"]); 
         
         
         //Insert Captured information to a database table
-        $query="UPDATE  tbl_treaties  SET b_title=?, b_author=?, b_isbn_no=?, b_publisher=?, bc_id=?, bc_name=?, b_status=?, b_summary=?, b_copies =?, b_coverimage=? WHERE b_id =?";
+        $query="UPDATE  tbl_treaties  SET b_title=?, b_author=?, b_isbn_no=?, b_publisher=?, bc_id=?, bc_name=?, b_status=?, b_summary =?, b_coverimage=? WHERE b_id =?";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
-        $rc=$stmt->bind_param('ssssssssssi', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_copies, $b_coverimage, $book_id);
+        $rc=$stmt->bind_param('ssssssssssi', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_coverimage, $book_id);
         $stmt->execute();
   
         //declare a varible which will be passed to alert function
@@ -114,11 +113,6 @@
                                     <div class="uk-form-row">
                                         <label>Book Publisher</label>
                                         <input type="text" value="<?php echo $row->b_publisher;?>" required class="md-input" name="b_publisher" />
-                                    </div>
-
-                                    <div class="uk-form-row">
-                                        <label>Number Of Copies</label>
-                                        <input type="text" value="<?php echo $row->b_copies;?>" required name="b_copies" class="md-input"  />
                                     </div>
                                     
                                     <div class="uk-form-row">
