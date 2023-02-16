@@ -84,7 +84,7 @@
 
     <?php } ?>
     <script>
-        function getBookId(val)
+        function getTreatyId(val)
 
         {
             $.ajax({

@@ -114,7 +114,7 @@ include("assets/inc/head.php");
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Treaty Status</label>
-                                    <select required onChange="getBookId(this.value);" name="treaty_name" class="md-input" />
+                                    <select required onChange="getTreatyId(this.value);" name="treaty_name" class="md-input" />
                                     <option>Select Treaty Category</option>
                                     <?php
                                     $ret = "SELECT * FROM  	tbl_treatiescategory";

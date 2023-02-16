@@ -18,83 +18,34 @@ $stmt->fetch();
 $stmt->close();
 
 //1.1 : Number of all books no matter what category
-$result = "SELECT SUM(b_copies) FROM tbl_treaties";
+$result = "SELECT COUNT(*) FROM tbl_treaties";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($books);
 $stmt->fetch();
 $stmt->close();
 
-//1.2 : Number of all Borrowed Books no matter what category
-$result = "SELECT count(*) FROM il_libraryoperations WHERE lo_type = 'Borrow' AND lo_status = '' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_books);
-$stmt->fetch();
-$stmt->close();
-
-
-// 3.Misc
-
-//3.0 : Number of all students requesting for password resets
-$result = "SELECT count(*) FROM il_passwordresets WHERE pr_usertype = 'Student' AND pr_status='Pending' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($pending_student_pwd_resets);
-$stmt->fetch();
-$stmt->close();
-
-/*
-        The following block of codes implements Books Charts
-
-        -->Books Category Will be HardCoded so my bad<--
-    */
-
 //1.0.1 : Number Of Books under Non-fiction Category
-$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Non-fiction' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Instruments' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($non_fiction);
+$stmt->bind_result($instruments);
 $stmt->fetch();
 $stmt->close();
 
 //1.0.2 : Number Of Books under Fiction Category
-$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Fiction' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Agreements' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($fiction);
+$stmt->bind_result($agreements);
 $stmt->fetch();
 $stmt->close();
 
 //1.0.3 : Number Of Books under References Category
-$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'References' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Memorandum of Understanding' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($References);
-$stmt->fetch();
-$stmt->close();
-
-//1.1.0 : Number of Borrowed Books Per Books in Non-fiction Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Non-fiction' AND lo_type ='Borrow' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_non_fiction);
-$stmt->fetch();
-$stmt->close();
-
-// 1.1.1 : Number of Borrowed Books Per Books in fiction Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Fiction' AND lo_type ='Borrow' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_fiction);
-$stmt->fetch();
-$stmt->close();
-
-// 1.1.2 : Number of Borrowed Books Per Books in References Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'References' AND lo_type ='Borrow' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_references);
+$stmt->bind_result($mou);
 $stmt->fetch();
 $stmt->close();
 
@@ -125,13 +76,13 @@ include("assets/inc/head.php");
     <div id="page_content">
         <div id="page_content_inner">
 
-            <!--1.Books-->
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <!--1.Treaty-->
+            <div class="uk-grid uk-grid-width-large-1-5 uk-grid-width-medium-1-3 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Book Categories</span>
+                            <span class="uk-text-muted uk-text-small">Documents Categories</span>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
                         </div>
                     </div>
@@ -140,8 +91,35 @@ include("assets/inc/head.php");
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Books</span>
+                            <span class="uk-text-muted uk-text-small">Documents</span>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $books; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Instruments</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $instruments; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Agreements</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $agreements; ?></noscript></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <span class="uk-text-muted uk-text-small">Mou's</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $mou; ?></noscript></span></h2>
                         </div>
                     </div>
                 </div>
@@ -160,141 +138,60 @@ include("assets/inc/head.php");
                             </div>
                         </div>
                         <div class="md-card-content">
-
                             <div class="mGraph-wrapper">
                                 <div id="PieChart" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
                             </div>
-
-                            <div id="Print_Content" class="md-card-fullscreen-content">
-                                <div class="uk-overflow-container">
-                                    <table class="uk-table uk-table-no-border uk-text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Title</th>
-                                                <th>Author</th>
-                                                <th>Category</th>
-                                                <th>ISBN No.</th>
-                                            </tr>
-                                        </thead>
-
-                                    </table>
-                                </div>
-                            </div>
                         </div>
-
-                        <div id="Print_Content" class="md-card-content">
-                            <div class="mGraph-wrapper">
-                                <div id="BooksBorrowedPerCategory" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
-
-                            </div>
-
-                            <div class="md-card-fullscreen-content">
-                                <div class="uk-overflow-container">
-                                    <table class="uk-table uk-table-no-border uk-text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Book Title</th>
-                                                <th>Borrowed By</th>
-                                                <th>Date Borrowed</th>
-                                                <th>Book Status</th>
-                                                <th>Book Category</th>
-                                                <th>ISBN No.</th>
-                                            </tr>
-                                        </thead>
-
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Donought chart-->
-            <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <div class="md-card">
-                        <div class="md-card-toolbar">
-                            <div class="md-card-toolbar-actions">
-                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
-                                <i class="md-icon material-icons">&#xE5D5;</i>
-
-                            </div>
-
-                        </div>
-
-                        <div class="md-card-content">
-                            <div class="mGraph-wrapper">
-                                <div id="libraryOperationsPerBookCategory" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
-
-                            </div>
-
-                            <div class="md-card-fullscreen-content">
-                                <div class="uk-overflow-container">
-                                    <table class="uk-table uk-table-no-border uk-text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Book Title</th>
-                                                <th>Borrowed By</th>
-                                                <th>Date Borrowed</th>
-                                                <th>Book Status</th>
-                                                <th>Book Category</th>
-                                                <th>ISBN No.</th>
-                                            </tr>
-                                        </thead>
-
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">Books</h4>
+                    <h4 class="heading_a uk-margin-bottom">Documents</h4>
                     <div class="md-card">
                         <div class="md-card-content">
                             <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                                 <thead>
                                     <th>Title</th>
-                                    <th>Author</th>
+                                    <th>Publisher</th>
                                     <th>Category</th>
                                     <th>Available Copies</th>
                                 </thead>
+                                <tbody>
+                                    <?php
+                                    $ret = "SELECT * FROM  tbl_treaties";
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->execute(); //ok
+                                    $res = $stmt->get_result();
+                                    while ($row = $res->fetch_object()) {
+                                        //use .success, .warning, . danger on book copies
+                                        if ($row->b_copies >= '200') {
+                                            $copies = "<td class='uk-text-success'>$row->b_copies Copies</td>";
+                                        } elseif ($row->b_copies > '100' && $row->b_copies < '200') {
+                                            $copies = "<td class='uk-text-primary'>$row->b_copies Copies</td>";
+                                        } elseif ($row->b_copies > '45' && $row->b_copies < '100') {
+                                            $copies = "<td class='uk-text-warning'>$row->b_copies Copies</td>";
+                                        } else {
+                                            $copies = "<td class='uk-text-danger'>$row->b_copies Copies</td>";
+                                        }
+                                    ?>
+                                        <tr>
+                                            <td class="uk-text-truncate"><?php echo $row->title; ?></td>
+                                            <td class="uk-text-primary"><?php echo $row->b_publisher; ?></td>
+                                            <td><?php echo $row->tc_name; ?></td>
+                                            <td> <?php echo $copies; ?></td>
+                                        </tr>
 
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">iLibrary Enrolled Students</h4>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>iLib Student No</th>
-                                        <th>Phone No.</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>Gender</th>
-                                        <th>Acc Status</th>
-                                    </tr>
-                                </thead>
-
+                                    <?php } ?>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     <!--Footer-->
     <?php require_once('assets/inc/footer.php'); ?>
@@ -343,94 +240,26 @@ include("assets/inc/head.php");
                     toolTipContent: "{name}: <strong>{y}%</strong>",
                     indexLabel: "{name} - {y}%",
                     dataPoints: [{
-                            y: <?php echo $non_fiction; ?>,
-                            name: "Non Fiction",
+                            y: <?php echo $instruments; ?>,
+                            name: "Instruments",
                             exploded: true
                         },
 
                         {
-                            y: <?php echo $fiction; ?>,
-                            name: " Fiction",
+                            y: <?php echo $agreements; ?>,
+                            name: " Agreements",
                             exploded: true
                         },
 
                         {
-                            y: <?php echo $References; ?>,
-                            name: "Refrences",
-                            exploded: true
-                        }
-                    ]
-                }]
-            });
-
-            var borrowChart = new CanvasJS.Chart("libraryOperationsPerBookCategory", {
-                exportEnabled: false,
-                animationEnabled: true,
-                title: {
-                    text: "Percentange Number Of Library Operations Per Book Category"
-                },
-                legend: {
-                    cursor: "pointer",
-                    itemclick: explodePie
-                },
-                data: [{
-                    type: "pie",
-                    showInLegend: true,
-                    toolTipContent: "{name}: <strong>{y}%</strong>",
-                    indexLabel: "{name} - {y}%",
-                    dataPoints: [{
-                            y: <?php echo $borrowed_non_fiction; ?>,
-                            name: "Non Fiction",
-                            exploded: true
-                        },
-                        {
-                            y: <?php echo $borrowed_fiction; ?>,
-                            name: "Fiction",
-                            exploded: true
-                        },
-                        {
-                            y: <?php echo $borrowed_references; ?>,
-                            name: "Refrences",
+                            y: <?php echo $mou; ?>,
+                            name: "Mou's",
                             exploded: true
                         }
                     ]
                 }]
             });
-
-            var chart = new CanvasJS.Chart("BooksBorrowedPerCategory", {
-                animationEnabled: true,
-                title: {
-                    text: "Library Operations At Glance",
-                    //horizontalAlign: "centre"
-                },
-                data: [{
-                    type: "doughnut",
-                    startAngle: 60,
-                    //innerRadius: 60,
-                    indexLabelFontSize: 17,
-                    indexLabel: "{label}:{y} (#percent%)",
-                    toolTipContent: "{label} - #percent%",
-                    dataPoints: [{
-                            y: <?php echo $lost_books; ?>,
-                            label: "Lost Books"
-                        },
-                        {
-                            y: <?php echo $Returned; ?>,
-                            label: "Returned Books"
-                        },
-                        {
-                            y: <?php echo $damanged_books; ?>,
-                            label: "Damanged Books"
-                        }
-
-                    ]
-                }]
-            });
-
-
-            chart.render();
             Piechart.render();
-            borrowChart.render();
 
         }
 

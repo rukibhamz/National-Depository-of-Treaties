@@ -1,149 +1,194 @@
 <?php
-    session_start();
-    include('assets/config/config.php');
-    include('assets/config/checklogin.php');
-    check_login();
+session_start();
+include('assets/config/config.php');
+include('assets/config/checklogin.php');
+check_login();
+
+//generate random isbn number
+$length = 6;
+$Number =  substr(str_shuffle('0123456789'), 1, $length);
+
+//edit book
+if (isset($_POST['update_book'])) {
+    $doc_id = $_GET['doc_id'];
+    $b_title  = $_POST['b_title'];
+    $b_author = $_POST['b_author'];
+    $b_isbn_no = $_POST['b_isbn_no'];
+    $b_publisher = $_POST['b_publisher'];
+    $bc_id = $_POST['bc_id'];
+    $bc_name = $_POST['bc_name'];
+    $b_status = $_POST['b_status'];
+    $b_summary = $_POST['b_summary'];
+    $b_copies = $_POST['b_copies'];
+
+    $b_coverimage = $_FILES["b_coverimage"]["name"];
+    move_uploaded_file($_FILES["b_coverimage"]["tmp_name"], "../sudo/assets/img/books/" . $_FILES["b_coverimage"]["name"]);
+
+
+    //Insert Captured information to a database table
+    $query = "UPDATE  tbl_treaties  SET b_title=?, b_author=?, b_isbn_no=?, b_publisher=?, bc_id=?, bc_name=?, b_status=?, b_summary=?, b_copies =?, b_coverimage=? WHERE b_id =?";
+    $stmt = $mysqli->prepare($query);
+    //bind paramaters
+    $rc = $stmt->bind_param('ssssssssssi', $b_title, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_copies, $b_coverimage, $doc_id);
+    $stmt->execute();
+
+    //declare a varible which will be passed to alert function
+    if ($stmt) {
+        $success = "Book Record Updated" && header("refresh:1;url=pages_staff_manage_books.php");
+    } else {
+        $err = "Please Try Again Or Try Later";
+    }
+}
 ?>
+
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php 
-    include("assets/inc/head.php");
+<!--[if gt IE 9]><!-->
+<html lang="en"> <!--<![endif]-->
+<?php
+include("assets/inc/head.php");
 ?>
+
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
-        <?php 
-            include("assets/inc/nav.php");
-        ?>
+    <?php
+    include("assets/inc/nav.php");
+    ?>
     <!-- main header end -->
     <!-- main sidebar -->
-        <?php 
-            include("assets/inc/sidebar.php");
-        ?>
+    <?php
+    include("assets/inc/sidebar.php");
+    ?>
     <!-- main sidebar end -->
     <?php
-        $s_id = $_GET['s_id'];
-        $ret="SELECT * FROM  iL_Subscriptions WHERE s_id = ?"; 
-        $stmt= $mysqli->prepare($ret) ;
-        $stmt->bind_param('s', $s_id);
-        $stmt->execute() ;//ok
-        $res=$stmt->get_result();
-        while($row=$res->fetch_object())
-    {
-        //load default book cover page if book is missing a cover image
-        if($row->s_cover_img == '')
-        {
-            $cover_image = "<img src='../sudo/assets/img/books/Image12.jpg' alt='Book Image'>";
-        }
-        else
-        {
-            $cover_image = "<img src='../sudo/assets/magazines/$row->s_cover_img' alt='Book Image'>";
+    $doc_id = $_GET['doc_id'];
+    $ret = "SELECT * FROM  tbl_treaties WHERE id = ?";
+    $stmt = $mysqli->prepare($ret);
+    $stmt->bind_param('i', $doc_id);
+    $stmt->execute(); //ok
+    $res = $stmt->get_result();
+    while ($row = $res->fetch_object()) {
 
-        }
     ?>
         <div id="page_content">
             <!--Breadcrums-->
             <div id="top_bar">
                 <ul id="breadcrumbs">
                     <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                    <li><a href="#">Subscriptions</a></li>
-                    <li><a href="pages_staff_view_subscription.php">Manage Subscription</a></li>
-                    <li><span>View <?php echo $row->s_title;?></span></li>
-
+                    <li><a href="pages_staff_manage_treaty.php">Treaty Inventory</a></li>
+                    <li><span>Update Treaty</span></li>
                 </ul>
             </div>
+
             <div id="page_content_inner">
-                <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
-                    <div class="uk-width-large-10-10">
-                        <div class="md-card">
-                            <div class="user_heading user_heading_bg" style="background-image: url('../sudo/assets/magazines/<?php echo  $row->s_cover_img;?>')">
-                                <div class="bg_overlay">
-                                    <div class="user_heading_menu hidden-print">
-                                        <div class="uk-display-inline-block"><i class="md-icon md-icon-light material-icons" id="page_print">&#xE8ad;</i></div>
-                                    </div>
-                                    <div class="user_heading_content">
-                                        <h2 class="heading_b uk-margin-bottom"><span class="uk-text-truncate"><?php echo $row->s_title;?></span><span class="sub-heading">Code: <?php echo $row->s_code;?></span></h2>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="md-card">
-                            <div class="user_heading">
-                                <div class="user_heading_menu hidden-print">
-                                    <div class="uk-display-inline-block" data-uk-dropdown="{pos:'left-top'}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="user_content">
-                                <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
-                                    <li class="uk-active"><a href="#"><?php echo $row->s_title;?> Details</a></li>
-                                    <!--
-                                    <li><a href="#">Photos</a></li>
-                                    <li><a href="#">Posts</a></li>
-                                    -->
-                                </ul>
-                                <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
-                                    <li>
-                                        <?php echo $row->s_desc;?>
-                                        <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
-                                            <div class="uk-width-large-1-2">
-                                                <h4 class="heading_c uk-margin-small-bottom">Magazine Information</h4>
-                                                <ul class="md-list md-list-addon">
-                                                    <li>
-                                                        <div class="md-list-addon-element">
-                                                            <i class="md-list-addon-icon uk-text-primary material-icons">storefront</i>
-                                                        </div>
-                                                        <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->s_publisher;?></span>
-                                                            <span class="uk-text-small uk-text-muted">Publisher</span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="md-list-addon-element">
-                                                            <i class="md-list-addon-icon uk-text-primary material-icons">event_available</i>
-                                                        </div>
-                                                        <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->s_category;?></span>
-                                                            <span class="uk-text-small uk-text-muted">Magazine Category</span>
-                                                        </div>
-                                                    </li>
-                                                    
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </li>
 
-                                </ul>
-                                <!--Book Cover Image-->
-                                <h4 class="heading_c uk-margin-small-bottom">Magazine Cover Image</h4>
-                                <hr>
-                                <div class="md-card md-card-hover">
-                                        <div class="gallery_grid_item md-card-content">
-                                            <a href="pages_staff_view_magazine.php?s_id=<?php echo $row->s_id;?>" class="custom-modal-open" data-image-id="7">
-                                                <?php echo $cover_image ;?>
-                                            </a>
-                                        </div>
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h3 class="heading_a">Please Fill All Fields</h3>
+                        <hr>
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="uk-grid" data-uk-grid-margin>
+                                <div class="uk-width-medium-1-2">
+                                    <div class="uk-form-row">
+                                        <label>Title</label>
+                                        <input type="text" value="<?php echo $row->title; ?>" required name="b_title" class="md-input" />
+                                    </div>
+                                    <div class="uk-form-row">
+                                        <label>Book ISBN No</label>
+                                        <input type="text" required value="<?php echo $row->b_isbn_no; ?>" name="b_isbn_no" class="md-input label-fixed" />
+                                    </div>
+                                    <div class="uk-form-row">
+                                        <label>Author</label>
+                                        <input type="text" value="<?php echo $row->b_publisher; ?>" required name="b_author" class="md-input" />
+                                    </div>
+                                    <div class="uk-form-row" style="display:none">
+                                        <label>Status</label>
+                                        <input type="text" required name="b_status" value="Available" class="md-input" />
                                     </div>
                                 </div>
 
+                                <div class="uk-width-medium-1-2">
+                                    <div class="uk-form-row">
+                                        <label>Publisher</label>
+                                        <input type="text" value="<?php echo $row->b_publisher; ?>" required class="md-input" name="b_publisher" />
+                                    </div>
+
+                                    <div class="uk-form-row">
+                                        <label>Number Of Copies</label>
+                                        <input type="text" value="<?php echo $row->b_copies; ?>" required name="b_copies" class="md-input" />
+                                    </div>
+
+                                    <div class="uk-form-row">
+                                        <label>Book Category</label>
+                                        <select required onChange="getTreatyId(this.value);" name="tc_name" class="md-input" />
+                                        <option>Select Treaty Category</option>
+                                        <?php
+                                        $ret = "SELECT * FROM  tbl_treatiescategory";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute(); //ok
+                                        $res = $stmt->get_result();
+                                        while ($row = $res->fetch_object()) {
+                                        ?>
+                                            <option value="<?= $row->name; ?>"><?= $row->code; ?> - <?= $row->name; ?></option>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="uk-form-row" style="display:none">
+                                        <label>Category ID</label>
+                                        <input type="text" id="BookCategoryID" required name="tc_id" class="md-input" />
+                                    </div>
+
+
+                                </div>
+
+                                <div class="uk-width-medium-2-2">
+                                    <div id="file_upload-drop" class="uk-file-upload">
+                                        <p class="uk-text">Drop Book Cover Image</p>
+                                        <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
+                                        <a class="uk-form-file md-btn">Choose File<input id="file_upload-select" name="b_coverimage" type="file"></a>
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-medium-2-2">
+                                    <div class="uk-form-row">
+                                        <label>Cover Page Summary</label>
+                                        <?php
+                                        $doc_id = $_GET['doc_id'];
+                                        $ret = "SELECT * FROM  tbl_treaties WHERE id = ?";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->bind_param('i', $doc_id);
+                                        $stmt->execute(); //ok
+                                        $res = $stmt->get_result();
+                                        while ($row = $res->fetch_object()) {
+
+                                        ?>
+                                            <textarea cols="30" rows="10" class="md-input" name="b_summary"><?= $row->b_summary; ?></textarea>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="uk-width-medium-2-2">
+                                    <div class="uk-form-row">
+                                        <div class="uk-input-group">
+                                            <input type="submit" class="md-btn md-btn-success" name="update_book" value="Update Book" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-
                 </div>
+
             </div>
         </div>
-    
-    <?php }?>
+
+    <?php } ?>
     <!--Footer-->
-    <?php require_once('assets/inc/footer.php');?>
+    <?php require_once('assets/inc/footer.php'); ?>
     <!--Footer-->
 
     <!-- google web fonts -->
-    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         WebFontConfig = {
             google: {
                 families: [
@@ -155,7 +200,7 @@
         (function() {
             var wf = document.createElement('script');
             wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
             wf.type = 'text/javascript';
             wf.async = 'true';
             var s = document.getElementsByTagName('script')[0];
@@ -173,13 +218,13 @@
 
     <script>
         $(function() {
-            if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+            if (isHighDensity()) {
+                $.getScript("assets/js/custom/dense.min.js", function(data) {
                     // enable hires images
                     altair_helpers.retina_images();
                 });
             }
-            if(Modernizr.touch) {
+            if (Modernizr.touch) {
                 // fastClick (touch devices)
                 FastClick.attach(document.body);
             }
@@ -189,6 +234,8 @@
             altair_helpers.ie_fix();
         });
     </script>
+
+
 
     <div id="style_switcher" style="display: none;">
         <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>
@@ -297,15 +344,15 @@
                     .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g app_theme_h app_theme_i app_theme_dark')
                     .addClass(this_theme);
 
-                if(this_theme == '') {
+                if (this_theme == '') {
                     localStorage.removeItem('altair_theme');
-                    $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                    $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                 } else {
                     localStorage.setItem("altair_theme", this_theme);
-                    if(this_theme == 'app_theme_dark') {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.materialblack.min.css')
+                    if (this_theme == 'app_theme_dark') {
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.materialblack.min.css')
                     } else {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                     }
                 }
 
@@ -313,10 +360,10 @@
 
             // hide style switcher
             $document.on('click keyup', function(e) {
-                if( $switcher.hasClass('switcher_active') ) {
+                if ($switcher.hasClass('switcher_active')) {
                     if (
-                        ( !$(e.target).closest($switcher).length )
-                        || ( e.keyCode == 27 )
+                        (!$(e.target).closest($switcher).length) ||
+                        (e.keyCode == 27)
                     ) {
                         $switcher.removeClass('switcher_active');
                     }
@@ -324,81 +371,81 @@
             });
 
             // get theme from local storage
-            if(localStorage.getItem("altair_theme") !== null) {
-                $theme_switcher.children('li[data-app-theme='+localStorage.getItem("altair_theme")+']').click();
+            if (localStorage.getItem("altair_theme") !== null) {
+                $theme_switcher.children('li[data-app-theme=' + localStorage.getItem("altair_theme") + ']').click();
             }
 
 
-        // toggle mini sidebar
+            // toggle mini sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
+            if ((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
                 $mini_sidebar_toggle.iCheck('check');
             }
 
             $mini_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_mini", '1');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 });
 
-        // toggle slim sidebar
+            // toggle slim sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
+            if ((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
                 $slim_sidebar_toggle.iCheck('check');
             }
 
             $slim_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_slim", '1');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 });
 
-        // toggle boxed layout
+            // toggle boxed layout
 
-            if((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
+            if ((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
                 $boxed_layout_toggle.iCheck('check');
                 $body.addClass('boxed_layout');
                 $(window).resize();
             }
 
             $boxed_layout_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_layout", 'boxed');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_layout');
                     location.reload(true);
                 });
 
-        // main menu accordion mode
-            if($sidebar_main.hasClass('accordion_mode')) {
+            // main menu accordion mode
+            if ($sidebar_main.hasClass('accordion_mode')) {
                 $accordion_mode_toggle.iCheck('check');
             }
 
             $accordion_mode_toggle
-                .on('ifChecked', function(){
+                .on('ifChecked', function() {
                     $sidebar_main.addClass('accordion_mode');
                 })
-                .on('ifUnchecked', function(){
+                .on('ifUnchecked', function() {
                     $sidebar_main.removeClass('accordion_mode');
                 });
 

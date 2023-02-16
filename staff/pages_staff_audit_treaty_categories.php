@@ -46,12 +46,12 @@ include("assets/inc/head.php");
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
                 <li><a href="#">Audits</a></li>
-                <li><span>Document Categories</span></li>
+                <li><span>Treaty Categories</span></li>
             </ul>
         </div>
         <div id="page_content_inner">
 
-            <h4 class="heading_a uk-margin-bottom">Document Categories</h4>
+            <h4 class="heading_a uk-margin-bottom">Treaty Categories</h4>
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                     <div class="dt_colVis_buttons"></div>

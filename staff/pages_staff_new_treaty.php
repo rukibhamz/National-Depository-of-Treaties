@@ -1,13 +1,91 @@
-<?php
+<?php 
     session_start();
     include('assets/config/config.php');
     include('assets/config/checklogin.php');
     check_login();
+
+    //generate random isbn number
+    $length = 6;    
+    $Number =  substr(str_shuffle('0123456789'),1,$length);
+
+    //add new book
+    if(isset($_POST['add_book']))
+    {
+        $error = 0;
+            if (isset($_POST['b_title']) && !empty($_POST['b_title'])) {
+                $b_title=mysqli_real_escape_string($mysqli,trim($_POST['b_title']));
+            }else{
+                $error = 1;
+                $err="Book title cannot be empty";
+            }
+            if (isset($_POST['b_author']) && !empty($_POST['b_author'])) {
+                $b_author=mysqli_real_escape_string($mysqli,trim($_POST['b_author']));
+            }else{
+                $error = 1;
+                $err="Book author cannot be empty";
+            }
+            if (isset($_POST['b_isbn_no']) && !empty($_POST['b_isbn_no'])) {
+                $b_isbn_no=mysqli_real_escape_string($mysqli,trim($_POST['b_isbn_no']));
+            }else{
+                $error = 1;
+                $err="Book ISBN number cannot be empty";
+            }
+            
+            if(!$error)
+            {
+                $sql="SELECT * FROM  tbl_treaties WHERE  b_isbn_no='$b_isbn_no' ";
+                $res=mysqli_query($mysqli,$sql);
+                if (mysqli_num_rows($res) > 0) {
+                $row = mysqli_fetch_assoc($res);
+                if ($b_isbn_no==$row['b_isbn_no'])
+                {
+                    $err="ISBN number already exists";
+                }
+                else
+                {
+                    $err="ISBN number already exists";
+                }
+            }
+            else
+            {
+                $b_title  = $_POST['b_title'];
+                $b_author = $_POST['b_author'];
+                $b_isbn_no = $_POST['b_isbn_no'];
+                $b_publisher = $_POST['b_publisher'];
+                $bc_id = $_POST['bc_id'];
+                $bc_name = $_POST['bc_name'];
+                $b_status = $_POST['b_status'];
+                $b_summary = $_POST['b_summary'];   
+                $b_copies = $_POST['b_copies'];
+
+                $b_coverimage = $_FILES["b_coverimage"]["name"];
+                move_uploaded_file($_FILES["b_coverimage"]["tmp_name"],"../sudo/assets/img/books/".$_FILES["b_coverimage"]["name"]); 
+                
+                //Insert Captured information to a database table
+                $query="INSERT INTO tbl_treaties (b_title, b_copies, b_author, b_isbn_no, b_publisher, bc_id, bc_name, b_status, b_summary, b_coverimage) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                $stmt = $mysqli->prepare($query);
+                //bind paramaters
+                $rc=$stmt->bind_param('ssssssssss', $b_title, $b_copies, $b_author, $b_isbn_no, $b_publisher, $bc_id, $bc_name, $b_status, $b_summary, $b_coverimage);
+                $stmt->execute();
+        
+                //declare a varible which will be passed to alert function
+                if($stmt)
+                {
+                    $success = "Book Added";
+                }
+                else 
+                {
+                    $err = "Please Try Again Or Try Later";
+                }
+            }
+        }          
+    }
 ?>
+
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php 
+<?php
     include("assets/inc/head.php");
 ?>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
@@ -17,70 +95,123 @@
         ?>
     <!-- main header end -->
     <!-- main sidebar -->
-        <?php 
+        <?php
             include("assets/inc/sidebar.php");
         ?>
     <!-- main sidebar end -->
-    <?php
-        $s_id = $_GET['s_id'];
-        $ret="SELECT * FROM  iL_Subscriptions WHERE s_id = ?"; 
-        $stmt= $mysqli->prepare($ret) ;
-        $stmt->bind_param('s', $s_id);
-        $stmt->execute() ;//ok
-        $res=$stmt->get_result();
-        while($row=$res->fetch_object())
-    {
-        //load default book cover page if book is missing a cover image
-        if($row->s_cover_img == '')
-        {
-            $cover_image = "<img src='../sudo/assets/img/books/Image12.jpg' alt='Book Image'>";
-        }
-        else
-        {
-            $cover_image = "<img src='../sudo/assets/magazines/$row->s_cover_img' alt='Book Image'>";
 
-        }
-    ?>
-        <div id="page_content">
-            <!--Breadcrums-->
+    <div id="page_content">
+     <!--Breadcrums-->
             <div id="top_bar">
                 <ul id="breadcrumbs">
                     <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                    <li><a href="#">Subscriptions</a></li>
-                    <li><a href="pages_staff_manage_subscriptions.php">Manage Subscription</a></li>
-                    <li><span>View <?php echo $row->s_title;?></span></li>
-
+                    <li><a href="#">Book Inventory</a></li>
+                    <li><span>Add Book</span></li>
                 </ul>
             </div>
-            <div id="page_content_inner">
-                <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
-                    <div class="uk-width-large-10-10">
-                       
-                        <div class="md-card">
-                            <div class="user_content">
+
+        <div id="page_content_inner">
+
+            <div class="md-card">
+                <div class="md-card-content">
+                    <h3 class="heading_a">Please Fill All Fields</h3>
+                    <hr>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="uk-grid" data-uk-grid-margin>
+                            <div class="uk-width-medium-1-2">
+                                <div class="uk-form-row">
+                                    <label>Book Title</label>
+                                    <input type="text" required name="b_title" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Book ISBN No</label>
+                                    <input type="text" required value="ISBN 0-13-<?php echo $Number;?>-1" name="b_isbn_no" class="md-input label-fixed" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Book Author</label>
+                                    <input type="text" required name="b_author" class="md-input"  />
+                                </div>
                                 
-                                <div class="md-card md-card-hover">
-                                        <div class="gallery_grid_item md-card-content">
-                                            <iframe src="../sudo/assets/magazines/<?php echo $row->s_file;?>" class ="uk-width-large-10-10" height="900px">
-                                        </div>
+                                <div class="uk-form-row" style="display:none">
+                                    <label>Book Status</label>
+                                    <input type="text" required name="b_status" value="Available" class="md-input"  />
+                                </div>
+
+                                
+                            </div>
+
+                            <div class="uk-width-medium-1-2">
+                                <div class="uk-form-row">
+                                    <label>Book Publisher</label>
+                                    <input type="text" required class="md-input" name="b_publisher" />
+                                </div>
+
+                                <div class="uk-form-row">
+                                    <label>Number Of Copies</label>
+                                    <input type="text"  required name="b_copies" class="md-input"  />
+                                </div>
+                                
+                                <div class="uk-form-row">
+                                    <label>Book Category</label>
+                                            <select required onChange="getTreatyId(this.value);" name="bc_name" class="md-input"  />
+                                            <option>Select Book Category</option>
+                                                <?php
+                                                    $ret="SELECT * FROM  tbl_treatiescategory"; 
+                                                    $stmt= $mysqli->prepare($ret) ;
+                                                    $stmt->execute() ;//ok
+                                                    $res=$stmt->get_result();
+                                                    while($row=$res->fetch_object())
+                                                    {
+                                                ?>
+                                                    <option value="<?php echo $row->bc_name;?>"><?php echo $row->bc_name;?></option>
+                                                <?php }?>
+                                            </select>
                                     </div>
+
+                                <div class="uk-form-row" style="display:none">
+                                    <label>Book Category ID</label>
+                                    <input type="text" id="BookCategoryID" required name="bc_id" class="md-input"  />
                                 </div>
 
                             </div>
-                        </div>
-                    </div>
 
+                            <div class="uk-width-medium-2-2">
+                                <div id="file_upload-drop" class="uk-file-upload">
+                                    <p class="uk-text">Drop Book Cover Image</p>
+                                    <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_coverimage" type="file"></a>
+                                </div>
+                                <div id="file_upload-progressbar" class="uk-progress uk-hidden">
+                                    <div class="uk-progress-bar" style="width:0">0%</div>
+                                </div>
+                            </div>
+
+                            <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <label>Book Cover Page Summary</label>
+                                    <textarea cols="30" rows="10" class="md-input" name="b_summary"></textarea>
+                                </div>
+                            </div>
+                            <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <div class="uk-input-group">
+                                        <input type="submit" class="md-btn md-btn-success" name="add_book" value="Add Book" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+
         </div>
-    
-    <?php }?>
+    </div>
     <!--Footer-->
     <?php require_once('assets/inc/footer.php');?>
     <!--Footer-->
 
     <!-- google web fonts -->
-    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         WebFontConfig = {
             google: {
                 families: [
@@ -126,6 +257,8 @@
             altair_helpers.ie_fix();
         });
     </script>
+
+   
 
     <div id="style_switcher" style="display: none;">
         <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>

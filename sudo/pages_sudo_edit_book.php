@@ -123,7 +123,7 @@
                                     
                                     <div class="uk-form-row">
                                         <label>Book Category</label>
-                                                <select required onChange="getBookId(this.value);" name="bc_name" class="md-input"  />
+                                                <select required onChange="getTreatyId(this.value);" name="bc_name" class="md-input"  />
                                                 <option>Select Book Category</option>
                                                     <?php
                                                         $ret="SELECT * FROM  tbl_treatiescategory"; 

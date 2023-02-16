@@ -33,49 +33,11 @@
                     <span class="menu_title">Treaty Inventory</span>
                 </a>
                 <ul>
-                    <li><a href="pages_staff_new_book.php">Upload Treaty</a></li>
-                    <li><a href="pages_staff_manage_books.php">Manage Treaty</a></li>
-                </ul>
-
-            </li>
-
-            <!--Library Operations-->
-            <li title="Library Operations">
-                <a href="#">
-                    <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
-                    <span class="menu_title">iLibrary Operations</span>
-                </a>
-                <ul>
-                    <li><a href="pages_staff_new_library_book_borrow_operation.php">Borrow Book</a></li>
-                    <li><a href="pages_staff_new_library_book_return_operation.php">Return Book</a></li>
-                    <li><a href="pages_staff_library_operations_lost_book.php">Lost Books</a></li>
-                    <li><a href="pages_staff_library_operations_damanged_book.php">Damanged Books</a></li>
-                    <li><a href="pages_staff_manage_library_operations.php">Manage Operations</a></li>
-
-                </ul>
-
-            </li>
-            <!--Audits-->
-            <li title="Audits">
-                <a href="#">
-                    <span class="menu_icon"><i class="material-icons">&#xE87B;</i></span>
-                    <span class="menu_title">Audits</span>
-                </a>
-                <ul>
+                    <li><a href="pages_staff_new_treaty.php">Upload Treaty</a></li>
+                    <li><a href="pages_staff_manage_treaty.php">Manage Treaty</a></li>
                     <li><a href="pages_staff_audit_treaty_categories.php">Treaty Categories</a></li>
-                    <li><a href="pages_staff_audit_books_records.php">Treaty Records</a></li>
-
-
                 </ul>
 
-            </li>
-
-            <!--password resets-->
-            <li title="Password Resets">
-                <a href="#">
-                    <span class="menu_icon"><i class="material-icons">lock</i></span>
-                    <span class="menu_title">Password Resets</span>
-                </a>
             </li>
         </ul>
     </div>
