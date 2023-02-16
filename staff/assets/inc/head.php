@@ -89,10 +89,10 @@
                 //get book ID
                 type: "POST",
                 url: "ajax.php",
-                data: 'bookCategoryName=' + val,
+                data: 'treatyCategoryName=' + val,
                 success: function(data) {
                     //alert(data);
-                    $('#BookCategoryID').val(data);
+                    $('#TreatyCategoryID').val(data);
                 }
             });
 

@@ -169,6 +169,10 @@ include("assets/inc/head.php");
                                     <?php } ?>
                                     </select>
                                 </div>
+                                <div class="uk-form-row" style="display:none">
+                                    <label>Book Treaty ID</label>
+                                    <input type="text" id="TreatyCategoryID" required name="tc_id" class="md-input" readonly />
+                                </div>
 
                                 <div class="uk-form-row">
                                     <label>Treaty Year</label>
