@@ -67,8 +67,7 @@
                     <span class="menu_title">Password Resets</span>
                 </a>
                 <ul>
-                    <li><a href="pages_sudo_manage_librarian_password_resets.php">Manage users</a></li>
-                    <li><a href="pages_sudo_manage_student_password_resets.php">Manage uploader</a></li>
+                    <li><a href="pages_sudo_manage_staff_password_resets.php">Manage uploader</a></li>
                 </ul>
             </li>
         </ul>

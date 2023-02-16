@@ -7,7 +7,7 @@
     if(isset($_GET['deleteBookCategory']))
    {
          $id=intval($_GET['deleteBookCategory']);
-         $adn="DELETE FROM  tbl_treatiescategory  WHERE treaty_id = ?";
+         $adn="DELETE FROM  tbl_treatiescategory  WHERE id = ?";
          $stmt= $mysqli->prepare($adn);
          $stmt->bind_param('i',$id);
          $stmt->execute();
@@ -75,16 +75,16 @@
                                     
                             ?>
                                 <tr>
-                                    <td><?php echo $row->treaty_code;?></td>
-                                    <td><?php echo $row->treaty_name;?></td>
+                                    <td><?php echo $row->code;?></td>
+                                    <td><?php echo $row->name;?></td>
                                     <td>
-                                        <a href="pages_sudo_view_book_category.php?category_code=<?php echo $row->treaty_code;?>">
+                                        <a href="pages_sudo_view_treaty_category.php?category_code=<?php echo $row->code;?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
-                                        <a href="pages_sudo_edit_book_category.php?category_code=<?php echo $row->treaty_code;?>">
+                                        <a href="pages_sudo_edit_treaty_category.php?category_code=<?php echo $row->code;?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
-                                        <a href="pages_sudo_manage_categories.php?deleteBookCategory=<?php echo $row->treaty_id;?>">
+                                        <a href="pages_sudo_manage_categories.php?deleteBookCategory=<?php echo $row->id;?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>

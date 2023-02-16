@@ -1,54 +1,13 @@
-<?php 
+<?php
     session_start();
     include('assets/config/config.php');
     include('assets/config/checklogin.php');
     check_login();
-
-    //generate random subcription issue
-    $length = 5;    
-    $code =  substr(str_shuffle('0123456789'),1,$length);
-
-    //update subscription
-    if(isset($_POST['update_subscribed_media']))
-    {
-        $s_id = $_GET['s_id'];
-        $s_title = $_POST['s_title'];
-        $s_code  = $_POST['s_code'];
-        $s_category = $_POST['s_category'];
-        $s_desc = $_POST['s_desc'];
-
-        $s_cover_img = $_FILES["s_cover_img"]["name"];
-        move_uploaded_file($_FILES["s_cover_img"]["tmp_name"],"assets/magazines/".$_FILES["s_cover_img"]["name"]);
-
-        $s_file = $_FILES["s_file"]["name"];
-        move_uploaded_file($_FILES["s_file"]["tmp_name"],"assets/magazines/".$_FILES["s_file"]["name"]);
-        
-        $s_publisher = $_POST['s_publisher'];
-        $s_year = $_POST['s_year'];
-        
-        //Insert Captured information to a database table
-        $query="UPDATE iL_Subscriptions SET s_title=?, s_code=?, s_category=?, s_desc=?, s_cover_img=?, s_file=?, s_publisher=?, s_year=? WHERE s_id = ?";
-        $stmt = $mysqli->prepare($query);
-        //bind paramaters
-        $rc=$stmt->bind_param('ssssssssi',$s_title, $s_code, $s_category, $s_desc, $s_cover_img, $s_file, $s_publisher, $s_year, $s_id);
-        $stmt->execute();
-  
-        //declare a varible which will be passed to alert function
-        if($stmt)
-        {
-            $success = "Subscription Media Updated" && header("refresh:1;url=pages_sudo_manage_subscriptions.php");
-        }
-        else 
-        {
-            $err = "Please Try Again Or Try Later";
-        }      
-    }
 ?>
-
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php
+<?php 
     include("assets/inc/head.php");
 ?>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
@@ -58,141 +17,81 @@
         ?>
     <!-- main header end -->
     <!-- main sidebar -->
-        <?php
+        <?php 
             include("assets/inc/sidebar.php");
         ?>
     <!-- main sidebar end -->
     <?php
-        $s_id = $_GET['s_id'];
-        $ret="SELECT * FROM  iL_Subscriptions WHERE s_id = ?"; 
+        $category_code = $_GET['category_code'];
+        $ret="SELECT * FROM  tbl_treatiescategory WHERE code = ?"; 
         $stmt= $mysqli->prepare($ret) ;
-        $stmt->bind_param('i', $s_id);
+        $stmt->bind_param('s', $category_code);
         $stmt->execute() ;//ok
         $res=$stmt->get_result();
         while($row=$res->fetch_object())
-        {
+    {
     ?>
         <div id="page_content">
             <!--Breadcrums-->
             <div id="top_bar">
                 <ul id="breadcrumbs">
                     <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                    <li><a href="#">Subscribed Media</a></li>
-                    <li><a href="pages_sudo_manage_subscriptions.php">Manage Subscribed Media</a></li>
-                    <li><span>Update <?php echo $row->s_title;?></span></li>
+                    <li><a href="pages_sudo_manage_categories.php">Treaty Inventory</a></li>
+                    <li><span><?php echo $row->name;?></span></li>
                 </ul>
             </div>
-
             <div id="page_content_inner">
-
-                <div class="md-card">
-                    <div class="md-card-content">
-                        <h3 class="heading_a">Please Fill All Fields</h3>
-                        <hr>
-                        <form method="post" enctype="multipart/form-data">
-                            <div class="uk-grid" data-uk-grid-margin>
-                                <div class="uk-width-medium-2-2">
-                                    <div class="uk-form-row">
-                                        <label>Title</label>
-                                        <input type="text" value="<?php echo $row->s_title;?>" required name="s_title" class="md-input" />
+                <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
+                    <div class="uk-width-large-10-10">
+                        <div class="md-card">
+                            <div class="user_heading user_heading_bg" style="background-image: url('assets/img/gallery/Image10.jpg')">
+                                <div class="bg_overlay">
+                                    <div class="user_heading_menu hidden-print">
+                                        <div class="uk-display-inline-block"><i class="md-icon md-icon-light material-icons" id="page_print">&#xE8ad;</i></div>
                                     </div>
-                                    <div class="uk-form-row">
-                                        <label>Code</label>
-                                        <input type="text" required readonly value="SUB-<?php echo $code;?>" name="s_code" class="md-input label-fixed" />
-                                    </div>
-                                    <div class="uk-form-row">
-                                        <label>Publisher</label>
-                                        <input type="text" required  value="<?php echo $row->s_publisher;?>" name="s_publisher" class="md-input label-fixed" />
-                                    </div>
-                                    <div class="uk-form-row">
-                                        <label>Year Published</label>
-                                        <input type="text" required value="<?php echo $row->s_year;?>"  name="s_year" class="md-input label-fixed" />
-                                    </div>
-                                    <div class="uk-form-row">
-                                        <label>Category</label>
-                                        <select name="s_category"class="md-input">
-                                            <option>Art & Architecture</option>
-                                            <option>Boating & Aviation</option>
-                                            <option>Business & Finance</option>
-                                            <option>Cars & Motorcycles</option>
-                                            <option>Celebrity & Gossip</option>
-                                            <option>Comics & Manga</option>
-                                            <option>Crafts</option>
-                                            <option>Culture & Literature</option>
-                                            <option>Family & Parenting</option>
-                                            <option>Fashion</option>
-                                            <option>Food & Wine</option>
-                                            <option>Health & Fitness</option>
-                                            <option>Home & Garden</option>
-                                            <option>Hunting & Fishing</option>
-                                            <option>Kids & Teens</option>
-                                            <option>Luxury</option>
-                                            <option>Men's Lifestyle</option>
-                                            <option>Movies, TV & Music</option>
-                                            <option>News & Politics</option>
-                                            <option>Photography</option>
-                                            <option>Science</option>
-                                            <option>Sports</option>
-                                            <option>Tech & Gaming</option>
-                                            <option>Travel & Outdoor</option>
-                                            <option>Women's Lifestyle</option>
-                                            <option>Adult</option>
-                                        </select>
-                                    </div>
-                                
-                                </div>
-
-                                <div class="uk-width-medium-2-2">
-                                    <div id="file_upload-drop" class="uk-file-upload">
-                                        <p class="uk-text">Drop Media (Subscribed Magazine) Image</p>
-                                        <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                        <a class="uk-form-file md-btn">Choose File<input id="file_upload-select" name="s_cover_img" type="file"></a>
-                                    </div>
-                                    <div id="file_upload-progressbar" class="uk-progress uk-hidden">
-                                        <div class="uk-progress-bar" style="width:0">0%</div>
-                                    </div>
-                                </div>
-
-                                <div class="uk-width-medium-2-2">
-                                    <div id="file_upload-drop" class="uk-file-upload">
-                                        <p class="uk-text">Drop Media File (Only In PDF Formart)</p>
-                                        <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                        <a class="uk-form-file md-btn">Choose Pdf File<input id="file_upload-select" name="s_file" type="file"></a>
-                                    </div>
-                                    <div id="file_upload-progressbar" class="uk-progress uk-hidden">
-                                        <div class="uk-progress-bar" style="width:0">0%</div>
-                                    </div>
-                                </div>
-
-                                <div class="uk-width-medium-2-2">
-                                    <div class="uk-form-row">
-                                        <label>Description</label>
-                                        <textarea cols="30" rows="4" class="md-input" name="s_desc"><?php echo $row->s_desc;?></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="uk-width-medium-2-2">
-                                    <div class="uk-form-row">
-                                        <div class="uk-input-group">
-                                            <input type="submit" class="md-btn md-btn-success" name="update_subscribed_media" value="Upate Subscribed Media" />
-                                        </div>
+                                    <div class="user_heading_content">
+                                        <h2 class="heading_b uk-margin-bottom"><span class="uk-text-truncate"><?php echo $row->name;?></span><span class="sub-heading"><?php echo $row->code;?></span></h2>
+                                        
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
+                        </div>
+                        <div class="md-card">
+                            <div class="user_heading">
+                                <div class="user_heading_menu hidden-print">
+                                    <div class="uk-display-inline-block" data-uk-dropdown="{pos:'left-top'}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user_content">
+                                <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
+                                    <li class="uk-active"><a href="#"><?php echo $row->name;?> Details</a></li>
+                                    <!--
+                                    <li><a href="#">Photos</a></li>
+                                    <li><a href="#">Posts</a></li>
+                                    -->
+                                </ul>
+                                <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
+                                    <li>
+                                        <?php echo $row->desc;?>
+                                        
+                                    </li>
 
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-
     <?php }?>
     <!--Footer-->
     <?php require_once('assets/inc/footer.php');?>
     <!--Footer-->
 
     <!-- google web fonts -->
-    <script>
+    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         WebFontConfig = {
             google: {
                 families: [
@@ -238,8 +137,6 @@
             altair_helpers.ie_fix();
         });
     </script>
-
-   
 
     <div id="style_switcher" style="display: none;">
         <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>

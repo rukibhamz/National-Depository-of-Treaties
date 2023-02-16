@@ -160,7 +160,7 @@ $stmt->close();
     */
 
 //1.0.1 : Number Of Books under Non-fiction Category
-$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Instruments' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Instruments' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($Instruments);
@@ -168,7 +168,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.0.2 : Number Of Books under Fiction Category
-$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Agreements' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Agreements' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($Agreements);
@@ -176,7 +176,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.0.3 : Number Of Books under References Category
-$result = "SELECT COUNT(*) FROM tbl_treaties WHERE treaty_name = 'Memorandum of Understanding' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Memorandum of Understanding' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($Memorandum_of_Understanding);
@@ -507,36 +507,34 @@ include("assets/inc/head.php");
                                         <th>Phone No.</th>
                                         <th>Email</th>
                                         <th>Address</th>
-                                        <th>Gender</th>
                                         <th>Acc Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $ret = "SELECT * FROM  iL_Students";
+                                    $ret = "SELECT * FROM  fmoj_staff";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
                                     while ($row = $res->fetch_object()) {
                                         //use .danger, .warning, .success according to account status
-                                        if ($row->s_acc_status == 'Active') {
-                                            $account_status = "<td class='uk-text-success'>$row->s_acc_status</td>";
-                                        } elseif ($row->s_acc_status == 'Pending') {
-                                            $account_status = "<td class='uk-text-warning'>$row->s_acc_status</td>";
+                                        if ($row->acc_status == 'Active') {
+                                            $account_status = "<td class='uk-text-success'>$row->acc_status</td>";
+                                        } elseif ($row->acc_status == 'Pending') {
+                                            $account_status = "<td class='uk-text-warning'>$row->acc_status</td>";
                                         } else {
-                                            $account_status = "<td class='uk-text-danger'>$row->s_acc_status</td>";
+                                            $account_status = "<td class='uk-text-danger'>$row->acc_status</td>";
                                         }
                                     ?>
                                         <tr>
-                                            <td><?php echo $row->s_name; ?></td>
-                                            <td><?php echo $row->s_number; ?></td>
-                                            <td><?php echo $row->s_phone; ?></td>
-                                            <td><?php echo $row->s_email; ?></td>
-                                            <td><?php echo $row->s_adr; ?></td>
-                                            <td><?php echo $row->s_sex; ?></td>
+                                            <td><?php echo $row->name; ?></td>
+                                            <td><?php echo $row->number; ?></td>
+                                            <td><?php echo $row->phone; ?></td>
+                                            <td><?php echo $row->email; ?></td>
+                                            <td><?php echo $row->adr; ?></td>
                                             <?php echo $account_status; ?>
-
                                         </tr>
+
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -554,40 +552,38 @@ include("assets/inc/head.php");
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Staff&nbsp;No</th>
+                                        <th>Staff Number</th>
                                         <th>Phone No.</th>
                                         <th>Email</th>
                                         <th>Address</th>
-                                        <th>Gender</th>
                                         <th>Acc Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $ret = "SELECT * FROM  iL_Students";
+                                    $ret = "SELECT * FROM  fmoj_staff";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
                                     while ($row = $res->fetch_object()) {
                                         //use .danger, .warning, .success according to account status
-                                        if ($row->s_acc_status == 'Active') {
-                                            $account_status = "<td class='uk-text-success'>$row->s_acc_status</td>";
-                                        } elseif ($row->s_acc_status == 'Pending') {
-                                            $account_status = "<td class='uk-text-warning'>$row->s_acc_status</td>";
+                                        if ($row->acc_status == 'Active') {
+                                            $account_status = "<td class='uk-text-success'>$row->acc_status</td>";
+                                        } elseif ($row->acc_status == 'Pending') {
+                                            $account_status = "<td class='uk-text-warning'>$row->acc_status</td>";
                                         } else {
-                                            $account_status = "<td class='uk-text-danger'>$row->s_acc_status</td>";
+                                            $account_status = "<td class='uk-text-danger'>$row->acc_status</td>";
                                         }
                                     ?>
                                         <tr>
-                                            <td><?php echo $row->s_name; ?></td>
-                                            <td><?php echo $row->s_number; ?></td>
-                                            <td><?php echo $row->s_phone; ?></td>
-                                            <td><?php echo $row->s_email; ?></td>
-                                            <td><?php echo $row->s_adr; ?></td>
-                                            <td><?php echo $row->s_sex; ?></td>
+                                            <td><?php echo $row->name; ?></td>
+                                            <td><?php echo $row->number; ?></td>
+                                            <td><?php echo $row->phone; ?></td>
+                                            <td><?php echo $row->email; ?></td>
+                                            <td><?php echo $row->adr; ?></td>
                                             <?php echo $account_status; ?>
-
                                         </tr>
+
                                     <?php } ?>
                                 </tbody>
                             </table>

@@ -1,123 +1,114 @@
-<?php
+<?php 
     session_start();
     include('assets/config/config.php');
     include('assets/config/checklogin.php');
     check_login();
 
-    //delete student password reset request
-    if(isset($_GET['deletePasswordRequest']))
-   {
-         $id=intval($_GET['deletePasswordRequest']);
-         $adn="DELETE FROM  il_passwordresets  WHERE pr_id = ?";
-         $stmt= $mysqli->prepare($adn);
-         $stmt->bind_param('i',$id);
-         $stmt->execute();
-         $stmt->close();	 
-   
-            if($stmt)
-            {
-                $info = "Deleted";
-            }
-            else
-            {
-                $err = "Try Again Later";
-            }
-     }
-?>    
+    //update a book category
+    if(isset($_POST['update_book_category']))
+    {
+        $category_code = $_GET['category_code'];
+        $bc_name = $_POST['bc_name'];
+        $bc_desc = $_POST['bc_desc'];
+        
+        //Insert Captured information to a database table
+        $query="UPDATE tbl_treatiescategory SET bc_name=?, bc_desc=? WHERE bc_code =?";
+        $stmt = $mysqli->prepare($query);
+        //bind paramaters
+        $rc=$stmt->bind_param('sss',  $bc_name, $bc_desc, $category_code);
+        $stmt->execute();
+  
+        //declare a varible which will be passed to alert function
+        if($stmt)
+        {
+            $success = "Book Category Updated" && header("refresh:1;url=pages_sudo_manage_categories.php");
+        }
+        else 
+        {
+            $err = "Please Try Again Or Try Later";
+        }      
+    }
+?>
+
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php 
+<?php
     include("assets/inc/head.php");
 ?>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
-    <?php
-        include("assets/inc/nav.php");
-    ?>
+        <?php 
+            include("assets/inc/nav.php");
+        ?>
     <!-- main header end -->
     <!-- main sidebar -->
-    <?php
-        include("assets/inc/sidebar.php");
-    ?>
+        <?php
+            include("assets/inc/sidebar.php");
+        ?>
     <!-- main sidebar end -->
-
+    <?php 
+        $category_code = $_GET['category_code'];
+        $ret="SELECT * FROM  tbl_treatiescategory WHERE code = ?"; 
+        $stmt= $mysqli->prepare($ret) ;
+        $stmt->bind_param('s', $category_code);
+        $stmt->execute() ;//ok
+        $res=$stmt->get_result();
+        while($row=$res->fetch_object())
+    {
+    ?>
     <div id="page_content">
-    <!--BreadCrumps-->
+        <!--Breadcrums-->
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Password Resets</a></li>
-                <li><span>Manage Students Password Resets</span></li>
+                <li><a href="pages_sudo_manage_categories.php">Treaty Inventory</a></li>
+                <li><span>Update <?php echo $row->name;?></span></li>
             </ul>
         </div>
+
         <div id="page_content_inner">
 
-            <h4 class="heading_a uk-margin-bottom">Students Accounts Requesting For Password Resets</h4>
-            <div class="md-card uk-margin-medium-bottom">
+            <div class="md-card">
                 <div class="md-card-content">
-                    <div class="dt_colVis_buttons"></div>
-                    <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Token</th>
-                            <th>Requested Date</th>
-                            <th>Actions</th>
-                        </tr>
-                      
-                        <tbody>
-                            <?php 
-                                $ret="SELECT * FROM  il_passwordresets WHERE pr_usertype = 'Student'"; 
-                                $stmt= $mysqli->prepare($ret) ;
-                                $stmt->execute() ;//ok
-                                $res=$stmt->get_result();
-                                while($row=$res->fetch_object())
-                                {
-                                     //trim timestamp to DD-MM-YYYY
-                                     $rd = $row->created_at;
-                            ?>
-                                <tr>
-                                    <td class="uk-text-success" ><?php echo $row->pr_useremail;?></td>
-                                    <td><?php echo $row->pr_token;?></td>
-                                    <td class="uk-text-primary"><?php echo date("d-M-Y h:m:s", strtotime($rd));?></td> 
-                                    <td>
-                                    <?php 
-                                           //mailing password logic
+                    <h3 class="heading_a">Please Fill All Fields</h3>
+                    <hr>
+                    <form method="post">
+                        <div class="uk-grid" data-uk-grid-margin>
+                            <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <label>Book Category Name</label>
+                                    <input type="text" required name="name" value="<?php echo $row->name;?>" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Book Category Code</label>
+                                    <input type="text" required readonly value="<?php echo $row->code;?> " name="code" class="md-input label-fixed" />
+                                </div>
+                               
+                            </div>
 
-                                        if ($row->pr_status == 'Pending')
-                                        {
-                                        echo    "
-                                                    <a href='pages_sudo_update_student_password.php?email=$row->pr_useremail&pass=$row->pr_dummypwd&pr_id=$row->pr_id&pr_status=Reset'>
-                                                        <span class='uk-badge uk-badge-primary'>Change Passsword</span>
-                                                    </a>
-                                                 ";
-
-                                        }
-                                        else
-                                        {
-                                          echo   "
-                                                    <a href='mailto:$row->pr_useremail?subject=Password Reset Request&body=Token:$row->pr_token,New Password=$row->pr_dummypwd'>
-                                                        <span class='uk-badge uk-badge-success'>Send Mail</span>
-                                                    </a>
-                                                 ";
-                                        }
-
-                                    ?>
-                                        <a href="pages_sudo_manage_librarian_password_resets.php?deletePasswordRequest=<?php echo $row->pr_id;?>">
-                                            <span class='uk-badge uk-badge-danger'>Delete</span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            <?php }?>
-                        </tbody>
-                    </table>
+                            <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <label>Book Category Description</label>
+                                    <textarea cols="30" rows="4" class="md-input" name="desc"><?php echo $row->desc;?></textarea>
+                                </div>
+                            </div>
+                            <div class="uk-width-medium-2-2">
+                                <div class="uk-form-row">
+                                    <div class="uk-input-group">
+                                        <input type="submit" class="md-btn md-btn-success" name="update_book_category" value="Update  Book Category" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
         </div>
     </div>
+    
+    <?php }?>
     <!--Footer-->
     <?php require_once('assets/inc/footer.php');?>
     <!--Footer-->
@@ -150,25 +141,7 @@
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
 
-    <!-- page specific plugins -->
-    <!-- datatables -->
-    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <!-- datatables buttons-->
-    <script src="bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
-    <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
-    <script src="bower_components/jszip/dist/jszip.min.js"></script>
-    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
-    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.colVis.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
 
-    <!-- datatables custom integration -->
-    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
-
-    <!--  datatables functions -->
-    <script src="assets/js/pages/plugins_datatables.min.js"></script>
-    
     <script>
         $(function() {
             if(isHighDensity()) {
@@ -187,6 +160,8 @@
             altair_helpers.ie_fix();
         });
     </script>
+
+   
 
     <div id="style_switcher" style="display: none;">
         <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>

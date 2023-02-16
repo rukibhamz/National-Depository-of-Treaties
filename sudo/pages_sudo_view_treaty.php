@@ -25,8 +25,8 @@ include("assets/inc/head.php");
     ?>
     <!-- main sidebar end -->
     <?php
-    $docs_id = $_GET['docs_id'];
-    $ret = "SELECT * FROM  tbl_treaties WHERE treaty_id = ?";
+    $docs_id = $_GET['doc_id'];
+    $ret = "SELECT * FROM  tbl_treaties WHERE id = ?";
     $stmt = $mysqli->prepare($ret);
     $stmt->bind_param('s', $docs_id);
     $stmt->execute(); //ok
@@ -45,7 +45,7 @@ include("assets/inc/head.php");
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
                 <li><a href="pages_sudo_manage_books.php">Treaties</a></li>
-                <li><span><?php echo $row->b_title; ?></span></li>
+                <li><span><?php echo $row->title; ?></span></li>
             </ul>
         </div>
         <div id="page_content_inner">
@@ -62,7 +62,7 @@ include("assets/inc/head.php");
                                 <div class="user_heading_content">
                                     <div class="space-10"></div>
                                     <h2 class="heading_b uk-margin-bottom"><span
-                                            class="uk-text-truncate"><?php echo $row->b_title; ?></span>
+                                            class="uk-text-truncate"><?php echo $row->title; ?></span>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ include("assets/inc/head.php");
                             <ul id="user_profile_tabs" class="uk-tab"
                                 data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}">
                                 <!-- data-uk-sticky="{ top: 48, media: 960 }"  -->
-                                <li class="preview uk-active"><a href="#"><?php echo $row->b_title; ?> Details</a></li>
+                                <li class="preview uk-active"><a href="#"><?php echo $row->title; ?> Details</a></li>
                                 <!--
                                     <li><a href="#">Photos</a></li>
                                     <li><a href="#">Posts</a></li>
@@ -99,7 +99,7 @@ include("assets/inc/head.php");
                                                     </div>
                                                     <div class="md-list-content">
                                                         <span
-                                                            class="md-list-heading"><?php echo $row->b_author; ?></span>
+                                                            class="md-list-heading"><?= $row->b_publisher; ?></span>
                                                         <span class="uk-text-small uk-text-muted">Author</span>
                                                     </div>
                                                 </li>
@@ -141,8 +141,8 @@ include("assets/inc/head.php");
                                                     </div>
                                                     <div class="md-list-content">
                                                         <span
-                                                            class="md-list-heading"><?php echo $row->bc_name; ?></span>
-                                                        <span class="uk-text-small uk-text-muted">Book Category</span>
+                                                            class="md-list-heading"><?= $row->tc_name; ?></span>
+                                                        <span class="uk-text-small uk-text-muted">Treaty Category</span>
                                                     </div>
                                                 </li>
 
@@ -172,7 +172,7 @@ include("assets/inc/head.php");
                                     ?>
                             </div>
                             <div class="md-card">
-                                <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['docs_id'] ?>">
+                                <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -241,12 +241,12 @@ include("assets/inc/head.php");
         integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-    const docsContainer = document.getElementById('<?= 'preview-', $_GET['docs_id'] ?>')
+    const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
     const fileName = docsContainer.getAttribute('data-value');
     const fileExt = fileName.split(".").pop();
     // console.log(fileExt, fileName, docsContainer, 'hello =>', typeof fileExt)
     if (fileExt === 'pdf') {
-        PDFObject.embed(`assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['docs_id'] ?>");
+        PDFObject.embed(`assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");
     }
     </script>
 </body>

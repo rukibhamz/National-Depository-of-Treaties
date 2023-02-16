@@ -43,7 +43,7 @@ include("assets/inc/head.php");
                 $res = $stmt->get_result();
                 $numRows = $res->num_rows;
             ?>
-            <h3 class="heading_a uk-margin-bottom text">Recent -New treaties Published ( <?= $numRows ?> )</h3>
+            <h3 class="heading_a uk-margin-bottom text">Recent -New treaties published ( <?= $numRows ?> )</h3>
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                     <div class="dt_colVis_buttons"></div>
@@ -66,13 +66,13 @@ include("assets/inc/head.php");
                             while ($row = $res->fetch_object()) {
                             ?>
                                 <tr>
-                                    <td class="uk-text-truncate"><?php echo $row->b_title; ?></td>
-                                    <td><?php echo $row->b_author; ?></td>
-                                    <td><?php echo $row->bc_name; ?></td>
-                                    <td><?php echo $row->b_copies; ?> Copies</td>
-                                    <td><?php echo $row->b_publisher; ?> Copies</td>
+                                    <td class="uk-text-truncate"><?= $row->title; ?></td>
+                                    <td><?= $row->signatory; ?></td>
+                                    <td><?= $row->tc_name; ?></td>
+                                    <td><?= $row->b_copies; ?> Copies</td>
+                                    <td><?= $row->b_publisher; ?> Copies</td>
                                     <td>
-                                        <a href="pages_sudo_view_book.php?docs_id=<?php echo $row->b_id; ?>">
+                                        <a href="pages_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
                                     </td>
