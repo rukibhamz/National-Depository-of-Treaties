@@ -171,7 +171,7 @@ require_once('sudo/assets/config/config.php');
                                     <div class="media">
                                         <div class="media-body">
                                             <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
-                                            <h6>Category: <?= $row->treaty_name; ?></h6>
+                                            <h6>Category: <?= $row->tc_name; ?></h6>
                                             <div class="space-10"></div>
                                             <div class="title-bar blue text-center">
                                                 <ul class="list-inline list-unstyled">
@@ -180,7 +180,7 @@ require_once('sudo/assets/config/config.php');
                                             </div>
                                             <div class="space-10"></div>
                                             <div class="row">
-                                                <div class="col-md-4"> <a href="treaty.php?docs_id=<?php echo $row->treaty_id; ?>" class="text-primary">View</a></div>
+                                                <div class="col-md-4"> <a href="treaty.php?doc_id=<?php echo $row->id; ?>" class="text-primary">View</a></div>
 
                                                 <div class="col-md-8">
                                                     <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
@@ -213,7 +213,7 @@ require_once('sudo/assets/config/config.php');
                                 $res = $stmt->get_result();
                                 while ($row = $res->fetch_object()) {
                                 ?>
-                                    <li><a href="#" class="text-success"><?php echo $row->treaty_name; ?></a></li>
+                                    <li><a href="#" class="text-success"><?php echo $row->name; ?></a></li>
                                 <?php } ?>
                             </ul>
                             <!-- <a href="#" class="btn btn-primary btn-xs">See All</a> -->

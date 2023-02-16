@@ -1,7 +1,7 @@
 <?php
 require_once('sudo/assets/config/config.php');
-$docs_id = $_GET['docs_id'];
-$ret = "SELECT * FROM  tbl_treaties WHERE treaty_id = ?";
+$docs_id = $_GET['doc_id'];
+$ret = "SELECT * FROM  tbl_treaties WHERE id = ?";
 $stmt = $mysqli->prepare($ret);
 $stmt->bind_param('s', $docs_id);
 $stmt->execute(); //ok
@@ -153,7 +153,7 @@ while ($row = $res->fetch_object()) {
                                             ?>
                                         </div>
                                         <div class="md-card">
-                                            <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['docs_id'] ?>">
+                                            <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">
                                             </div>
                                         </div>
                                         <div class="media-body">
@@ -197,7 +197,7 @@ while ($row = $res->fetch_object()) {
             const fileExt = fileName.split(".").pop();
             // console.log(fileExt, fileName, docsContainer, 'hello =>', typeof fileExt)
             if (fileExt === 'pdf') {
-                PDFObject.embed(`sudo/assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['docs_id'] ?>");
+                PDFObject.embed(`sudo/assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");
             }
         </script>
 

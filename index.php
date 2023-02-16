@@ -209,8 +209,9 @@ require_once('sudo/assets/config/config.php');
                         <div class="category-item well blue">
                             <div>
                                 <!-- <p>Newly added treaties</p> -->
-                                <h3><?php echo $row->treaty_name; ?></h3>
-                                <p class="trim"><?= $row->treaty_desc; ?></p>
+                                <small><?= $row->code; ?></small>
+                                <h3><?= $row->name; ?></h3>
+                                <p class="trim"><?= $row->desc; ?></p>
                                 <div class="text-center">
 
                                     <div class="space-10"></div>
