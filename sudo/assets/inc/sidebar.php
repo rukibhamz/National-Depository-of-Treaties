@@ -60,6 +60,18 @@
                     <li><a href="pages_sudo_manage_categories.php">Manage</a></li>
                 </ul>
             </li>
+
+            <!--Manage Status-->
+            <li title="Status">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                    <span class="menu_title">Status</span>
+                </a>
+                <ul>
+                    <li><a href="treaty_sudo_add_status.php">Add</a></li>
+                    <li><a href="treaty_sudo_manage_status.php">Manage</a></li>
+                </ul>
+            </li>
             <!--password resets-->
             <li title="Password Resets">
                 <a href="#">

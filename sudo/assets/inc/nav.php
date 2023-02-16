@@ -30,13 +30,6 @@
         Messanges Counter
     */  
 
-    $result ="SELECT count(*) FROM  iL_receivedMails  WHERE sm_receiverName = 'System Admin' ";
-    $stmt = $mysqli->prepare($result);
-    $stmt->execute();
-    $stmt->bind_result($msg_cnt);
-    $stmt->fetch();
-    $stmt->close();
-
 
     /*
         Notifications Counter
@@ -50,8 +43,6 @@
     $stmt->fetch();
     $stmt->close();
     
-    //total messanges and notifications
-    $total_alerts = $msg_cnt + $notifications_cnt;
 ?>
 
     <header id="header_main">
@@ -67,48 +58,13 @@
                         <ul class="uk-navbar-nav user_actions">
                             <li><a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">fullscreen</i></a></li>
                             <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
-                                <a href="#" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE7F4;</i><span class="uk-badge"><?php echo $total_alerts;?></span></a>
+                                <a href="#" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE7F4;</i><span class="uk-badge"><?php echo $notifications_cnt;?></span></a>
                                 <div class="uk-dropdown uk-dropdown-xlarge">
                                     <div class="md-card-content">
                                         <ul class="uk-tab uk-tab-grid" data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
-                                            <li class="uk-width-1-2 uk-active"><a href="#" class="js-uk-prevent uk-text-small">Messages (<?php echo $msg_cnt;?>)</a></li>
                                             <li class="uk-width-1-2"><a href="#" class="js-uk-prevent uk-text-small">Alerts (<?php echo $notifications_cnt;?>)</a></li>
                                         </ul>
                                         <ul id="header_alerts" class="uk-switcher uk-margin">
-                                            <li>
-                                            <!--
-                                                <ul class="md-list md-list-addon">
-
-                                                    <?php
-                                                        //display all messeges
-                                                        $ret="SELECT * FROM  iL_receivedMails  WHERE sm_receiverName = 'System Admin' "; 
-                                                        $stmt= $mysqli->prepare($ret) ;
-                                                        $stmt->execute() ;//ok
-                                                        $res=$stmt->get_result();
-                                                        while($row=$res->fetch_object())
-                                                        {
-                                                            
-                                                            $sender_initials = $row->sm_senderName;
-                                                            
-                                                    ?>
-                                                        <li>
-                                                            <div class="md-list-addon-element">
-                                                                <span class="md-user-letters md-bg-cyan"><?php echo $sender_initials[0];?></span>
-                                                            </div>
-                                                            <div class="md-list-content">
-                                                                <span class="md-list-heading"><a href="pages_sudo_mail.php?sender=<?php echo $row->sm_senderName;?>"><?php echo $row->sm_senderName;?></a></span>
-                                                                <span class="uk-text-small uk-text-muted uk-text-truncate"><?php echo $row->sm_title;?></span>
-                                                            </div>
-                                                        </li>
-
-                                                    <?php }?>
-                                                </ul>
-                                                
-                                                <div class="uk-text-center uk-margin-top uk-margin-small-bottom">
-                                                    <a href="pages_sudo_manage_incommingmails.php" class="md-btn md-btn-flat md-btn-flat-primary js-uk-prevent">Show All</a>
-                                                </div>
-                                                -->
-                                            </li>
 
                                             <li>
                                                 <ul class="md-list md-list-addon">

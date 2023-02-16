@@ -149,7 +149,6 @@ include("assets/inc/head.php");
                                 <div class="uk-form-row">
                                     <label>Treaty Category</label>
                                     <select required onChange="getTreatyId(this.value);" name="tc_name" id="tc_name" class="md-input" />
-                                    <option value="">Select Treaty Category</option>
                                     <?php
                                     $ret = "SELECT * FROM  tbl_treatiescategory";
                                     $stmt = $mysqli->prepare($ret);

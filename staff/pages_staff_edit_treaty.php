@@ -32,19 +32,20 @@ if (isset($_POST['update_treaty'])) {
     $treaty_year = $_POST['treaty_year'];
     $b_status = $_POST['b_status'];
 
-    $b_file = $_FILES["b_file"]["name"];
-    move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
+
+    // $b_file = $_FILES["b_file"]["name"];
+    // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
     //Insert Captured information to a database table
-    $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, b_status) VALUES (?,?,?,?,?,?,?,?,?)";
+    $query = "UPDATE tbl_treaties SET title=?, signatory=?, b_publisher=?, tc_id=?, tc_name=?, b_summary=?, treaty_year=?, b_status=? WHERE id =?";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
-    $rc = $stmt->bind_param('sssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $b_status);
+    $rc = $stmt->bind_param('ssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $b_status, $doc_id);
     $stmt->execute();
 
     //declare a varible which will be passed to alert function
     if ($stmt) {
-        $success = "Treaty Record Updated" && header("refresh:1;url=pages_staff_manage_treaty.php");
+        $success = "Treaty Updated Successfully" && header("refresh:1;url=pages_staff_manage_treaty.php");
     } else {
         $err = "Please Try Again Or Try Later";
     }
@@ -100,76 +101,77 @@ include("assets/inc/head.php");
                             <div class="uk-grid" data-uk-grid-margin>
                                 <div class="uk-width-medium-1-2">
                                     <div class="uk-form-row">
-                                        <label>Title</label>
+                                        <label>Treaty Title</label>
                                         <input type="text" value="<?= $row->title; ?>" required name="title" class="md-input" />
                                     </div>
                                     <div class="uk-form-row">
                                         <label>Treaty Signatory</label>
                                         <input type="text" value="<?= $row->signatory; ?>" required name="signatory" class="md-input" />
                                     </div>
-
                                     <div class="uk-form-row">
                                         <label>Treaty Status</label>
-                                        <select value="<?= $row->b_status; ?>" required name="b_status" id="b_status" class="md-input">
-                                            <option>Select Treaty Status</option>
+                                        <select required name="b_status" id="b_status" class="md-input">
                                             <?php
                                             $ret = "SELECT DISTINCT b_status FROM tbl_treaties";
                                             $stmt = $mysqli->prepare($ret);
-                                            $stmt->execute();
+                                            $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($row = $res->fetch_object()) {
+                                            $selected_status = $row->b_status ? $row->b_status : '';
+                                            while ($row1 = $res->fetch_object()) {
+                                                $selected = ($row1->b_status == $selected_status) ? 'selected' : '';
                                             ?>
-                                                <option value="<?= $row->b_status; ?>"><?= $row->b_status; ?></option>
+                                                <option value="<?= $row1->b_status ?>" <?= $selected ?>><?= $row1->b_status ?></option>
                                             <?php } ?>
                                         </select>
 
                                     </div>
                                 </div>
-                                
+
                                 <div class="uk-width-medium-1-2">
                                     <div class="uk-form-row">
-                                        <label>Publisher</label>
-                                        <input type="text" value="<?= $row->b_publisher; ?>" required class="md-input" name="b_publisher" />
+                                        <label>Treaty Publisher</label>
+                                        <input type="text" value="<?= $user->name ?>" readonly class="md-input" name="b_publisher" />
                                     </div>
 
                                     <div class="uk-form-row">
-                                        <label>Book Category</label>
-                                        <select value="<?= $row->tc_name; ?>" required onChange="getTreatyId(this.value);" name="tc_name" class="md-input" />
-                                        <option>Select Treaty Category</option>
+                                        <label>Treaty Category</label>
+                                        <select value="<?= $row->tc_name; ?>" required onChange="getTreatyId(this.value);" name="tc_name" id="tc_name" class="md-input" />
                                         <?php
-                                        $ret = "SELECT * FROM  tbl_treatiescategory";
+                                        $ret = "SELECT * FROM tbl_treatiescategory";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute(); //ok
                                         $res = $stmt->get_result();
-                                        while ($row = $res->fetch_object()) {
+                                        $selected_status = $row->tc_name ? $row->tc_name : '';
+                                        while ($row2 = $res->fetch_object()) {
+                                            $selected = ($row2->name == $selected_status) ? 'selected' : '';
                                         ?>
-                                            <option value="<?= $row->name; ?>"><?= $row->code; ?> - <?= $row->name; ?></option>
+                                            <option value="<?= $row2->name ?>" <?= $selected ?>><?= $row2->name ?></option>
                                         <?php } ?>
                                         </select>
                                     </div>
-
                                     <div class="uk-form-row" style="display:none">
                                         <label>Treaty Category ID</label>
-                                        <input type="text" id="TreatyCategoryID" required name="tc_id" class="md-input" />
+                                        <input type="text" id="TreatyCategoryID" value="<?= $row->tc_id ?>" required name="tc_id" class="md-input" readonly />
                                     </div>
+
                                     <div class="uk-form-row">
                                         <label>Treaty Year</label>
-                                        <input type="text" value="<?= $row->treaty_year; ?>" id="treaty_year" required name="treaty_year" class="md-input" />
+                                        <input type="text" id="treaty_year" value="<?= $row->treaty_year ?>" required name="treaty_year" class="md-input" />
                                     </div>
 
                                 </div>
 
-                                <div class="uk-width-medium-2-2">
+                                <!-- <div class="uk-width-medium-2-2">
                                     <div id="file_upload-drop" class="uk-file-upload">
-                                        <p class="uk-text">Drop Book Cover Image</p>
+                                        <p class="uk-text">Drop Treaty Document</p>
                                         <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                        <a class="uk-form-file md-btn">Choose File<input id="file_upload-select" name="b_coverimage" type="file"></a>
+                                        <a class="uk-form-file md-btn">Choose File<input id="file_upload-select" name="b_file" type="file" accept="image/*, .pdf"></a>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="uk-width-medium-2-2">
                                     <div class="uk-form-row">
-                                        <label>Cover Page Summary</label>
+                                        <label>Treaty Description</label>
                                         <?php
                                         $doc_id = $_GET['doc_id'];
                                         $ret = "SELECT * FROM  tbl_treaties WHERE id = ?";
@@ -187,7 +189,7 @@ include("assets/inc/head.php");
                                 <div class="uk-width-medium-2-2">
                                     <div class="uk-form-row">
                                         <div class="uk-input-group">
-                                            <input type="submit" class="md-btn md-btn-success" name="update_treaty" value="Update Treaty" />
+                                            <input type="submit" class="md-btn md-btn-success" name="update_treaty" value="Update Book" />
                                         </div>
                                     </div>
                                 </div>

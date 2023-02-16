@@ -1,17 +1,17 @@
 <?php
 include('assets/config/pdoconfig.php');
-if(!empty($_POST["bookCategoryName"])) 
+if(!empty($_POST["treatyCategoryName"])) 
 {	
     //get instructor id
-    $id=$_POST['bookCategoryName'];
-    $stmt = $DB_con->prepare("SELECT * FROM tbl_treatiescategory WHERE  bc_name = :id");
+    $id=$_POST['treatyCategoryName'];
+    $stmt = $DB_con->prepare("SELECT * FROM tbl_treatiescategory WHERE name = :id");
     $stmt->execute(array(':id' => $id));
 ?>
 <?php
     while($row=$stmt->fetch(PDO::FETCH_ASSOC))
 {
 ?>
-<?php echo htmlentities($row['bc_id']); ?>
+<?php echo htmlentities($row['id']); ?>
 <?php
 }
 }

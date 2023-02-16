@@ -7,34 +7,6 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 
-
-/*
-    Statics logic
-        1.Books
-            1.0 : Number of all book categories in the library
-            1.1 : Number of all books no matter what category
-            1.2 : Number of all Borrowed Books no matter what category
-            1.3 : Number of all Lost Books no matter what category
-
-        2.Library Users(Students and Librarians)
-            2.0 : Number of Employed Librarians
-            2.1 : Number of all Enrolled Students
-            2.2 : Number of all Enrolled Students with pending account activation
-            2.3 : Number of all Employed Librarians with pending accounts activations
-        3.Misc
-            3.0 : Number of all Librarians requestings for Password Resets
-            3.1 : Number of all students requesting for password resets
-            3.2 : Number of Unread Messsanges inbox
-            3.3 : Number of all amount paid by students as a fine of loosing and damaging any book
-
-    Charts
-         1.Books
-            1.0 : Number Of Books Per Book Category ->PieChart
-            1.1 : Number of Borrowed Books Per Books Category ->Piechart or Donought Chart
-
-
-
-    */
 //1.Books
 
 //1.0 : Number of all book categories in the library
@@ -53,39 +25,6 @@ $stmt->bind_result($books);
 $stmt->fetch();
 $stmt->close();
 
-//1.2 : Number of all Borrowed Books no matter what category
-$result = "SELECT count(*) FROM il_libraryoperations WHERE lo_type = 'Borrow' AND lo_status = '' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_books);
-$stmt->fetch();
-$stmt->close();
-
-//1.3 : Number of all Lost Books no matter what category
-$result = "SELECT count(*) FROM il_libraryoperations WHERE lo_status = 'Lost'  ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($lost_books);
-$stmt->fetch();
-$stmt->close();
-
-//1.3.1 : Number of all Damanged no matter what category
-$result = "SELECT count(*) FROM il_libraryoperations WHERE  lo_status = 'Damanged' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($damanged_books);
-$stmt->fetch();
-$stmt->close();
-
-//1.3.2 : Number of all returned books no matter what category
-$result = "SELECT count(*) FROM il_libraryoperations WHERE lo_status = 'Returned'  ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($Returned);
-$stmt->fetch();
-$stmt->close();
-
-$damanged_and_lost_books = $lost_books + $damanged_books;
 
 
 //2.Library Users(Students and Librarians)
@@ -96,22 +35,6 @@ $stmt->execute();
 $stmt->bind_result($librarians);
 $stmt->fetch();
 $stmt->close();
-
-//2.1 : Number of all Enrolled Students
-// $result = "SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Active' ";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($students);
-// $stmt->fetch();
-// $stmt->close();
-
-// //2.2 : Number of all Enrolled Students with pending account activation
-// $result = "SELECT count(*) FROM iL_Students WHERE s_acc_status = 'Pending' ";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($pending_students);
-// $stmt->fetch();
-// $stmt->close();
 
 //2.3 : Number of all Employed Librarians with pending accounts activations
 $result = "SELECT count(*) FROM fmoj_staff WHERE acc_status = 'Pending' ";
@@ -139,25 +62,6 @@ $stmt->bind_result($pending_student_pwd_resets);
 $stmt->fetch();
 $stmt->close();
 
-//3.2 : Number of Subcribed media in the system
-// $result = "SELECT count(*) FROM iL_Subscriptions ";
-// $stmt = $mysqli->prepare($result);
-// //$stmt->bind_param('i', $id);
-// $stmt->execute();
-// $stmt->bind_result($subscriptions);
-// $stmt->fetch();
-// $stmt->close();
-
-//3.3 : Number of all amount paid by students as a fine of loosing  any book
-
-
-
-
-/*
-        The following block of codes implements Books Charts
-
-        -->Books Category Will be HardCoded so my bad<--
-    */
 
 //1.0.1 : Number Of Books under Non-fiction Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Instruments' ";
@@ -180,30 +84,6 @@ $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Memorandum of Unde
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($Memorandum_of_Understanding);
-$stmt->fetch();
-$stmt->close();
-
-//1.1.0 : Number of Borrowed Books Per Books in Non-fiction Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Non-fiction' AND lo_type ='Borrow' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_non_fiction);
-$stmt->fetch();
-$stmt->close();
-
-//1.1.1 : Number of Borrowed Books Per Books in fiction Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'Fiction' AND lo_type ='Borrow' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_fiction);
-$stmt->fetch();
-$stmt->close();
-
-//1.1.2 : Number of Borrowed Books Per Books in References Category ->Piechart or Donought Chart
-$result = "SELECT COUNT(*) FROM il_libraryoperations WHERE bc_name = 'References' AND lo_type ='Borrow' ";
-$stmt = $mysqli->prepare($result);
-$stmt->execute();
-$stmt->bind_result($borrowed_references);
 $stmt->fetch();
 $stmt->close();
 

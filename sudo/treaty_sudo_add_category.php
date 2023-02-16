@@ -12,42 +12,42 @@
 
     {
                 $error = 0;
-                if (isset($_POST['bc_code']) && !empty($_POST['bc_code'])) {
-                    $bc_code=mysqli_real_escape_string($mysqli,trim($_POST['bc_code']));
+                if (isset($_POST['code']) && !empty($_POST['code'])) {
+                    $bc_code=mysqli_real_escape_string($mysqli,trim($_POST['code']));
                 }else{
                     $error = 1;
-                    $err="Book Category number cannot be empty";
+                    $err="Treaty Category number cannot be empty";
                 }
-                if (isset($_POST['bc_name']) && !empty($_POST['bc_name'])) {
-                    $bc_name=mysqli_real_escape_string($mysqli,trim($_POST['bc_name']));
+                if (isset($_POST['name']) && !empty($_POST['name'])) {
+                    $bc_name=mysqli_real_escape_string($mysqli,trim($_POST['name']));
                 }else{
                     $error = 1;
-                    $err="Book Category name cannot be empty";
+                    $err="Treaty Category name cannot be empty";
                 }
                 
                 if(!$error)
                 {
-                    $sql="SELECT * FROM  tbl_treatiescategory WHERE  bc_code='$bc_code' ";
+                    $sql="SELECT * FROM  tbl_treatiescategory WHERE  code='$bc_code' ";
                     $res=mysqli_query($mysqli,$sql);
                     if (mysqli_num_rows($res) > 0) {
                     $row = mysqli_fetch_assoc($res);
-                    if ($bc_code==$row['bc_code'])
+                    if ($bc_code==$row['code'])
                     {
-                        $err =  "Book category code already exists";
+                        $err =  "Treaty category code already exists";
                     }
                     else
                     {
-                        $err =  "Book category code already exists";
+                        $err =  "Treaty category code already exists";
                     }
                 }
                 else
                 {
-                $bc_code = $_POST['bc_code'];
-                $bc_name = $_POST['bc_name'];
-                $bc_desc = $_POST['bc_desc'];
+                $bc_code = $_POST['code'];
+                $bc_name = $_POST['name'];
+                $bc_desc = $_POST['desc'];
                 
                 //Insert Captured information to a database table
-                $query="INSERT INTO tbl_treatiescategory (bc_code, bc_name, bc_desc) VALUES (?,?,?)";
+                $query="INSERT INTO tbl_treatiescategory (code, name, desc) VALUES (?,?,?)";
                 $stmt = $mysqli->prepare($query);
                 //bind paramaters
                 $rc=$stmt->bind_param('sss', $bc_code, $bc_name, $bc_desc);
@@ -56,7 +56,7 @@
                 //declare a varible which will be passed to alert function
                 if($stmt)
                 {
-                    $success = "Book Category Added";
+                    $success = "Treaty Category Added";
                 }
                 else 
                 {
@@ -106,11 +106,11 @@
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Category Name</label>
-                                    <input type="text" required name="bc_name" class="md-input" />
+                                    <input type="text" required name="name" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Category Code</label>
-                                    <input type="text" required readonly value="BC-<?php echo $Number;?>" name="bc_code" class="md-input label-fixed" />
+                                    <input type="text" required readonly value="TR-<?php echo $Number;?>" name="code" class="md-input label-fixed" />
                                 </div>
                                
                             </div>
@@ -118,7 +118,7 @@
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Category Description</label>
-                                    <textarea cols="30" rows="4" class="md-input" name="bc_desc"></textarea>
+                                    <textarea cols="30" rows="4" class="md-input" name="desc"></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">

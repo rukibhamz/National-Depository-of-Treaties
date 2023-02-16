@@ -91,7 +91,6 @@
                 url: "ajax.php",
                 data: 'treatyCategoryName=' + val,
                 success: function(data) {
-                    //alert(data);
                     $('#TreatyCategoryID').val(data);
                 }
             });
