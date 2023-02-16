@@ -127,9 +127,14 @@ require_once('sudo/assets/config/config.php');
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="treaty">
+<<<<<<< Updated upstream
                                         <form action="books.php">
+=======
+                                        <form action="treaties.php" method="POST">
+>>>>>>> Stashed changes
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Enter book name">
+                                                <input type="text" name="treaty_search" 
+                                                class="form-control" placeholder="Enter document title">
                                                 <div class="input-group-btn">
                                                     <button type="submit" class="btn btn-primary px-3">Search <i class="icofont icofont-search-alt-2"></i></button>
                                                 </div>

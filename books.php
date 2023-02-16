@@ -58,7 +58,11 @@
                     <!--Mainmenu list-->
                          <div class="collapse navbar-collapse navbar-right" id="mainmenu">
                         <ul class="nav navbar-nav nav-white text-uppercase">
+<<<<<<< Updated upstream:books.php
                             <li>
+=======
+                            <li class="active">
+>>>>>>> Stashed changes:treaties.php
                                 <a href="index.php">Home</a>
                             </li>
                             <li>
@@ -142,6 +146,7 @@
                     <div class="space-20"></div>
                     <div class="row">
                         <!--Books-->
+<<<<<<< Updated upstream:books.php
                         <?php
                             $ret="SELECT * FROM  iL_Books"; 
                             $stmt= $mysqli->prepare($ret) ;
@@ -150,6 +155,15 @@
                             while($row=$res->fetch_object())
                             {
                                 /*
+=======
+                        <!-- <?php
+                        $ret = "SELECT * FROM  iL_Books";
+                        $stmt = $mysqli->prepare($ret);
+                        $stmt->execute(); //ok
+                        $res = $stmt->get_result();
+                        while ($row = $res->fetch_object()) {
+                            /*
+>>>>>>> Stashed changes:treaties.php
                                 if($row->b_coverimage == '')
                                 {
                                     $cover_image = "<img src='sudo/assets/img/books/Image12.jpg'  class='media-object'  alt='Book Image'>";
@@ -159,8 +173,15 @@
                                  $cover_image = "<img src='sudo/assets/img/books/$row->b_coverimage'  class='media-object' alt='Book Image'>";
                                 }
                                 */
+<<<<<<< Updated upstream:books.php
                                 
                         ?>
+=======
+
+                        ?> -->
+                            <!-- PDF, DOCX -->
+                            <!-- Add a description field -->
+>>>>>>> Stashed changes:treaties.php
                             <div class="col-xs-12 col-md-6">
                                 <div class="category-item well yellow">
                                     <div class="media">
