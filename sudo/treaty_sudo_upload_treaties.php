@@ -6,7 +6,7 @@ check_login();
 
 if (isset($_SESSION['id'])) {
     // Get the user's ID and other details from the session
-    $user_id = $_SESSION['id'];
+    $user_id = $_SESSION['sudo_id'];
     $result = "SELECT * FROM il_sudo WHERE id = ?";
     $stmt = $mysqli->prepare($result);
     $stmt->bind_param('i', $user_id);
