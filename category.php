@@ -131,7 +131,7 @@ require_once('sudo/assets/config/config.php');
                                     <label class="control-label" for="sort">Filter by year : </label>
                                     <div class="form-group">
                                         <select onchange="filterByYear()" name="treaty_year" id="treaty_year" class="form-control" />
-                                        <option value="" >--Select Year--</option>
+                                        <option value="">--Select Year--</option>
                                         <?php
                                         $ret = "SELECT DISTINCT treaty_year FROM tbl_treaties WHERE tc_id = $row1->id";
                                         $stmt = $mysqli->prepare($ret);
@@ -279,7 +279,7 @@ require_once('sudo/assets/config/config.php');
     <script>
         function filterByYear() {
             var selectedYear = document.getElementById("treaty_year").value;
-            window.location.href = "category.php?id=1&year=" + selectedYear;
+            window.location.href = "category.php?id=<?= $_GET['id'] ?>&year=" + selectedYear;
         }
     </script>
 </body>
