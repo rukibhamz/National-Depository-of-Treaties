@@ -2,3 +2,5 @@
 node_modules
 /sudo/assets/config/config.php
 /staff/assets/config/config.php
+/sudo/assets/config/pdoconfig.php
+/staff/assets/config/pdoconfig.php
