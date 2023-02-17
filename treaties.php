@@ -68,12 +68,6 @@ require_once('sudo/assets/config/config.php');
                             <li>
                                 <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                             </li>
-                            <!-- <li>
-                                <a href="lib_user/pages_std_index.php">LOGIN</a>
-                            </li>
-                                    <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>-->
                             <li>
                                 <a href="sudo/pages_sudo_index.php">LOGIN</a>
                             </li>
@@ -123,34 +117,11 @@ require_once('sudo/assets/config/config.php');
                         </div>
                     </form>
                     <div class="space-30"></div>
-                    <!-- <div class="row" style="display: none;">
-                        <div class="pull-right col-xs-12 col-sm-7 col-md-6">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4" for="sort">Sont By : </label>
-                                    <div class="col-xs-8">
-                                        <div class="form-group">
-                                            <select name="sort" id="sort" class="form-control">
-                                                <option value="">Best Match</option>
-                                                <option value="">Best Document</option>
-                                                <option value="">Latest Document</option>
-                                                <option value="">Old Document</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div> -->
                     <hr>
                     <div class="space-20"></div>
                     <div class="row">
                         <!--Books-->
                         <?php
-                        // $ret = "SELECT * FROM  tbl_treaties WHERE ";
-                        // $stmt = $mysqli->prepare($ret);
-                        // $stmt->execute(); //ok
-                        // $res = $stmt->get_result();
                         if (isset($_GET['treaty'])) {
                             $treaty = $_GET['treaty'];
                             $ret = "SELECT * FROM tbl_treaties WHERE title LIKE ?";

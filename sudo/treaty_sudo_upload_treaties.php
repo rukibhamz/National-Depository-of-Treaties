@@ -190,7 +190,7 @@ include("assets/inc/head.php");
                                     <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*, .pdf"></a>
                                 </div>
                                 <div id="file_upload-progressbar" class="uk-progress uk-hidden">
-                                    <div class="uk-progress-bar" style="width:0">0%</div>
+                                    <div class="uk-progress-bar" style="width:0">0</div>
                                 </div>
                             </div>
 
@@ -243,6 +243,7 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
+    <script src="assets/js/pages/forms_file_upload.min.js"></script>
 </body>
 
 </html>
