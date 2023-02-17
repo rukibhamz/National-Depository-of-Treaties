@@ -4,6 +4,26 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 
+if (isset($_GET['d_id'])) {
+    $id = intval($_GET['d_id']);
+    $adn = "DELETE FROM  tbl_treaties  WHERE id = ?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+    if ($stmt) {
+        $success = "Treaty Deleted";
+?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+<?php
+    } else {
+        $err = "Try Again Later";
+    }
+}
 ?>
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
@@ -73,8 +93,14 @@ include("assets/inc/head.php");
                                     <td><?= $row->s_status; ?></td>
                                     <td><?= $row->treaty_year; ?></td>
                                     <td>
-                                        <a href="pages_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
+                                        <a href="treaty_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
+                                        </a>
+                                        <a href="treaty_sudo_edit_treaty.php?doc_id=<?= $row->id; ?>">
+                                            <span class='uk-badge uk-badge-primary'>Update</span>
+                                        </a>
+                                        <a href="treaty_sudo_all_treaties.php?d_id=<?= $row->id; ?>">
+                                            <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>
                                 </tr>

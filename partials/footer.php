@@ -4,10 +4,9 @@
         <div class="space-60"></div>
         <div class="row">
             <div class="col-sm-12 col-lg-3">
-                <a href="#"><img src="images/logo-2.png" alt="library" width="200px"></a>
+                <a href="index.php"><img src="images/logo-2.png" alt="library" width="200px"></a>
                 <div class="space-20"></div>
-                <p class="footer_about">Lörem ipsum gön prelig. Ase spenar prebibesm. Lagen radiotos teler. Kontraktig sav nedäbelt jåsat.
-                    Tötrev heterovis. Infodemi kasamma. Biledes naböll bionomi vilanade. Virtuell våldtäkt semingen: gyling cringe.</p>
+                <p class="footer_about">The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with other countries and international organizations.</p>
                 <div class="space-10"></div>
                 <ul class="list-inline list-unstyled social-list">
                     <li><a href="https://facebook.com/" target="_blank"><i class="icofont icofont-social-facebook"></i></a></li>
@@ -58,7 +57,7 @@
                 <h4 class="text-white">Catalogue Categories</h4>
                 <div class="space-10"></div>
                 <ul class="list-unstyled menu-tip">
-                    <li><a href="#">Recent treaties</a></li>
+                    <li><a href="treaties.php">Recent treaties</a></li>
                     <li><a href="staff/pages_staff_index.php">Recent notifications</a></li>
                     <li><a href="sudo/pages_sudo_index.php">Top treaties</a></li>
                     <li><a href="sudo/pages_sudo_index.php">Most viewed treaties</a></li>

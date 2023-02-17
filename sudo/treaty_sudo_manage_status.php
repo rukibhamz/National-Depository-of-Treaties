@@ -13,7 +13,13 @@ if (isset($_GET['d_id'])) {
     $stmt->close();
 
     if ($stmt) {
-        $info = "Treaty Status Deleted";
+        $success = "Treaty Status Deleted";
+?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+<?php
     } else {
         $err = "Try Again Later";
     }

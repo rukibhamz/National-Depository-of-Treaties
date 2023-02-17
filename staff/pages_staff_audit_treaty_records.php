@@ -30,7 +30,6 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Audits</a></li>
                 <li><span>Documents Records</span></li>
             </ul>
         </div>

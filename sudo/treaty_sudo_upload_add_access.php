@@ -8,55 +8,65 @@ $length = 3;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
 //create a librarian account
-if (isset($_POST['add_staff'])) {
+if (isset($_POST['add_uploader'])) {
     $error = 0;
-    if (isset($_POST['staff_name']) && !empty($_POST['staff_name'])) {
-        $l_name = mysqli_real_escape_string($mysqli, trim($_POST['staff_name']));
+    if (isset($_POST['name']) && !empty($_POST['name'])) {
+        $s_name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
     } else {
         $error = 1;
         $err = "Staff name cannot be empty";
     }
     if (isset($_POST['email']) && !empty($_POST['email'])) {
-        $l_email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
+        $s_email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
     } else {
         $error = 1;
         $err = "Staff email cannot be empty";
     }
-    if (isset($_POST['number']) && !empty($_POST['number'])) {
-        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
+    if (isset($_POST['phone']) && !empty($_POST['phone'])) {
+        $s_phone = mysqli_real_escape_string($mysqli, trim($_POST['phone']));
     } else {
         $error = 1;
-        $err = "Staff number cannot be empty";
+        $err = "Staff phone number cannot be empty";
     }
+    if (isset($_POST['acc_status']) && !empty($_POST['acc_status'])) {
+        $s_acc_status = mysqli_real_escape_string($mysqli, trim($_POST['acc_status']));
+    } else {
+        $error = 1;
+        $err = "Staff status cannot be empty";
+    }
+
     if (!$error) {
-        $sql = "SELECT * FROM  fmoj_staff WHERE  number='$l_number' || email ='$l_email' ";
+        $sql = "SELECT * FROM fmoj_staff WHERE email ='$s_email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($l_number == $row['l_number']) {
+            if ($s_number == $row['number']) {
                 $err = "Staff number already exists";
             } else {
                 $err = "Staff email already exists";
             }
         } else {
 
-            $l_number = $_POST['number'];
-            $l_name = $_POST['staff_name'];
-            $l_phone = $_POST['phone'];
-            $l_email = $_POST['email'];
-            $l_pwd = sha1(md5($_POST['pwd']));
-            $l_adr = $_POST['adr'];
-            $l_bio = $_POST['bio'];
-            $l_acc_status = $_POST['acc_status'];
+            $s_name = $_POST['name'];
+            $s_email = $_POST['email'];
+            $s_phone = $_POST['phone'];
+            $s_pwd = sha1(md5($_POST['pwd']));
+            $s_number = $_POST['number'];
+            $s_adr = $_POST['adr'];
+            $s_bio = $_POST['bio'];
+            $s_acc_status = $_POST['acc_status'];
+
+            // $s_pic = $_FILES["p_pic"]["name"];
+            // move_uploaded_file($_FILES["p_pic"]["tmp_name"], "assets/profile_img/" . $_FILES["p_pic"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO fmoj_staff (number, staff_name, phone, email, pwd, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO fmoj_staff (name, email, phone, pwd, number, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
-            //bind paramaters
-            $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
+            //bind parameters
+            $rc = $stmt->bind_param('ssssssss', $s_name, $s_email, $s_phone, $s_pwd, $s_number, $s_adr, $s_bio, $s_acc_status);
             $stmt->execute();
 
-            //declare a varible which will be passed to alert function
+            //declare a variable which will be passed to alert function
             if ($stmt) {
                 $success = "Staff Account Created";
             } else {
@@ -92,7 +102,7 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Upload Access</a></li>
+                <li><a href="treaty_sudo_upload_manage_access.php">Manage Access</a></li>
                 <li><span>Add New Uploader</span></li>
             </ul>
         </div>
@@ -107,7 +117,7 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Full Name</label>
-                                    <input type="text" required name="staff_name" class="md-input" />
+                                    <input type="text" required name="name" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Email Address</label>
@@ -115,22 +125,22 @@ include("assets/inc/head.php");
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Phone Number</label>
-                                    <input type="text" required name="acc_status" class="md-input" />
+                                    <input type="tel" required name="phone" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Password</label>
-                                    <input type="password" requied name="adr" class="md-input" />
+                                    <input type="password" required name="pwd" class="md-input" />
                                 </div>
                             </div>
 
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Staff ID Number</label>
-                                    <input type="text" required readonly value="FMOJ-<?php echo $Number; ?>" name="number" class="md-input label-fixed" />
+                                    <input type="text" required readonly value="FMOJ-<?= $Number; ?>" name="number" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>User Address</label>
-                                    <input type="text" required name="addr" class="md-input" />
+                                    <input type="text" required name="adr" class="md-input" autocomplete="street-address" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Short Description Bio</label>
@@ -139,9 +149,27 @@ include("assets/inc/head.php");
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Account Status</label>
-                                    <input type="text" required name="acc_status" class="md-input" />
+                                    <select required name="acc_status" id="acc_status" class="md-input">
+                                        <option value="">--Select Staff Status--</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Suspended">Suspended</option>
+                                    </select>
+
                                 </div>
                             </div>
+
+
+                            <!-- <div class="uk-width-medium-2-2">
+                                <div id="file_upload-drop" class="uk-file-upload">
+                                    <p class="uk-text">Upload Profile Picture</p>
+                                    <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" required name="p_pic" type="file" accept="image/*"></a>
+                                </div>
+                                <div id="file_upload-progressbar" class="uk-progress uk-hidden">
+                                    <div class="uk-progress-bar" style="width:100%">0%</div>
+                                </div>
+                            </div> -->
+
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <div class="uk-input-group">
@@ -185,28 +213,6 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
-    <!-- altair common functions/helpers -->
-    <script src="assets/js/altair_admin_common.min.js"></script>
-
-
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
 </body>
 
 </html>

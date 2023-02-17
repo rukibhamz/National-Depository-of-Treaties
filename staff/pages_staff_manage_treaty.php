@@ -6,14 +6,20 @@ check_login();
 //delete book  
 if (isset($_GET['deleteBook'])) {
     $id = intval($_GET['deleteBook']);
-    $adn = "DELETE FROM  tbl_treaties  WHERE id = ?";
+    $adn = "DELETE FROM tbl_treaties  WHERE id = ?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('i', $id);
     $stmt->execute();
     $stmt->close();
 
     if ($stmt) {
-        $info = "Book Deleted";
+        $success = "Treaty Deleted";
+?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+<?php
     } else {
         $err = "Try Again Later";
     }
@@ -44,7 +50,6 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Treaty Inventory</a></li>
                 <li><span>Manage Treaties</span></li>
             </ul>
         </div>
@@ -80,7 +85,7 @@ include("assets/inc/head.php");
                                         </a>
                                         <a href="pages_staff_edit_treaty.php?doc_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
-                                        </a> </a>
+                                        </a>
 
                                     </td>
                                 </tr>

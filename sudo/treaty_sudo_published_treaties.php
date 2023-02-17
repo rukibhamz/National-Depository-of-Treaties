@@ -71,7 +71,7 @@ include("assets/inc/head.php");
                                     <td><?= $row->tc_name; ?></td>
                                     <td><?= $row->treaty_year; ?></td>
                                     <td>
-                                        <a href="pages_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
+                                        <a href="treaty_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
                                     </td>

@@ -9,7 +9,7 @@ $res = $stmt->get_result();
 while ($row = $res->fetch_object()) {
     //load default book cover page if book is missing a cover image
     if ($row->b_file == '') {
-        $cover_image = "<img src='sudo/assets/img/books/Image12.jpg' class='img-fluid img-thumbnail' alt='Book Image'>";
+        $cover_image = "<img src='sudo/assets/magazines/default.png' class='img-fluid img-thumbnail' alt='Book Image'>";
     } else {
         $cover_image = "<img src='sudo/assets/img/books/$row->b_file' class='img-fluid img-thumbnail' alt='Book Image'>";
     }
@@ -143,12 +143,12 @@ while ($row = $res->fetch_object()) {
 
                                             if (in_array($file_ext, $allowed_extensions)) {
                                                 echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
-        <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
-        <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
-        <button class='btn btn-success'>
-        &ensp;Download
-        </button></a>
-    </div>";
+                                            <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
+                                            <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
+                                            <button class='btn btn-success'>
+                                            &ensp;Download
+                                            </button></a>
+                                        </div>";
                                             } else {
                                                 echo "";
                                             }
