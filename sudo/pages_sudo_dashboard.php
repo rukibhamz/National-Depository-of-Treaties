@@ -7,63 +7,61 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 
-//1.Books
+//1.Treaty
 
-//1.0 : Number of all book categories in the library
+//1.0 : Number of all treaty categories in the library
 $result = "SELECT count(*) FROM tbl_treatiescategory";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($book_categories);
+$stmt->bind_result($treaty_categories);
 $stmt->fetch();
 $stmt->close();
 
-//1.1 : Number of all books no matter what category
+//1.1 : Number of all treaty by category
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE s_status='Published'";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($treaty_published);
+$stmt->fetch();
+$stmt->close();
+
 $result = "SELECT COUNT(*) FROM tbl_treaties";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($books);
+$stmt->bind_result($treaty_total);
 $stmt->fetch();
 $stmt->close();
 
-
-
-//2.Library Users(Students and Librarians)
-//2.0 : Number of Employed Librarians
-$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status = 'Active' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE s_status='Revised'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($librarians);
+$stmt->bind_result($treaty_revised);
 $stmt->fetch();
 $stmt->close();
 
-//2.3 : Number of all Employed Librarians with pending accounts activations
-$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status = 'Pending' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE s_status='Running'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($pending_librarians);
+$stmt->bind_result($treaty_running);
 $stmt->fetch();
 $stmt->close();
 
-// 3.Misc
-
-//3.0 : Number of all Librarians requestings for Password Resets
-$result = "SELECT count(*) FROM il_passwordresets WHERE pr_usertype = 'Librarian' AND pr_status='Pending' ";
+//2.0 : Number of Staff
+$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status='Active'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($pending_librarians_pwd_resets);
+$stmt->bind_result($active_staff);
 $stmt->fetch();
 $stmt->close();
 
-//3.1 : Number of all students requesting for password resets
-$result = "SELECT count(*) FROM il_passwordresets WHERE pr_usertype = 'Student' AND pr_status='Pending' ";
+$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status='Suspended'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($pending_student_pwd_resets);
+$stmt->bind_result($suspended_staff);
 $stmt->fetch();
 $stmt->close();
 
-
-//1.0.1 : Number Of Books under Non-fiction Category
+//1.0.1 : Number Of Treaty under a Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Instruments' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
@@ -71,7 +69,6 @@ $stmt->bind_result($Instruments);
 $stmt->fetch();
 $stmt->close();
 
-//1.0.2 : Number Of Books under Fiction Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Agreements' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
@@ -79,15 +76,20 @@ $stmt->bind_result($Agreements);
 $stmt->fetch();
 $stmt->close();
 
-//1.0.3 : Number Of Books under References Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Memorandum of Understanding' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($Memorandum_of_Understanding);
 $stmt->fetch();
 $stmt->close();
+$ret = "SELECT * FROM  tbl_status";
 
-
+$result = "SELECT COUNT(*) FROM tbl_status";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($treaty_status);
+$stmt->fetch();
+$stmt->close();
 
 ?>
 <!doctype html>
@@ -113,15 +115,6 @@ include("assets/inc/head.php");
 
 
     <div id="page_content">
-        <!-- USE THIS FOR ALERTS -->
-        <!-- <div class="uk-alert black" data-uk-alert>
-            <a href="" class="uk-alert-close uk-close"></a>
-            <p>Lorem Ipsum dpmpr.pdf has been published</p>
-        </div>
-        <div class="uk-alert danger" data-uk-alert>
-            <a href="" class="uk-alert-close uk-close"></a>
-            <p>Lorem Ipsum dpmpr.pdf has been published</p>
-        </div> -->
         <div id="page_content_inner">
 
             <!--1.Treaty-->
@@ -131,7 +124,7 @@ include("assets/inc/head.php");
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $treaty_total; ?></span></h2>
                             <div class="space-10"></div>
                             <p class="text">Total treaties
                                 In Depository</p>
@@ -143,7 +136,7 @@ include("assets/inc/head.php");
                                 </ul>
                             </div>
                             <div class="space-10"></div>
-                            <a href="#">
+                            <a href="treaty_sudo_all_treaties.php">
                                 <p class="text">View treaties <img src="assets/img/arrow_icon.png" alt="arrow icon" width="35px" /></p>
                             </a>
                         </div>
@@ -154,7 +147,7 @@ include("assets/inc/head.php");
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $treaty_published; ?></span></h2>
                             <div class="space-10"></div>
                             <p class="text">Total treaties Published</p>
 
@@ -165,7 +158,7 @@ include("assets/inc/head.php");
                                 </ul>
                             </div>
                             <div class="space-10"></div>
-                            <a href="#">
+                            <a href="treaty_sudo_published_treaties.php">
                                 <p class="text">View treaties <img src="assets/img/arrow_icon.png" alt="arrow icon" width="35px" /></p>
                             </a>
                         </div>
@@ -176,7 +169,7 @@ include("assets/inc/head.php");
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $treaty_revised; ?></span></h2>
                             <div class="space-10"></div>
                             <p class="text">Total treaties
                                 Revised</p>
@@ -188,7 +181,7 @@ include("assets/inc/head.php");
                                 </ul>
                             </div>
                             <div class="space-10"></div>
-                            <a href="#">
+                            <a href="treaty_sudo_revised_treaties.php">
                                 <p class="text">View treaties <img src="assets/img/arrow_icon.png" alt="arrow icon" width="35px" /></p>
                             </a>
                         </div>
@@ -199,7 +192,7 @@ include("assets/inc/head.php");
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $treaty_running; ?></span></h2>
                             <div class="space-10"></div>
                             <p class="text">Total treaties
                                 Running</p>
@@ -211,7 +204,7 @@ include("assets/inc/head.php");
                                 </ul>
                             </div>
                             <div class="space-10"></div>
-                            <a href="#">
+                            <a href="treaty_sudo_running_treaties.php">
                                 <p class="text">View treaties <img src="assets/img/arrow_icon.png" alt="arrow icon" width="35px" /></p>
                             </a>
                         </div>
@@ -231,57 +224,13 @@ include("assets/inc/head.php");
             </div>
 
             <!--2.User Analytics-->
-            <h3 class="text">User Analytics</h3>
+            <h3 class="text">Analytics</h3>
             <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-large uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card card-alt">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
-                            <div class="space-10"></div>
-                            <p class="text">Registered Users</p>
-
-                            <div class="space-10"></div>
-                            <div class="title-bar white">
-                                <ul class="list-inline list-unstyled">
-                                    <li><i class="icofont icofont-square"></i></li>
-                                </ul>
-                            </div>
-                            <div class="space-10"></div>
-                            <a href="#">
-                                <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="space-10"></div>
-                </div>
-                <div>
-                    <div class="md-card card-alt">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
-                            <div class="space-10"></div>
-                            <p class="text">Suspended Users</p>
-
-                            <div class="space-10"></div>
-                            <div class="title-bar white">
-                                <ul class="list-inline list-unstyled">
-                                    <li><i class="icofont icofont-square"></i></li>
-                                </ul>
-                            </div>
-                            <div class="space-10"></div>
-                            <a href="#">
-                                <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="space-10"></div>
-                </div>
-                <div>
-                    <div class="md-card card-alt">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $active_staff; ?></span></h2>
                             <div class="space-10"></div>
                             <p class="text">Active
                                 User</p>
@@ -293,20 +242,21 @@ include("assets/inc/head.php");
                                 </ul>
                             </div>
                             <div class="space-10"></div>
-                            <a href="#">
+                            <a href="treaty_sudo_upload_manage_access.php">
                                 <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
                             </a>
                         </div>
                     </div>
                     <div class="space-10"></div>
                 </div>
+
                 <div>
                     <div class="md-card card-alt">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $suspended_staff; ?></span></h2>
                             <div class="space-10"></div>
-                            <p class="text">In-active
+                            <p class="text">Suspended
                                 User</p>
 
                             <div class="space-10"></div>
@@ -316,157 +266,155 @@ include("assets/inc/head.php");
                                 </ul>
                             </div>
                             <div class="space-10"></div>
-                            <a href="#">
+                            <a href="treaty_sudo_upload_manage_access.php">
                                 <p class="text">View users <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
                             </a>
                         </div>
                     </div>
                     <div class="space-10"></div>
                 </div>
+
+                <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $treaty_categories; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Categories</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                            <div class="space-10"></div>
+                            <a href="pages_sudo_manage_categories.php">
+                                <p class="text">View Categories <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
+
+                <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $treaty_status; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Status</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                            <div class="space-10"></div>
+                            <a href="treaty_sudo_manage_status.php">
+                                <p class="text">View Status <img src="assets/img/arrow_icon_white.png" alt="arrow icon" width="35px" /></p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
+
+                <!-- ----- -->
+
+                <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $Instruments; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Instruments</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                            <div class="space-10"></div>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
+                <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $Agreements; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Agreements</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
+                <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $Memorandum_of_Understanding; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Mou's</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
             </div>
-
-            <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">Recent Uploads</h4>
+            <!-- ----------- -->
+            <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-1 uk-grid-large" data-uk-grid-margin>
+                <div>
                     <div class="md-card">
-                        <div class="md-card-content uk-overflow-container">
-                            <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Staff Number</th>
-                                        <th>Phone No.</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>Account Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $ret = "SELECT * FROM  fmoj_staff";
-                                    $stmt = $mysqli->prepare($ret);
-                                    $stmt->execute(); //ok
-                                    $res = $stmt->get_result();
-                                    while ($row = $res->fetch_object()) {
-                                        //use .danger, .warning, .success according to account status
-                                        if ($row->acc_status == 'Active') {
-                                            $account_status = "<td class='uk-text-success'>$row->acc_status</td>";
-                                        } elseif ($row->acc_status == 'Pending') {
-                                            $account_status = "<td class='uk-text-warning'>$row->acc_status</td>";
-                                        } else {
-                                            $account_status = "<td class='uk-text-danger'>$row->acc_status</td>";
-                                        }
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $row->name; ?></td>
-                                            <td><?php echo $row->number; ?></td>
-                                            <td><?php echo $row->phone; ?></td>
-                                            <td><?php echo $row->email; ?></td>
-                                            <td><?php echo $row->adr; ?></td>
-                                            <?php echo $account_status; ?>
-                                        </tr>
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                <!-- <i class="md-icon material-icons" id="print" onclick="printContent('Print_Content');">&#xE8ad;</i> -->
+                                <i class="md-icon material-icons">&#xE5D5;</i>
 
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                            </div>
+                        </div>
+                        <div class="md-card-content">
+
+                            <div class="mGraph-wrapper">
+                                <div id="PieChart" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+                            </div>
+                            <!-- -------- -->
+
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">New Uploader</h4>
+                <div>
                     <div class="md-card">
-                        <div class="md-card-content uk-overflow-container">
-                            <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Staff Number</th>
-                                        <th>Phone No.</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>Acc Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $ret = "SELECT * FROM  fmoj_staff";
-                                    $stmt = $mysqli->prepare($ret);
-                                    $stmt->execute(); //ok
-                                    $res = $stmt->get_result();
-                                    while ($row = $res->fetch_object()) {
-                                        //use .danger, .warning, .success according to account status
-                                        if ($row->acc_status == 'Active') {
-                                            $account_status = "<td class='uk-text-success'>$row->acc_status</td>";
-                                        } elseif ($row->acc_status == 'Pending') {
-                                            $account_status = "<td class='uk-text-warning'>$row->acc_status</td>";
-                                        } else {
-                                            $account_status = "<td class='uk-text-danger'>$row->acc_status</td>";
-                                        }
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $row->name; ?></td>
-                                            <td><?php echo $row->number; ?></td>
-                                            <td><?php echo $row->phone; ?></td>
-                                            <td><?php echo $row->email; ?></td>
-                                            <td><?php echo $row->adr; ?></td>
-                                            <?php echo $account_status; ?>
-                                        </tr>
-
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                <!-- <i class="md-icon material-icons" id="print" onclick="printContent('Print_Content');">&#xE8ad;</i> -->
+                                <i class="md-icon material-icons">&#xE5D5;</i>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <h4 class="heading_a uk-margin-bottom">Pending Uploads Submitted</h4>
-                    <div class="md-card">
-                        <div class="md-card-content uk-overflow-container">
-                            <table id="dt_default" class="uk-table" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Staff Number</th>
-                                        <th>Phone No.</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>Acc Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $ret = "SELECT * FROM  fmoj_staff";
-                                    $stmt = $mysqli->prepare($ret);
-                                    $stmt->execute(); //ok
-                                    $res = $stmt->get_result();
-                                    while ($row = $res->fetch_object()) {
-                                        //use .danger, .warning, .success according to account status
-                                        if ($row->acc_status == 'Active') {
-                                            $account_status = "<td class='uk-text-success'>$row->acc_status</td>";
-                                        } elseif ($row->acc_status == 'Pending') {
-                                            $account_status = "<td class='uk-text-warning'>$row->acc_status</td>";
-                                        } else {
-                                            $account_status = "<td class='uk-text-danger'>$row->acc_status</td>";
-                                        }
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $row->name; ?></td>
-                                            <td><?php echo $row->number; ?></td>
-                                            <td><?php echo $row->phone; ?></td>
-                                            <td><?php echo $row->email; ?></td>
-                                            <td><?php echo $row->adr; ?></td>
-                                            <?php echo $account_status; ?>
-                                        </tr>
-
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                        <div class="md-card-content">
+                            <div class="mGraph-wrapper">
+                                <div id="Doughnut" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+                            </div>
+                            <!-- -------- -->
                         </div>
                     </div>
                 </div>
@@ -499,6 +447,95 @@ include("assets/inc/head.php");
         })();
     </script>
 
+    <!--Load Canvas JS -->
+    <script src="assets/js/canvasjs.min.js"></script>
+    <!--Load Few Charts-->
+    <script>
+        window.onload = function() {
+
+            var Piechart = new CanvasJS.Chart("PieChart", {
+                exportEnabled: false,
+                animationEnabled: true,
+                title: {
+                    text: "Percentage Of Treaty's Per Category"
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: explodePie
+                },
+                data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    toolTipContent: "{name}: <strong>{y}%</strong>",
+                    indexLabel: "{name} - {y}%",
+                    dataPoints: [{
+                            y: <?= $Instruments; ?>,
+                            name: "Instruments",
+                            exploded: true
+                        },
+
+                        {
+                            y: <?= $Agreements; ?>,
+                            name: " Agreements",
+                            exploded: true
+                        },
+
+                        {
+                            y: <?= $Memorandum_of_Understanding; ?>,
+                            name: "Memorandum of Understanding",
+                            exploded: true
+                        }
+                    ]
+                }]
+            });
+
+            var chart = new CanvasJS.Chart("Doughnut", {
+                animationEnabled: true,
+                title: {
+                    text: "Treaty Status At Glance",
+                    //horizontalAlign: "centre"
+                },
+                data: [{
+                    type: "doughnut",
+                    startAngle: 60,
+                    //innerRadius: 60,
+                    indexLabelFontSize: 17,
+                    indexLabel: "{label}:{y} (#percent%)",
+                    toolTipContent: "{label} - #percent%",
+                    dataPoints: [{
+                            y: <?= $treaty_published; ?>,
+                            label: "Published"
+                        },
+                        {
+                            y: <?= $treaty_revised; ?>,
+                            label: "Revised"
+                        },
+                        {
+                            y: <?= $treaty_running; ?>,
+                            label: "Running"
+                        }
+
+                    ]
+                }]
+            });
+
+
+            chart.render();
+            Piechart.render();
+
+        }
+
+        function explodePie(e) {
+            if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    </script>
+
     <!-- common functions -->
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
@@ -511,6 +548,13 @@ include("assets/inc/head.php");
     <script src="bower_components/d3/d3.min.js"></script>
     <!-- metrics graphics (charts) -->
     <script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
+    <!-- chartist (charts) -->
+    <script src="bower_components/chartist/dist/chartist.min.js"></script>
+    <script src="bower_components/maplace-js/dist/maplace.min.js"></script>
+    <!-- peity (small charts) -->
+    <script src="bower_components/peity/jquery.peity.min.js"></script>
+    <!-- easy-pie-chart (circular statistics) -->
+    <script src="bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
     <!-- countUp -->
     <script src="bower_components/countUp.js/dist/countUp.min.js"></script>
     <!-- handlebars.js -->
@@ -521,48 +565,6 @@ include("assets/inc/head.php");
 
     <!--  dashbord functions -->
     <script src="assets/js/pages/dashboard.min.js"></script>
-
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
-    <!-- common functions -->
-    <script src="assets/js/common.min.js"></script>
-    <!-- uikit functions -->
-    <script src="assets/js/uikit_custom.min.js"></script>
-    <!-- page specific plugins -->
-    <!-- datatables -->
-    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <!-- datatables buttons-->
-    <script src="bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
-    <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
-    <script src="bower_components/jszip/dist/jszip.min.js"></script>
-    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
-    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.colVis.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
-
-    <!-- datatables custom integration -->
-    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
-
-    <!--  datatables functions -->
-    <script src="assets/js/pages/plugins_datatables.min.js"></script>
-
 </body>
 
 </html>

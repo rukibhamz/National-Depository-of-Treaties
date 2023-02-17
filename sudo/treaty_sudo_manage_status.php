@@ -4,8 +4,8 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 //delete status 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_GET['d_id'])) {
+    $id = intval($_GET['d_id']);
     $adn = "DELETE FROM tbl_status  WHERE id = ?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('i', $id);
@@ -77,7 +77,7 @@ include("assets/inc/head.php");
                                         <a href="treaty_sudo_edit_treaty_status.php?id=<?php echo $row->id; ?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
-                                        <a href="treaty_sudo_manage_status.php?id=<?php echo $row->id; ?>">
+                                        <a href="treaty_sudo_manage_status.php?d_id=<?php echo $row->id; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>

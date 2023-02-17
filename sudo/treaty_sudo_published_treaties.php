@@ -31,44 +31,45 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Treaties</a></li>
-                <li><span>Published</span></li>
+                <li><span>Published Treaties</span></li>
             </ul>
         </div>
         <div id="page_content_inner">
             <?php
-                $ret = "SELECT * FROM tbl_treaties";
-                $stmt = $mysqli->prepare($ret);
-                $stmt->execute();
-                $res = $stmt->get_result();
-                $numRows = $res->num_rows;
+            $ret = "SELECT * FROM tbl_treaties WHERE s_status='Published'";
+            $stmt = $mysqli->prepare($ret);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $numRows = $res->num_rows;
             ?>
-            <h3 class="heading_a uk-margin-bottom text">Recent -New treaties published ( <?= $numRows ?> )</h3>
+            <h3 class="heading_a uk-margin-bottom text">Number of Published Treaties ( <?= $numRows ?> )</h3>
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                     <div class="dt_colVis_buttons"></div>
                     <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                         <thead>
-                            <th>Name</th>
-                            <th>Identification No</th>
-                            <th>Email Address</th>
-                            <th>Date submitted</th>
+                            <th>Title</th>
+                            <th>Signatory</th>
+                            <th>Publisher</th>
+                            <th>Category</th>
+                            <th>Year</th>
                             <th>Action</th>
                         </thead>
 
                         <tbody>
                             <?php
-                            $ret = "SELECT * FROM  tbl_treaties";
+                            $ret = "SELECT * FROM tbl_treaties WHERE s_status='Published'";
                             $stmt = $mysqli->prepare($ret);
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();
                             while ($row = $res->fetch_object()) {
                             ?>
                                 <tr>
-                                    <td class="uk-text-truncate"><?= $row->title; ?></td>
+                                    <td><?= $row->title; ?></td>
                                     <td><?= $row->signatory; ?></td>
-                                    <td><?= $row->tc_name; ?></td>
                                     <td><?= $row->b_publisher; ?></td>
+                                    <td><?= $row->tc_name; ?></td>
+                                    <td><?= $row->treaty_year; ?></td>
                                     <td>
                                         <a href="pages_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
@@ -134,25 +135,6 @@ include("assets/inc/head.php");
 
     <!--  datatables functions -->
     <script src="assets/js/pages/plugins_datatables.min.js"></script>
-
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
 </body>
 
 </html>

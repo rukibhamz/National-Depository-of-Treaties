@@ -1,52 +1,49 @@
 <?php
-    session_start();
-    include('assets/config/config.php');
-    include('assets/config/checklogin.php');
-    check_login();
-    //delete booc categoory 
-    if(isset($_GET['deleteBookCategory']))
-   {
-         $id=intval($_GET['deleteBookCategory']);
-         $adn="DELETE FROM  tbl_treatiescategory  WHERE id = ?";
-         $stmt= $mysqli->prepare($adn);
-         $stmt->bind_param('i',$id);
-         $stmt->execute();
-         $stmt->close();	 
-   
-            if($stmt)
-            {
-                $info = "Treaty Category Deleted";
-            }
-            else
-            {
-                $err = "Try Again Later";
-            }
-     }
-?>    
+session_start();
+include('assets/config/config.php');
+include('assets/config/checklogin.php');
+check_login();
+
+if (isset($_GET['d_id'])) {
+    $id = intval($_GET['d_id']);
+    $adn = "DELETE FROM  tbl_treatiescategory  WHERE id = ?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+    if ($stmt) {
+        $info = "Treaty Category Deleted";
+    } else {
+        $err = "Try Again Later";
+    }
+}
+?>
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php 
-    include("assets/inc/head.php");
+<!--[if gt IE 9]><!-->
+<html lang="en"> <!--<![endif]-->
+<?php
+include("assets/inc/head.php");
 ?>
+
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
     <?php
-        include("assets/inc/nav.php");
+    include("assets/inc/nav.php");
     ?>
     <!-- main header end -->
     <!-- main sidebar -->
     <?php
-        include("assets/inc/sidebar.php");
+    include("assets/inc/sidebar.php");
     ?>
     <!-- main sidebar end -->
 
     <div id="page_content">
-    <!--BreadCrumps-->
+        <!--BreadCrumps-->
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Categories</a></li>
                 <li><span>Manage Treaty Category</span></li>
             </ul>
         </div>
@@ -58,39 +55,38 @@
                     <div class="dt_colVis_buttons"></div>
                     <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                         <thead>
-                        <tr>
-                            <th>Treaty Category Code</th>
-                            <th>Treaty Category Name</th>
-                            <th>Actions</th>
-                        </tr>
-                      
+                            <tr>
+                                <th>Treaty Category Code</th>
+                                <th>Treaty Category Name</th>
+                                <th>Actions</th>
+                            </tr>
+
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  tbl_treatiescategory"; 
-                                $stmt= $mysqli->prepare($ret) ;
-                                $stmt->execute() ;//ok
-                                $res=$stmt->get_result();
-                                while($row=$res->fetch_object())
-                                {
-                                    
+                            $ret = "SELECT * FROM  tbl_treatiescategory";
+                            $stmt = $mysqli->prepare($ret);
+                            $stmt->execute(); //ok
+                            $res = $stmt->get_result();
+                            while ($row = $res->fetch_object()) {
+
                             ?>
                                 <tr>
-                                    <td><?php echo $row->code;?></td>
-                                    <td><?php echo $row->name;?></td>
+                                    <td><?php echo $row->code; ?></td>
+                                    <td><?php echo $row->name; ?></td>
                                     <td>
-                                        <a href="pages_sudo_view_treaty_category.php?category_code=<?php echo $row->code;?>">
+                                        <a href="pages_sudo_view_treaty_category.php?category_code=<?php echo $row->code; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
-                                        <a href="pages_sudo_edit_treaty_category.php?category_code=<?php echo $row->code;?>">
+                                        <a href="pages_sudo_edit_treaty_category.php?code=<?php echo $row->code; ?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
-                                        <a href="pages_sudo_manage_categories.php?deleteBookCategory=<?php echo $row->id;?>">
+                                        <a href="pages_sudo_manage_categories.php?d_id=<?php echo $row->id; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>
                                 </tr>
 
-                            <?php }?>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -99,7 +95,7 @@
         </div>
     </div>
     <!--Footer-->
-    <?php require_once('assets/inc/footer.php');?>
+    <?php require_once('assets/inc/footer.php'); ?>
     <!--Footer-->
 
     <!-- google web fonts -->
@@ -115,7 +111,7 @@
         (function() {
             var wf = document.createElement('script');
             wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
             wf.type = 'text/javascript';
             wf.async = 'true';
             var s = document.getElementsByTagName('script')[0];
@@ -148,16 +144,16 @@
 
     <!--  datatables functions -->
     <script src="assets/js/pages/plugins_datatables.min.js"></script>
-    
+
     <script>
         $(function() {
-            if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+            if (isHighDensity()) {
+                $.getScript("assets/js/custom/dense.min.js", function(data) {
                     // enable hires images
                     altair_helpers.retina_images();
                 });
             }
-            if(Modernizr.touch) {
+            if (Modernizr.touch) {
                 // fastClick (touch devices)
                 FastClick.attach(document.body);
             }

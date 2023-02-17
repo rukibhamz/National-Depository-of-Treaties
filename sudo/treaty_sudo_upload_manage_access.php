@@ -31,7 +31,6 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Upload Access</a></li>
                 <li><span>Manage Uploaders</span></li>
             </ul>
         </div>

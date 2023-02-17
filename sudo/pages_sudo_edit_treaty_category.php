@@ -5,23 +5,23 @@
     check_login();
 
     //update a book category
-    if(isset($_POST['update_book_category']))
+    if(isset($_POST['update_treaty_category']))
     {
-        $category_code = $_GET['category_code'];
-        $bc_name = $_POST['bc_name'];
-        $bc_desc = $_POST['bc_desc'];
+        $category_code = $_GET['code'];
+        $bc_name = $_POST['name'];
+        $bc_desc = $_POST['desc'];
         
         //Insert Captured information to a database table
-        $query="UPDATE tbl_treatiescategory SET bc_name=?, bc_desc=? WHERE bc_code =?";
+        $query="UPDATE tbl_treatiescategory SET name=?, description=? WHERE code =?";
         $stmt = $mysqli->prepare($query);
-        //bind paramaters
+        //bind parameters
         $rc=$stmt->bind_param('sss',  $bc_name, $bc_desc, $category_code);
         $stmt->execute();
   
         //declare a varible which will be passed to alert function
         if($stmt)
         {
-            $success = "Book Category Updated" && header("refresh:1;url=pages_sudo_manage_categories.php");
+            $success = "Treaty Category Updated" && header("refresh:1;url=pages_sudo_manage_categories.php");
         }
         else 
         {
@@ -48,7 +48,7 @@
         ?>
     <!-- main sidebar end -->
     <?php 
-        $category_code = $_GET['category_code'];
+        $category_code = $_GET['code'];
         $ret="SELECT * FROM  tbl_treatiescategory WHERE code = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $category_code);
@@ -77,11 +77,11 @@
                         <div class="uk-grid" data-uk-grid-margin>
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
-                                    <label>Book Category Name</label>
+                                    <label>Treaty Category Name</label>
                                     <input type="text" required name="name" value="<?php echo $row->name;?>" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
-                                    <label>Book Category Code</label>
+                                    <label>Treaty Category Code</label>
                                     <input type="text" required readonly value="<?php echo $row->code;?> " name="code" class="md-input label-fixed" />
                                 </div>
                                
@@ -89,14 +89,14 @@
 
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
-                                    <label>Book Category Description</label>
-                                    <textarea cols="30" rows="4" class="md-input" name="desc"><?php echo $row->desc;?></textarea>
+                                    <label>Treaty Category Description</label>
+                                    <textarea cols="30" rows="4" class="md-input" name="desc"><?php echo $row->description;?></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <div class="uk-input-group">
-                                        <input type="submit" class="md-btn md-btn-success" name="update_book_category" value="Update  Book Category" />
+                                        <input type="submit" class="md-btn md-btn-success" name="update_treaty_category" value="Update Treaty Category" />
                                     </div>
                                 </div>
                             </div>

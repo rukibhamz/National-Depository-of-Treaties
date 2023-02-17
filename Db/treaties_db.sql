@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 17, 2023 at 02:47 AM
+-- Generation Time: Feb 17, 2023 at 04:57 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -230,19 +230,19 @@ INSERT INTO `tbl_treaties` (`id`, `title`, `signatory`, `b_publisher`, `b_file`,
 
 CREATE TABLE `tbl_treatiescategory` (
   `id` int(20) NOT NULL,
-  `code` varchar(200) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `desc` longtext NOT NULL
+  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_treatiescategory`
 --
 
-INSERT INTO `tbl_treatiescategory` (`id`, `code`, `name`, `desc`) VALUES
-(1, 'INT-FMOJ', 'Instruments', 'Instruments Signed by the President/Head of state of the Federal Republic of Nigeria'),
-(2, 'AGR-FMOJ', 'Agreements', 'Agreements signed between the federal republic of Nigeria and other entities'),
-(3, 'MOU-FMOJ', 'Memorandum of Understanding', 'Memorandum of Understanding signed between the Federal Republic of Nigeria and other entities');
+INSERT INTO `tbl_treatiescategory` (`id`, `code`, `name`, `description`) VALUES
+(1, 'FMOJ-INT', 'Instruments', 'Instruments Signed by the President/Head of state of the Federal Republic of Nigeria'),
+(2, 'FMOJ-AGR', 'Agreements', 'Agreements signed between the federal republic of Nigeria and other entities'),
+(3, 'FMOJ-MOU', 'Memorandum of Understanding', 'Memorandum of Understanding signed between the Federal Republic of Nigeria and other entities');
 
 --
 -- Indexes for dumped tables
@@ -261,6 +261,12 @@ ALTER TABLE `tbl_treaties`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_treatiescategory`
+--
+ALTER TABLE `tbl_treatiescategory`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -275,6 +281,12 @@ ALTER TABLE `tbl_status`
 --
 ALTER TABLE `tbl_treaties`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `tbl_treatiescategory`
+--
+ALTER TABLE `tbl_treatiescategory`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

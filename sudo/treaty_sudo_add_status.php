@@ -3,9 +3,6 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
-//generate random librarian number
-$length = 5;
-$Number =  substr(str_shuffle('QWERTYUIOPLKJHGFDSAZXCVBNM'), 1, $length);
 
 //create a Treaty Status
 if (isset($_POST['add_status'])) {
@@ -40,7 +37,7 @@ if (isset($_POST['add_status'])) {
             //Insert Captured information to a database table
             $query = "INSERT INTO tbl_status (name, description) VALUES (?,?)";
             $stmt = $mysqli->prepare($query);
-            //bind paramaters
+            //bind parameters
             $rc = $stmt->bind_param('ss', $s_name, $s_desc);
             $stmt->execute();
 
