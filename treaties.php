@@ -116,14 +116,14 @@ require_once('sudo/assets/config/config.php');
                     <div class="space-5"></div>
                     <form action="treaties.php">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="enter document name">
+                            <input type="text" class="form-control" placeholder="Enter document name" name="treaty">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-primary"><i class="icofont icofont-search-alt-2"></i></button>
                             </div>
                         </div>
                     </form>
                     <div class="space-30"></div>
-                    <div class="row" style="display: none;">
+                    <!-- <div class="row" style="display: none;">
                         <div class="pull-right col-xs-12 col-sm-7 col-md-6">
                             <form class="form-horizontal">
                                 <div class="form-group">
@@ -141,27 +141,31 @@ require_once('sudo/assets/config/config.php');
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div> -->
                     <hr>
                     <div class="space-20"></div>
                     <div class="row">
                         <!--Books-->
                         <?php
-                        $ret = "SELECT * FROM  tbl_treaties";
-                        $stmt = $mysqli->prepare($ret);
-                        $stmt->execute(); //ok
-                        $res = $stmt->get_result();
+                        // $ret = "SELECT * FROM  tbl_treaties WHERE ";
+                        // $stmt = $mysqli->prepare($ret);
+                        // $stmt->execute(); //ok
+                        // $res = $stmt->get_result();
+                        if (isset($_GET['treaty'])) {
+                            $treaty = $_GET['treaty'];
+                            $ret = "SELECT * FROM tbl_treaties WHERE title LIKE ?";
+                            $stmt = $mysqli->prepare($ret);
+                            $treaty_query = "%$treaty%";
+                            $stmt->bind_param('s', $treaty_query);
+                            $stmt->execute();
+                            $res = $stmt->get_result();
+                        } else {
+                            $ret = "SELECT * FROM tbl_treaties";
+                            $res = $mysqli->query($ret);
+                        }
+
+                        if ($res->num_rows > 0) {
                         while ($row = $res->fetch_object()) {
-                            /*
-                                if($row->b_coverimage == '')
-                                {
-                                    $cover_image = "<img src='sudo/assets/magazines/default.png'  class='media-object'  alt='Book Image'>";
-                                }
-                                else
-                                {
-                                 $cover_image = "<img src='sudo/assets/img/books/$row->b_coverimage'  class='media-object' alt='Book Image'>";
-                                }
-                                */
 
                         ?>
                             <!-- PDF, DOCX -->
@@ -180,7 +184,7 @@ require_once('sudo/assets/config/config.php');
                                             </div>
                                             <div class="space-10"></div>
                                             <div class="row">
-                                                <div class="col-md-4"> <a href="treaty.php?doc_id=<?php echo $row->id; ?>" class="text-primary">View</a></div>
+                                                <div class="col-md-4"> <a href="treaty.php?doc_id=<?= $row->id; ?>" class="text-primary">View</a></div>
 
                                                 <div class="col-md-8">
                                                     <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
@@ -190,7 +194,9 @@ require_once('sudo/assets/config/config.php');
                                     </div>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php } } else {
+                           echo "<h3 class='text-center'>No Treaty Found!</h3>";
+                        } ?>
                         <!--Book-->
 
                     </div>
@@ -206,7 +212,6 @@ require_once('sudo/assets/config/config.php');
                             <hr>
                             <ul class="list-unstyled menu-tip">
                                 <?php
-                                //Fetch all book categories
                                 $ret = "SELECT * FROM  tbl_treatiescategory";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
@@ -216,7 +221,6 @@ require_once('sudo/assets/config/config.php');
                                     <li><a href="#" class="text-success"><?php echo $row->name; ?></a></li>
                                 <?php } ?>
                             </ul>
-                            <!-- <a href="#" class="btn btn-primary btn-xs">See All</a> -->
                         </div>
                         <div class="space-20"></div>
                         <div class="single-sidebar">

@@ -130,7 +130,7 @@ require_once('sudo/assets/config/config.php');
                                     <div class="tab-pane fade in active" id="treaty">
                                         <form action="treaties.php">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Enter document title">
+                                                <input type="text" class="form-control" placeholder="Enter document name" name="treaty">
                                                 <div class="input-group-btn">
                                                     <button type="submit" class="btn btn-primary px-3">Search <i class="icofont icofont-search-alt-2"></i></button>
                                                 </div>
