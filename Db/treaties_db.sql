@@ -166,7 +166,7 @@ CREATE TABLE `il_sudo` (
 --
 
 INSERT INTO `il_sudo` (`id`, `username`, `number`, `email`, `password`, `profile_pic`, `bio`, `phone`, `created_at`) VALUES
-(1, 'MartDevelopers Inc', '7OBA6', 'admin@ilib.org', '90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad', '', 'Et sequi sit sit in eius officia est corrupti illo amet expedita labore sed sunt iusto numquam quod sapiente iusto laboriosam debitis qui sapiente dolorem alias vel aut explicabo iure culpa inventore ut debitis voluptate non libero autem voluptas ad ipsa nisi enim voluptatem qui nihil omnis ut voluptas numquam qui vel voluptatum commodi earum aut quibusdam impedit voluptatem exercitationem odio dolores ab reprehenderit nesciunt exercitationem vero libero ut ad aperiam laboriosam aut animi voluptatem perspiciatis voluptas unde id delectus omnis sint laboriosam sit enim tempore recusandae distinctio sequi et eveniet. ', '+254737229776', '2020-06-11 11:00:08.999494');
+(1, 'FMOJ_Admin', 'FMOJ-001', 'admin@FMOJ.org', '90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad', '', 'Et sequi sit sit in eius officia est corrupti illo amet expedita labore sed sunt iusto numquam quod sapiente iusto laboriosam debitis qui sapiente dolorem alias vel aut explicabo iure culpa inventore ut debitis voluptate non libero autem voluptas ad ipsa nisi enim voluptatem qui nihil omnis ut voluptas numquam qui vel voluptatum commodi earum aut quibusdam impedit voluptatem exercitationem odio dolores ab reprehenderit nesciunt exercitationem vero libero ut ad aperiam laboriosam aut animi voluptatem perspiciatis voluptas unde id delectus omnis sint laboriosam sit enim tempore recusandae distinctio sequi et eveniet. ', '+23490000000000', '2020-06-11 11:00:08.999494');
 
 -- --------------------------------------------------------
 

@@ -13,7 +13,13 @@ if (isset($_GET['deleteBookCategory'])) {
     $stmt->close();
 
     if ($stmt) {
-        $info = "Category Deleted";
+        $success = "Category Deleted";
+?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+<?php
     } else {
         $err = "Try Again Later";
     }
@@ -45,7 +51,6 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Audits</a></li>
                 <li><span>Treaty Categories</span></li>
             </ul>
         </div>

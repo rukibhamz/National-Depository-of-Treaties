@@ -4,14 +4,10 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 
-//generate random isbn number
-$length = 6;
-$Number =  substr(str_shuffle('0123456789'), 1, $length);
-
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['sudo_id'])) {
     // Get the user's ID and other details from the session
-    $user_id = $_SESSION['id'];
-    $result = "SELECT * FROM fmoj_staff WHERE id = ?";
+    $user_id = $_SESSION['sudo_id'];
+    $result = "SELECT * FROM il_sudo WHERE id = ?";
     $stmt = $mysqli->prepare($result);
     $stmt->bind_param('i', $user_id);
     $stmt->execute();
@@ -20,7 +16,11 @@ if (isset($_SESSION['id'])) {
     $stmt->close();
 }
 
-//edit treaty
+//generate random isbn number
+$length = 6;
+$Number =  substr(str_shuffle('0123456789'), 1, $length);
+
+//edit  book
 if (isset($_POST['update_treaty'])) {
     $doc_id = $_GET['doc_id'];
     $title  = $_POST['title'];
@@ -31,7 +31,6 @@ if (isset($_POST['update_treaty'])) {
     $b_summary = $_POST['b_summary'];
     $treaty_year = $_POST['treaty_year'];
     $s_status = $_POST['s_status'];
-
 
     // $b_file = $_FILES["b_file"]["name"];
     // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
@@ -45,7 +44,7 @@ if (isset($_POST['update_treaty'])) {
 
     //declare a varible which will be passed to alert function
     if ($stmt) {
-        $success = "Treaty Updated Successfully" && header("refresh:1;url=pages_staff_manage_treaty.php");
+        $success = "Treaty Updated Successfully" && header("refresh:1;url=treaty_sudo_all_treaties.php");
     } else {
         $err = "Please Try Again Or Try Later";
     }
@@ -85,9 +84,9 @@ include("assets/inc/head.php");
             <!--Breadcrums-->
             <div id="top_bar">
                 <ul id="breadcrumbs">
-                    <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                    <li><a href="pages_staff_manage_treaty.php">Treaty Inventory</a></li>
-                    <li><span>Update Treaty</span></li>
+                    <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
+                    <li><a href="treaty_sudo_all_treaties.php">All Treaties</a></li>
+                    <li><span>Update Treaty <?= $row->title ?></span></li>
                 </ul>
             </div>
 
@@ -130,7 +129,7 @@ include("assets/inc/head.php");
                                 <div class="uk-width-medium-1-2">
                                     <div class="uk-form-row">
                                         <label>Treaty Publisher</label>
-                                        <input type="text" value="<?= $user->name ?>" readonly class="md-input" name="b_publisher" />
+                                        <input type="text" value="<?= $user->username ?>" readonly class="md-input" name="b_publisher" />
                                     </div>
 
                                     <div class="uk-form-row">
@@ -189,7 +188,7 @@ include("assets/inc/head.php");
                                 <div class="uk-width-medium-2-2">
                                     <div class="uk-form-row">
                                         <div class="uk-input-group">
-                                            <input type="submit" class="md-btn md-btn-success" name="update_treaty" value="Update Book" />
+                                            <input type="submit" class="md-btn md-btn-success" name="update_treaty" value="Update Treaty" />
                                         </div>
                                     </div>
                                 </div>
@@ -253,6 +252,7 @@ include("assets/inc/head.php");
             altair_helpers.ie_fix();
         });
     </script>
+
 </body>
 
 </html>

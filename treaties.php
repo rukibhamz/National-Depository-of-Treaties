@@ -155,7 +155,7 @@ require_once('sudo/assets/config/config.php');
                             /*
                                 if($row->b_coverimage == '')
                                 {
-                                    $cover_image = "<img src='sudo/assets/img/books/Image12.jpg'  class='media-object'  alt='Book Image'>";
+                                    $cover_image = "<img src='sudo/assets/magazines/default.png'  class='media-object'  alt='Book Image'>";
                                 }
                                 else
                                 {

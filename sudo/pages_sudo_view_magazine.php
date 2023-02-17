@@ -33,7 +33,7 @@
         //load default book cover page if book is missing a cover image
         if($row->s_cover_img == '')
         {
-            $cover_image = "<img src='assets/img/books/Image12.jpg' alt='Book Image'>";
+            $cover_image = "<img src='assets/magazines/default.png' alt='Book Image'>";
         }
         else
         {
