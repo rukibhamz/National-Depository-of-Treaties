@@ -25,10 +25,8 @@ if (isset($_POST['add_status'])) {
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($s_name == $row['s_name']) {
+            if ($s_name == $row['name']) {
                 $err =  "Treaty Status name already exists";
-            } else {
-                $err =  "Treaty Status code already exists";
             }
         } else {
             $s_name = $_POST['name'];
