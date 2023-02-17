@@ -105,7 +105,6 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Treaties</a></li>
                 <li><span>Treaty Upload Form</span></li>
             </ul>
         </div>

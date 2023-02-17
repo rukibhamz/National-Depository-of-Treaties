@@ -11,7 +11,7 @@ while ($row = $res->fetch_object()) {
     if ($row->b_file == '') {
         $cover_image = "<img src='sudo/assets/img/books/Image12.jpg' class='img-fluid img-thumbnail' alt='Book Image'>";
     } else {
-        $cover_image = "<img src='sudo/assets/img/books/$row->b_coverimage' class='img-fluid img-thumbnail' alt='Book Image'>";
+        $cover_image = "<img src='sudo/assets/img/books/$row->b_file' class='img-fluid img-thumbnail' alt='Book Image'>";
     }
 ?>
     <!doctype html>
