@@ -114,34 +114,6 @@
 
         }
 
-        function getStudentDetails(val)
-
-        {
-            $.ajax({
-                //get student Name
-                type: "POST",
-                url: "ajax.php",
-                data: 'studentiLibNumber=' + val,
-                success: function(data) {
-                    //alert(data);
-                    $('#studentName').val(data);
-                }
-            });
-
-            $.ajax({
-
-                //get student ID
-                type: "POST",
-                url: "ajax.php",
-                data: 'studentName=' + val,
-                success: function(data) {
-                    //alert(data);
-                    $('#studentID').val(data);
-                }
-            });
-
-        }
-
         function printContent(el)
         //printContent
         {

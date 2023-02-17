@@ -67,7 +67,7 @@ while ($row = $res->fetch_object()) {
                                                 <?php
                                                 //display all notifications
                                                 $id = $_SESSION['id'];
-                                                $ret = "SELECT * FROM  iL_notifications  WHERE user_id = ? ";
+                                                $ret = "SELECT * FROM  il_notifications  WHERE user_id = ? ";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->bind_param('i', $id);
                                                 $stmt->execute(); //ok

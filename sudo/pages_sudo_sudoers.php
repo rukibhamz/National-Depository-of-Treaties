@@ -728,7 +728,7 @@
 
                                             //display all notifications
                                             $sudo_id = $_GET['sudo_id'];
-                                            $ret="SELECT * FROM  iL_notifications  WHERE user_id = ? "; 
+                                            $ret="SELECT * FROM  il_notifications  WHERE user_id = ? "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->bind_param('i', $sudo_id);
                                             $stmt->execute() ;//ok
