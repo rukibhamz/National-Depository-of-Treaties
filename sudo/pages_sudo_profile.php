@@ -22,7 +22,7 @@
     <!-- main sidebar -->
     <?php
         include("assets/inc/sidebar.php"); 
-        $id = $_SESSION['id'];
+        $id = $_SESSION['sudo_id'];
         $ret="SELECT * FROM  il_sudo  WHERE id = ? "; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $id);
@@ -726,7 +726,7 @@
                                         <?php
 
                                             //display all notifications
-                                            $id = $_SESSION['id'];
+                                            $id = $_SESSION['sudo_id'];
                                             $ret="SELECT * FROM  il_notifications  WHERE user_id = ? "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->bind_param('i', $id);

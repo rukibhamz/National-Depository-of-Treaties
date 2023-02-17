@@ -65,7 +65,7 @@
                             </div>
                             <div class="user_content">
                                 <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
-                                    <li class="uk-active"><a href="#"><?php echo $row->name;?> Details</a></li>
+                                    <li class="uk-active"><a href="#"><?= $row->name;?></a></li>
                                     <!--
                                     <li><a href="#">Photos</a></li>
                                     <li><a href="#">Posts</a></li>
@@ -73,7 +73,7 @@
                                 </ul>
                                 <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
                                     <li>
-                                        <?php echo $row->desc;?>
+                                        <?php echo $row->description;?>
                                         
                                     </li>
 

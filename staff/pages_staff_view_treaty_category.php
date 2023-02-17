@@ -36,8 +36,7 @@
             <div id="top_bar">
                 <ul id="breadcrumbs">
                     <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                    <li><a href="#">Books Inventory</a></li>
-                    <li><span><?php echo $row->name;?></span></li>
+                    <li><span><?= $row->name;?></span></li>
                 </ul>
             </div>
             <div id="page_content_inner">
@@ -65,7 +64,7 @@
                             </div>
                             <div class="user_content">
                                 <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
-                                    <li class="uk-active"><a href="#"><?php echo $row->name;?> Details</a></li>
+                                    <li class="uk-active"><a href="#"><?= $row->name;?></a></li>
                                     <!--
                                     <li><a href="#">Photos</a></li>
                                     <li><a href="#">Posts</a></li>
@@ -73,7 +72,7 @@
                                 </ul>
                                 <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
                                     <li>
-                                        <?php echo $row->desc;?>
+                                        <?= $row->description;?>
                                         
                                     </li>
 

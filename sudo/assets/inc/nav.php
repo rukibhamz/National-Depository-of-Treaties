@@ -3,7 +3,7 @@
     *Load naviagation partial with logged in sudo session
     */
 
-$id = $_SESSION['id'];
+$id = $_SESSION['sudo_id'];
 $ret = "SELECT * FROM  il_sudo  WHERE id = ? ";
 $stmt = $mysqli->prepare($ret);
 $stmt->bind_param('i', $id);
@@ -30,7 +30,7 @@ while ($row = $res->fetch_object()) {
     /*
         Notifications Counter
     */
-    $id = $_SESSION['id'];
+    $id = $_SESSION['sudo_id'];
     $result = "SELECT count(*) FROM il_notifications WHERE user_id = ? "; //get the number of notifications for logged in user
     $stmt = $mysqli->prepare($result);
     $stmt->bind_param('i', $id);
@@ -66,7 +66,7 @@ while ($row = $res->fetch_object()) {
                                             <ul class="md-list md-list-addon">
                                                 <?php
                                                 //display all notifications
-                                                $id = $_SESSION['id'];
+                                                $id = $_SESSION['sudo_id'];
                                                 $ret = "SELECT * FROM  il_notifications  WHERE user_id = ? ";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->bind_param('i', $id);

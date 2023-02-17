@@ -42,7 +42,7 @@ include("assets/inc/head.php");
             $res = $stmt->get_result();
             $numRows = $res->num_rows;
             ?>
-            <h3 class="heading_a uk-margin-bottom text">Number of Published Treaties ( <?= $numRows ?> )</h3>
+            <h3 class="heading_a uk-margin-bottom text">Number of Treaties ( <?= $numRows ?> )</h3>
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                     <div class="dt_colVis_buttons"></div>

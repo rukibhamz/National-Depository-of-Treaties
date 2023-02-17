@@ -46,11 +46,12 @@
             <div id="top_bar">
                 <ul id="breadcrumbs">
                     <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                    <li><a href="pages_staff_manage_books.php">Document Inventory</a></li>
-                    <li><span><?php echo $row->title;?></span></li>
+                    <li><a href="pages_staff_manage_treaty.php">Document Inventory</a></li>
+                    <li><span><?= $row->title;?></span></li>
                 </ul>
             </div>
             <div id="page_content_inner">
+                <div class="space-30"></div>
                 <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
                     <div class="uk-width-large-10-10">
                         <div class="md-card">

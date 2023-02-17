@@ -15,7 +15,7 @@ if (isset($_POST['sudo_login'])) {
     $stmt->execute(); //execute bind
     $stmt->bind_result($email, $password, $id); //bind result
     $rs = $stmt->fetch();
-    $_SESSION['id'] = $id; //assaign session to sudo id
+    $_SESSION['sudo_id'] = $id; //assaign session to sudo id
 
     if ($rs) {
         //if its sucessfull

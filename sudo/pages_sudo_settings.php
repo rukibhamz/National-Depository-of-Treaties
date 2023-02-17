@@ -8,7 +8,7 @@
     if(isset($_POST['sudo_update']))
     {
 
-        $id = $_SESSION['id'];
+        $id = $_SESSION['sudo_id'];
         $username = $_POST['username'];
         $email =$_POST['email'];
         $phone = $_POST['phone'];
@@ -55,7 +55,7 @@
         <?php 
             include("assets/inc/sidebar.php");
 
-            $id = $_SESSION['id'];
+            $id = $_SESSION['sudo_id'];
             $ret="SELECT * FROM  il_sudo  WHERE id = ? "; 
             $stmt= $mysqli->prepare($ret) ;
             $stmt->bind_param('i', $id);
