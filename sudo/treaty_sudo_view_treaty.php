@@ -234,7 +234,6 @@ include("assets/inc/head.php");
         const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
         const fileName = docsContainer.getAttribute('data-value');
         const fileExt = fileName.split(".").pop();
-        // console.log(fileExt, fileName, docsContainer, 'hello =>', typeof fileExt)
         if (fileExt === 'pdf') {
             PDFObject.embed(`assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");
         }
