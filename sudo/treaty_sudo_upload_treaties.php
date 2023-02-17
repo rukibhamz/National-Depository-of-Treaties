@@ -4,7 +4,7 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['sudo_id'])) {
     // Get the user's ID and other details from the session
     $user_id = $_SESSION['sudo_id'];
     $result = "SELECT * FROM il_sudo WHERE id = ?";
