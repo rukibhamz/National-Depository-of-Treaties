@@ -8,7 +8,7 @@ $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($row = $res->fetch_object()) {
     //load default book cover page if book is missing a cover image
-    if ($row->b_coverimage == '') {
+    if ($row->b_file == '') {
         $cover_image = "<img src='sudo/assets/img/books/Image12.jpg' class='img-fluid img-thumbnail' alt='Book Image'>";
     } else {
         $cover_image = "<img src='sudo/assets/img/books/$row->b_coverimage' class='img-fluid img-thumbnail' alt='Book Image'>";
@@ -136,9 +136,6 @@ while ($row = $res->fetch_object()) {
                             <div class="col-xs-12 col-md-12">
                                 <div class="category-item well green">
                                     <div class="media">
-                                        <!-- <div>
-                                            <?php echo $cover_image; ?>
-                                        </div> -->
                                         <div class="md-card">
                                             <?php
                                             $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
