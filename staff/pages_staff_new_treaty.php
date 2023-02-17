@@ -187,7 +187,9 @@ include("assets/inc/head.php");
                                 <div id="file_upload-drop" class="uk-file-upload">
                                     <p class="uk-text">Drop Treaty Document</p>
                                     <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*, .pdf"></a>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*,.pdf"></a>
+                                    <div class="space-20"></div>
+                                    <div id="file_name"></div>
                                 </div>
                                 <div id="file_upload-progressbar" class="uk-progress uk-hidden">
                                     <div class="uk-progress-bar" style="width:0">0%</div>
@@ -244,6 +246,15 @@ include("assets/inc/head.php");
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
     <script src="assets/js/pages/forms_file_upload.min.js"></script>
+    <script>
+        const fileUpload = document.getElementById("file_upload-select");
+        const fileNameElement = document.getElementById("file_name");
+
+        document.getElementById("file_upload-drop").addEventListener("change", (event) => {
+            const fileName = event.target.files[0].name;
+            fileNameElement.innerText = `Selected File Name : ${fileName}`;
+        });
+    </script>
 </body>
 
 </html>
