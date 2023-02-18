@@ -118,14 +118,12 @@ require_once('sudo/assets/config/config.php');
 
                         <div>
                             <?php
-                            $selected_year = isset($_GET['treaty']) ? $_GET['treaty'] : '';
-                            $query_string = $_SERVER['QUERY_STRING'];
-                            $query_string = preg_replace('/?treaty=[^&]+/', '', $query_string);
-                            $query_string = preg_replace('/^&/', '', $query_string);
-
-                            if (!empty($query_string)) {
-                                $query_string = '?' . $query_string;
-                            }
+                              $selected_year = isset($_GET['treaty']) ? $_GET['treaty'] : '';
+                              $query_string = $_SERVER['QUERY_STRING'];
+                              $query_string = preg_replace('/\?treaty=[^&]+&?/', '', $query_string);
+                              if (!empty($query_string)) {
+                                  $query_string = '?' . $query_string;
+                              }
                             ?>
 
                             <?php if ($selected_year) : ?>

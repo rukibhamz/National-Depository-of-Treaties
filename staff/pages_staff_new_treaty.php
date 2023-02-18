@@ -70,6 +70,7 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
                 $err =  "Treaty title already exists";
             }
         } else {
+            $title  = $_POST['title'];
             $signatory = $_POST['signatory'];
             $b_publisher = $_POST['b_publisher'];
             $tc_id = $_POST['tc_id'];
