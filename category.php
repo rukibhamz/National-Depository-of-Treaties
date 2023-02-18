@@ -110,9 +110,9 @@ require_once('sudo/assets/config/config.php');
             <div class="space-100"></div>
             <!-- Header-jumbotron-end -->
         </header>
-        <section>
-            <div class="space-30"></div>
+        <section id="scroll_view">
             <div class="container">
+                <div class="space-50"></div>
                 <div class="">
                     <div class="row">
                         <!-- <div class="col-xs-12 col-md-6">
@@ -127,7 +127,7 @@ require_once('sudo/assets/config/config.php');
 
                         <div class="col-xs-12 col-md-6 pull-right">
                             <form class="form-horizontal">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom: 0;">
                                     <label class="control-label" for="sort">Filter by year : </label>
                                     <div class="form-group">
                                         <select onchange="filterByYear()" name="treaty_year" id="treaty_year" class="form-control" />
@@ -147,27 +147,27 @@ require_once('sudo/assets/config/config.php');
                                     </div>
                                 </div>
                             </form>
+                            <!-- ----- -->
+
+                            <div>
+                                <?php
+                                $selected_year = isset($_GET['year']) ? $_GET['year'] : '';
+                                $query_string = $_SERVER['QUERY_STRING'];
+                                $query_string = preg_replace('/&year=[^&]+/', '', $query_string);
+                                $query_string = preg_replace('/^&/', '', $query_string);
+
+                                if (!empty($query_string)) {
+                                    $query_string = '?' . $query_string;
+                                }
+                                ?>
+
+                                <?php if ($selected_year) : ?>
+                                    <a style="margin-left: -28px" href="<?= $_SERVER['PHP_SELF'] . $query_string ?>" class="btn btn-primary">Clear Filter</a>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <?php
-                        $selected_year = isset($_GET['year']) ? $_GET['year'] : '';
-                        $query_string = $_SERVER['QUERY_STRING'];
-                        $query_string = preg_replace('/&year=[^&]+/', '', $query_string);
-                        $query_string = preg_replace('/^&/', '', $query_string);
-
-                        if (!empty($query_string)) {
-                            $query_string = '?' . $query_string;
-                        }
-                        ?>
-
-                        <?php if ($selected_year) : ?>
-                            <a href="<?= $_SERVER['PHP_SELF'] . $query_string ?>" class="btn btn-primary">Clear Filter</a>
-                        <?php endif; ?>
-                    </div>
                     <hr>
-                    <div class="space-20"></div>
-
                     <?php
                     if (isset($_GET['year'])) {
                         $selectedYear = $_GET['year'];
@@ -195,6 +195,7 @@ require_once('sudo/assets/config/config.php');
                                         <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
                                         <h6>Category: <?= $row->tc_name; ?></h6>
                                         <h6>Year: <?= $row->treaty_year; ?></h6>
+                                        <h6>Status: <i><?= $row->s_status; ?></i></h6>
                                         <div class="space-5"></div>
                                         <div class="title-bar blue text-center">
                                             <ul class="list-inline list-unstyled">
@@ -214,46 +215,6 @@ require_once('sudo/assets/config/config.php');
                             </div>
                         </div>
                     <?php } ?>
-                    <div class="row" style="display:none">
-                        <!--Books-->
-                        <?php
-                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id";
-                        $stmt = $mysqli->prepare($ret);
-                        $stmt->execute(); //ok
-                        $res = $stmt->get_result();
-                        while ($row = $res->fetch_object()) {
-
-                        ?>
-                            <!-- PDF, DOCX -->
-                            <!-- Add a description field -->
-                            <div class="col-xs-12 col-sm-6 col-lg-4">
-                                <div class="category-item well green">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
-                                            <h6>Category: <?= $row->tc_name; ?></h6>
-                                            <div class="space-10"></div>
-                                            <div class="title-bar blue text-center">
-                                                <ul class="list-inline list-unstyled">
-                                                    <li><i class="icofont icofont-square"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="space-10"></div>
-                                            <div class="row">
-                                                <div class="col-md-4"> <a href="treaty.php?doc_id=<?php echo $row->id; ?>" class="text-primary">View</a></div>
-
-                                                <div class="col-md-8">
-                                                    <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <!--Book-->
-
-                    </div>
                 </div>
             </div>
             <div class="space-80"></div>
@@ -280,6 +241,17 @@ require_once('sudo/assets/config/config.php');
         function filterByYear() {
             var selectedYear = document.getElementById("treaty_year").value;
             window.location.href = "category.php?id=<?= $_GET['id'] ?>&year=" + selectedYear;
+        }
+    </script>
+    <script>
+        // Check if treaty parameter exists in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('id')) {
+            // Scroll smoothly to screen_view element
+            const element = document.getElementById('scroll_view');
+            element.scrollIntoView({
+                behavior: 'smooth'
+            });
         }
     </script>
 </body>
