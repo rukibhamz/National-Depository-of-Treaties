@@ -3,9 +3,32 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
-//generate random librarian number
-$length = 3;
-$Number =  substr(str_shuffle('0123456789'), 1, $length);
+//generate staff number
+
+// Get the last staff ID from the database
+// Query to find the last staff number entry in the table
+$sql = "SELECT number FROM tbl_staff ORDER BY id DESC LIMIT 1";
+$res = mysqli_query($mysqli, $sql);
+
+if ($res) {
+    $row = mysqli_fetch_assoc($res);
+    $num = intval(substr($row['number'], 5)) + 1;
+    $num_str = str_pad($num, 4, "0", STR_PAD_LEFT);
+    $new_staff_id = "FMOJ-" . $num_str;
+    $sql = "SELECT * FROM tbl_staff WHERE number = '$new_staff_id'";
+    $res = mysqli_query($mysqli, $sql);
+    if ($res && mysqli_num_rows($res) > 0) {
+        // If the new staff ID already exists in the database, generate a new one
+        mysqli_free_result($res);
+        $num += 1;
+        $num_str = str_pad($num, 4, "0", STR_PAD_LEFT);
+        $new_staff_id = "FMOJ-" . $num_str;
+    }
+    $Number = $new_staff_id;
+} else {
+    // If the query fails, use FMOJ-0002 as the staff number
+    $Number = "FMOJ-0002";
+}
 
 //create a librarian account
 if (isset($_POST['add_uploader'])) {
@@ -138,7 +161,7 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Staff ID Number</label>
-                                    <input type="text" required readonly value="FMOJ-<?= $Number; ?>" name="number" class="md-input label-fixed" />
+                                    <input type="text" required readonly value="<?= $Number; ?>" name="number" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>User Address</label>
