@@ -4,3 +4,5 @@ node_modules
 /staff/assets/config/config.php
 /sudo/assets/config/pdoconfig.php
 /staff/assets/config/pdoconfig.php
+/sudo/assets/magazines
+/sudo/assets/magazines/

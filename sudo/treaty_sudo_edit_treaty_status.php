@@ -5,25 +5,51 @@ include('assets/config/checklogin.php');
 check_login();
 
 //update a book category
+// if (isset($_POST['update_treaty_status'])) {
+//     $status_id = $_GET['id'];
+//     $s_name = $_POST['name'];
+//     $s_desc = $_POST['desc'];
+
+//     //Insert Captured information to a database table
+//     $query = "UPDATE tbl_status SET name=?, description=? WHERE id =?";
+//     $stmt = $mysqli->prepare($query);
+//     //bind parameters
+//     $rc = $stmt->bind_param('ssi',  $s_name, $s_desc, $status_id);
+//     $stmt->execute();
+
+//     //declare a variable which will be passed to alert function
+//     if ($stmt) {
+//         $success = "Treaty Status Updated" && header("refresh:1;url=treaty_sudo_manage_status.php");
+//     } else {
+//         $err = "Please Try Again Or Try Later";
+//     }
+// }
 if (isset($_POST['update_treaty_status'])) {
     $status_id = $_GET['id'];
     $s_name = $_POST['name'];
     $s_desc = $_POST['desc'];
 
-    //Insert Captured information to a database table
-    $query = "UPDATE tbl_status SET name=?, description=? WHERE id =?";
-    $stmt = $mysqli->prepare($query);
+    // Update the tbl_status table
+    $query_status = "UPDATE tbl_status SET name=?, description=? WHERE id =?";
+    $stmt_status = $mysqli->prepare($query_status);
     //bind parameters
-    $rc = $stmt->bind_param('ssi',  $s_name, $s_desc, $status_id);
-    $stmt->execute();
+    $rc = $stmt_status->bind_param('ssi',  $s_name, $s_desc, $status_id);
+    $stmt_status->execute();
 
-    //declare a varible which will be passed to alert function
-    if ($stmt) {
+    // Update the tbl_treaties table
+    $query_treaty = "UPDATE tbl_treaties SET s_id=?, s_status=? WHERE s_id=?";
+    $stmt_treaty = $mysqli->prepare($query_treaty);
+    $rc = $stmt_treaty->bind_param('isi', $status_id, $s_name, $status_id);
+    $stmt_treaty->execute();
+
+    //declare a variable which will be passed to alert function
+    if ($stmt_status && $stmt_treaty) {
         $success = "Treaty Status Updated" && header("refresh:1;url=treaty_sudo_manage_status.php");
     } else {
         $err = "Please Try Again Or Try Later";
     }
 }
+
 ?>
 
 <!doctype html>

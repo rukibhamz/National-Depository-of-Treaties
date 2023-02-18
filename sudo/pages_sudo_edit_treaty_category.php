@@ -5,29 +5,6 @@ include('assets/config/checklogin.php');
 check_login();
 
 //update a treaty category
-// if(isset($_POST['update_treaty_category']))
-// {
-//     $category_code = $_GET['code'];
-//     $bc_name = $_POST['name'];
-//     $bc_desc = $_POST['desc'];
-
-//     //Insert Captured information to a database table
-//     $query="UPDATE tbl_treatiescategory SET name=?, description=? WHERE code =?";
-//     $stmt = $mysqli->prepare($query);
-//     //bind parameters
-//     $rc=$stmt->bind_param('sss',  $bc_name, $bc_desc, $category_code);
-//     $stmt->execute();
-
-//     //declare a varible which will be passed to alert function
-//     if($stmt)
-//     {
-//         $success = "Treaty Category Updated" && header("refresh:1;url=pages_sudo_manage_categories.php");
-//     }
-//     else 
-//     {
-//         $err = "Please Try Again Or Try Later";
-//     }      
-// }
 
 if (isset($_POST['update_treaty_category'])) {
     $category_code = $_GET['code'];

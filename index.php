@@ -197,8 +197,8 @@ require_once('sudo/assets/config/config.php');
             <div class="row">
                 <!--Show Book Categories-->
                 <?php
-                //Fetch all book categories
-                $ret = "SELECT * FROM  	tbl_treatiescategory";
+                //Fetch all treaty categories
+                $ret = "SELECT * FROM tbl_treatiescategory";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
