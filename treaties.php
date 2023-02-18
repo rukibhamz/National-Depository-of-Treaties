@@ -114,9 +114,9 @@ require_once('sudo/assets/config/config.php');
                 <div class="col-xs-12 col-md-9 pull-right">
                     <h4>Search Box</h4>
                     <div class="space-5"></div>
-                    <form action="treaties.php">
+                    <form action="treaties.php" method="GET">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="enter document name">
+                            <input type="text" class="form-control" name="search_id" value="<?php if(isset($_GET['search_id'])){echo $_GET['search_id'];} ?>" placeholder="enter document name">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-primary"><i class="icofont icofont-search-alt-2"></i></button>
                             </div>
@@ -147,51 +147,59 @@ require_once('sudo/assets/config/config.php');
                     <div class="row">
                         <!--Books-->
                         <?php
-                        $ret = "SELECT * FROM  tbl_treaties";
-                        $stmt = $mysqli->prepare($ret);
-                        $stmt->execute(); //ok
-                        $res = $stmt->get_result();
-                        while ($row = $res->fetch_object()) {
-                            /*
-                                if($row->b_coverimage == '')
-                                {
-                                    $cover_image = "<img src='sudo/assets/magazines/default.png'  class='media-object'  alt='Book Image'>";
-                                }
-                                else
-                                {
-                                 $cover_image = "<img src='sudo/assets/img/books/$row->b_coverimage'  class='media-object' alt='Book Image'>";
-                                }
-                                */
+                            $ret = null;
+                            $res = null;
 
+                            if (isset($_GET['search_id'])) {
+                                $stud_id = $_GET['search_id'];
+
+                                // Debugging: print the query to the error log
+                                $ret = "SELECT * FROM tbl_treaties WHERE tc_name = ? OR signatory = ? OR title= ? ";
+                                error_log("SQL query: $ret");
+
+                                try {
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->bind_param("sss", $search_id, $search_id, $search_id);
+                                    $stmt->execute();
+                                    $res = $stmt->get_result();
+                                } catch (Exception $e) {
+                                    error_log("Error executing SQL query: " . $e->getMessage());
+                                    $res = null;
+                                }
+                            }
+
+                            if ($res != null) {
+                                while ($row = $res->fetch_object()) {
                         ?>
-                            <!-- PDF, DOCX -->
-                            <!-- Add a description field -->
-                            <div class="col-xs-12 col-md-6">
-                                <div class="category-item well green">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
-                                            <h6>Category: <?= $row->tc_name; ?></h6>
-                                            <div class="space-10"></div>
-                                            <div class="title-bar blue text-center">
-                                                <ul class="list-inline list-unstyled">
-                                                    <li><i class="icofont icofont-square"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="space-10"></div>
-                                            <div class="row">
-                                                <div class="col-md-4"> <a href="treaty.php?doc_id=<?php echo $row->id; ?>" class="text-primary">View</a></div>
-
-                                                <div class="col-md-8">
-                                                    <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="category-item well green">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h5><img src="images/file_icon.png" alt="<?= $row->title ?>" />&ensp;<span class="trim"><?= $row->title ?></span></h5>
+                                                    <h6>Category: <?= $row->tc_name ?></h6>
+                                                    <div class="space-10"></div>
+                                                    <div class="title-bar blue text-center">
+                                                        <ul class="list-inline list-unstyled">
+                                                            <li><i class="icofont icofont-square"></i></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="space-10"></div>
+                                                    <div class="row">
+                                                        <div class="col-md-4"><a href="treaty.php?doc_id=<?php echo $row->id ?>" class="text-primary">View</a></div>
+                                                        <div class="col-md-8">
+                                                            <img src="images/card-logo.png" alt="<?= $row->title ?>" class="img-responsive" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <!--Book-->
+                        <?php
+                                }
+                            } else {
+                                echo "No record";
+                            }
+                        ?>
 
                     </div>
                     <div class="space-60"></div>
