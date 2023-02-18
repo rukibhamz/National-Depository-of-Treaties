@@ -53,17 +53,19 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty description cannot be empty";
     }
-    if (!$error) { 
-            $title  = $_POST['title'];
-            $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
-            $res = mysqli_query($mysqli, $sql);
-            if (mysqli_num_rows($res) > 0) {
+    if (!$error) {
+        $title  = $_POST['title'];
+        $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if ($title == $row['title']) {
                 $err =  "Treaty title already exists";
             } else {
                 $err =  "Treaty title already exists";
             }
+        } else {
+            $title  = $_POST['title'];
             $signatory = $_POST['signatory'];
             $b_publisher = $_POST['b_publisher'];
             $tc_id = $_POST['tc_id'];

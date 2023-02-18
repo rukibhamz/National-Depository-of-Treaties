@@ -8,18 +8,18 @@
     if(isset($_POST['staff_update']))
     {
 
-        $id = $_SESSION['l_id'];
+        $id = $_SESSION['id'];
         $l_name =$_POST['l_name'];
         $l_phone = $_POST['l_phone'];
         $l_email = $_POST['l_email'];
         $l_bio = $_POST['l_bio'];
         $pic  = $_FILES["pic"]["name"];
-        move_uploaded_file($_FILES["pic"]["tmp_name"],"../sudo/assets/img/avatars/librarians/".$_FILES["pic"]["name"]);
+        move_uploaded_file($_FILES["pic"]["tmp_name"],"../sudo/assets/profile_img/".$_FILES["pic"]["name"]);
         $l_pwd= sha1(md5($_POST['l_pwd']));
         //$number = $_POST['number'];
         
         //Insert Captured information to a database table
-        $query="UPDATE  tbl_staff SET l_name = ?, l_phone = ?, l_email = ?,  l_bio = ?, pic = ?, l_pwd =? WHERE l_id = ? ";
+        $query="UPDATE  tbl_staff SET name = ?, phone = ?, email = ?,  bio = ?, pic = ?, pwd =? WHERE id = ? ";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
         $rc=$stmt->bind_param('ssssssi', $l_name, $l_phone, $l_email, $l_bio, $pic, $l_pwd, $id);
@@ -56,7 +56,7 @@
         <?php 
             include("assets/inc/sidebar.php");
 
-            $id = $_SESSION['l_id'];
+            $id = $_SESSION['id'];
             $ret="SELECT * FROM  tbl_staff  WHERE id = ? "; 
             $stmt= $mysqli->prepare($ret) ;
             $stmt->bind_param('i', $id);
@@ -125,7 +125,7 @@
                                                 <div class="uk-grid" data-uk-grid-margin>
                                                     <div class="uk-width-medium-1-3">
                                                         <label for="user_edit_uname_control">Name</label>
-                                                        <input class="md-input" required type="text" name="l_name" value="<?= $row->name;?>" />
+                                                        <input class="md-input" required type="text" name="l_name" value="<?= $row->name;?>" readonly/>
                                                     </div>
                                                     <div class="uk-width-medium-1-3">
                                                         <label for="user_edit_position_control">Email</label>

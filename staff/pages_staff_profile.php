@@ -23,7 +23,7 @@
         ?>
     <!-- main sidebar end -->
     <?php
-        $id = $_SESSION['l_id'];
+        $id = $_SESSION['id'];
         $ret="SELECT * FROM  tbl_staff WHERE id = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $id);

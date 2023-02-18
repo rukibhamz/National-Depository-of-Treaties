@@ -58,36 +58,39 @@ if (isset($_POST['add_treaty'])) {
             $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
             $res = mysqli_query($mysqli, $sql);
             if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($title == $row['title']) {
-                $err =  "Treaty title already exists";
+                $row = mysqli_fetch_assoc($res);
+                if ($title == $row['title']) {
+                    $err =  "Treaty title already exists";
+                } else {
+                    $err =  "Treaty title already exists";
+                }
             } else {
-                $err =  "Treaty title already exists";
-            }
-            $signatory = $_POST['signatory'];
-            $b_publisher = $_POST['b_publisher'];
-            $tc_id = $_POST['tc_id'];
-            $tc_name = $_POST['tc_name'];
-            $b_summary = $_POST['b_summary'];
-            $treaty_year = $_POST['treaty_year'];
-            $s_status = $_POST['s_status'];
-            $s_id = $_POST['s_id'];
+                $title  = $_POST['title'];
+                $signatory = $_POST['signatory'];
+                $b_publisher = $_POST['b_publisher'];
+                $tc_id = $_POST['tc_id'];
+                $tc_name = $_POST['tc_name'];
+                $b_summary = $_POST['b_summary'];
+                $treaty_year = $_POST['treaty_year'];
+                $s_status = $_POST['s_status'];
+                $s_id = $_POST['s_id'];
 
-            $b_file = $_FILES["b_file"]["name"];
-            move_uploaded_file($_FILES["b_file"]["tmp_name"], "./assets/magazines/" . $_FILES["b_file"]["name"]);
+                $b_file = $_FILES["b_file"]["name"];
+                move_uploaded_file($_FILES["b_file"]["tmp_name"], "./assets/magazines/" . $_FILES["b_file"]["name"]);
 
-            //Insert Captured information to a database table
-            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            //bind parameters
-            $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
-            $stmt->execute();
+                //Insert Captured information to a database table
+                $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                $stmt = $mysqli->prepare($query);
+                //bind parameters
+                $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
+                $stmt->execute();
 
-            //declare a variable which will be passed to alert function
-            if ($stmt) {
-                $success = "Treaty Created Successfully";
-            } else {
-                $err = "Please Try Again Or Try Later";
+                //declare a variable which will be passed to alert function
+                if ($stmt) {
+                    $success = "Treaty Created Successfully";
+                } else {
+                    $err = "Please Try Again Or Try Later";
+                }
             }
         }
     }
