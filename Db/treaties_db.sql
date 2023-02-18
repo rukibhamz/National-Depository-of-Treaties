@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fmoj_staff`
+-- Table structure for table `tbl_staff`
 --
 
-CREATE TABLE `fmoj_staff` (
+CREATE TABLE `tbl_staff` (
   `id` int(20) NOT NULL,
   `name` varchar(200) NOT NULL,
   `number` varchar(200) NOT NULL,
@@ -42,10 +42,10 @@ CREATE TABLE `fmoj_staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `fmoj_staff`
+-- Dumping data for table `tbl_staff`
 --
 
-INSERT INTO `fmoj_staff` (`id`, `name`, `number`, `email`, `pwd`, `bio`, `phone`, `adr`, `pic`, `acc_status`, `created_at`) VALUES
+INSERT INTO `tbl_staff` (`id`, `name`, `number`, `email`, `pwd`, `bio`, `phone`, `adr`, `pic`, `acc_status`, `created_at`) VALUES
 (1, 'Ajala Morenikeji', 'FMOJ-002', 'staff001@FMOJ.org', 'c6bd71c6e0f6a6c9b71d0b8571c99c27bfa7e8f0', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.', '+254740847563', '127001 Localhost', '', 'Active', '2023-02-16 07:38:02.681210'),
 (2, 'Jacobs Charles', 'FMOJ-003', 'staff002@FMOJ.org', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '+254740847908', '127001 Localhost', '', 'Suspended', '2023-02-16 07:38:08.740921'),
 (3, 'Debra Espinoza', 'FMOJ-136', 'judylydubo@mailinator.com', '92432e7c66519c4e404d347718ffe641a658ac7e', 'Beatae repellendus ', '+1 (424) 327-6698', 'Vel iusto esse nulla', '', 'Active', '2023-02-17 09:09:49.263153');
@@ -250,9 +250,9 @@ INSERT INTO `tbl_treatiescategory` (`id`, `code`, `name`, `description`) VALUES
 --
 
 --
--- Indexes for table `fmoj_staff`
+-- Indexes for table `tbl_staff`
 --
-ALTER TABLE `fmoj_staff`
+ALTER TABLE `tbl_staff`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -278,9 +278,9 @@ ALTER TABLE `tbl_treatiescategory`
 --
 
 --
--- AUTO_INCREMENT for table `fmoj_staff`
+-- AUTO_INCREMENT for table `tbl_staff`
 --
-ALTER TABLE `fmoj_staff`
+ALTER TABLE `tbl_staff`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --

@@ -36,7 +36,7 @@ if (isset($_POST['add_uploader'])) {
     }
 
     if (!$error) {
-        $sql = "SELECT * FROM fmoj_staff WHERE email ='$s_email' ";
+        $sql = "SELECT * FROM tbl_staff WHERE email ='$s_email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
@@ -60,7 +60,7 @@ if (isset($_POST['add_uploader'])) {
             // move_uploaded_file($_FILES["p_pic"]["tmp_name"], "assets/profile_img/" . $_FILES["p_pic"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO fmoj_staff (name, email, phone, pwd, number, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO tbl_staff (name, email, phone, pwd, number, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
             //bind parameters
             $rc = $stmt->bind_param('ssssssss', $s_name, $s_email, $s_phone, $s_pwd, $s_number, $s_adr, $s_bio, $s_acc_status);

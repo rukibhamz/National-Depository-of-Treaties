@@ -24,7 +24,7 @@
     <!-- main sidebar end -->
     <?php
         $librarian_number = $_GET['id'];
-        $ret="SELECT * FROM  fmoj_staff WHERE number = ?"; 
+        $ret="SELECT * FROM  tbl_staff WHERE number = ?"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('s', $librarian_number);
         $stmt->execute() ;//ok

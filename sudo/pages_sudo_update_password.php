@@ -14,7 +14,7 @@
         $pr_status = $_GET['pr_status'];
 
         //Insert Captured information to a database table
-        $query="UPDATE fmoj_staff SET pwd = ? WHERE email = ? ";
+        $query="UPDATE tbl_staff SET pwd = ? WHERE email = ? ";
         $query1 = "UPDATE il_passwordresets SET pr_status = ? WHERE pr_id =?";
         $stmt = $mysqli->prepare($query);
         $stmt1 = $mysqli->prepare($query1);

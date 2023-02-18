@@ -17,7 +17,7 @@ if (isset($_POST['staff_login'])) {
     $l_email = $_POST['l_email'];
     $l_pwd = sha1(md5($_POST['l_pwd'])); //double encrypt to increase security
     print_r($l_email,$l_pwd);
-    $stmt = $mysqli->prepare("SELECT email, number, pwd, id  FROM fmoj_staff  WHERE (email=? || number =?) AND pwd=?"); //sql to log in user
+    $stmt = $mysqli->prepare("SELECT email, number, pwd, id  FROM tbl_staff  WHERE (email=? || number =?) AND pwd=?"); //sql to log in user
     $stmt->bind_param('sss', $l_email, $l_email, $l_pwd); //bind fetched parameters
     $stmt->execute(); //execute bind
     $stmt->bind_result($l_email, $l_email, $l_pwd, $id); //bind result

@@ -10,7 +10,7 @@ check_login();
 if (isset($_SESSION['id'])) {
     // Get the user's ID and other details from the session
     $user_id = $_SESSION['id'];
-    $result = "SELECT * FROM fmoj_staff WHERE id = ?";
+    $result = "SELECT * FROM tbl_staff WHERE id = ?";
     $stmt = $mysqli->prepare($result);
     $stmt->bind_param('i', $user_id);
     $stmt->execute();
