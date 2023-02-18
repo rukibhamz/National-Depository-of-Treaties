@@ -19,7 +19,7 @@
         //$number = $_POST['number'];
         
         //Insert Captured information to a database table
-        $query="UPDATE  fmoj_staff SET l_name = ?, l_phone = ?, l_email = ?,  l_bio = ?, pic = ?, l_pwd =? WHERE l_id = ? ";
+        $query="UPDATE  tbl_staff SET l_name = ?, l_phone = ?, l_email = ?,  l_bio = ?, pic = ?, l_pwd =? WHERE l_id = ? ";
         $stmt = $mysqli->prepare($query);
         //bind paramaters
         $rc=$stmt->bind_param('ssssssi', $l_name, $l_phone, $l_email, $l_bio, $pic, $l_pwd, $id);
@@ -57,7 +57,7 @@
             include("assets/inc/sidebar.php");
 
             $id = $_SESSION['l_id'];
-            $ret="SELECT * FROM  fmoj_staff  WHERE id = ? "; 
+            $ret="SELECT * FROM  tbl_staff  WHERE id = ? "; 
             $stmt= $mysqli->prepare($ret) ;
             $stmt->bind_param('i', $id);
             $stmt->execute() ;//ok

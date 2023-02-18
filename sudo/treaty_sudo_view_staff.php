@@ -26,7 +26,7 @@ include("assets/inc/head.php");
     <!-- main sidebar end -->
     <?php
     $id = $_GET['id'];
-    $ret = "SELECT * FROM  fmoj_staff WHERE id = ?";
+    $ret = "SELECT * FROM  tbl_staff WHERE id = ?";
     $stmt = $mysqli->prepare($ret);
     $stmt->bind_param('s', $id);
     $stmt->execute(); //ok

@@ -6,7 +6,7 @@ check_login();
 
 if (isset($_GET['d_id'])) {
     $id = intval($_GET['d_id']);
-    $adn = "DELETE FROM fmoj_staff WHERE id = ?";
+    $adn = "DELETE FROM tbl_staff WHERE id = ?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('i', $id);
     $stmt->execute();
@@ -56,7 +56,7 @@ include("assets/inc/head.php");
         </div>
         <div id="page_content_inner">
             <?php
-            $ret = "SELECT * FROM fmoj_staff";
+            $ret = "SELECT * FROM tbl_staff";
             $stmt = $mysqli->prepare($ret);
             $stmt->execute();
             $res = $stmt->get_result();
@@ -77,7 +77,7 @@ include("assets/inc/head.php");
 
                         <tbody>
                             <?php
-                            $ret = "SELECT * FROM  fmoj_staff";
+                            $ret = "SELECT * FROM  tbl_staff";
                             $stmt = $mysqli->prepare($ret);
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();

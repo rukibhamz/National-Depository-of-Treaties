@@ -18,7 +18,7 @@ if (isset($_POST['update_staff'])) {
     $acc_status = $_POST['acc_status'];
 
     //Insert Captured information to a database table
-    $query = "UPDATE fmoj_staff SET name = ?, phone = ?, adr = ?, bio = ?, acc_status = ? WHERE id = ? ";
+    $query = "UPDATE tbl_staff SET name = ?, phone = ?, adr = ?, bio = ?, acc_status = ? WHERE id = ? ";
     $stmt = $mysqli->prepare($query);
     //bind parameters
     $rc = $stmt->bind_param('sssssi', $name, $phone, $adr, $bio, $acc_status, $id);
@@ -54,7 +54,7 @@ include("assets/inc/head.php");
     <!-- main sidebar end -->
     <?php
     $id = $_GET['id'];
-    $ret = "SELECT * FROM fmoj_staff WHERE id = ?";
+    $ret = "SELECT * FROM tbl_staff WHERE id = ?";
     $stmt = $mysqli->prepare($ret);
     $stmt->bind_param('s', $id);
     $stmt->execute(); //ok

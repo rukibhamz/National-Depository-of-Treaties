@@ -47,14 +47,14 @@ $stmt->fetch();
 $stmt->close();
 
 //2.0 : Number of Staff
-$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status='Active'";
+$result = "SELECT count(*) FROM tbl_staff WHERE acc_status='Active'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($active_staff);
 $stmt->fetch();
 $stmt->close();
 
-$result = "SELECT count(*) FROM fmoj_staff WHERE acc_status='Suspended'";
+$result = "SELECT count(*) FROM tbl_staff WHERE acc_status='Suspended'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($suspended_staff);
