@@ -36,14 +36,16 @@ if (isset($_POST['add_uploader'])) {
     }
 
     if (!$error) {
-        $sql = "SELECT * FROM tbl_staff WHERE email ='$s_email' ";
+        $sql = "SELECT * FROM tbl_staff WHERE email = '$email' OR name = '$name' OR number = '$number'";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($s_number == $row['number']) {
+            if ($number == $row['number']) {
                 $err = "Staff number already exists";
-            } else {
+            } else if ($email == $row['email']) {
                 $err = "Staff email already exists";
+            } else {
+                $err = "Staff name already exists";
             }
         } else {
 

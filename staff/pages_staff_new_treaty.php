@@ -53,11 +53,11 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty description cannot be empty";
     }
-    if (!$error) { 
-            $title  = $_POST['title'];
-            $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
-            $res = mysqli_query($mysqli, $sql);
-            if (mysqli_num_rows($res) > 0) {
+    if (!$error) {
+        $title  = $_POST['title'];
+        $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if ($title == $row['title']) {
                 $err =  "Treaty title already exists";
@@ -79,12 +79,24 @@ if (isset($_POST['add_treaty'])) {
             //Insert Captured information to a database table
             $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
+
+
+            //---Post a notification that someone has reported a book lost--//
+            $content = `$title, has been created.`;
+
+            $notification = "INSERT INTO il_notifications (content, user_id) VALUES(?,?)";
+            $notification_stmt = $mysqli->prepare($notification);
+
             //bind parameters
             $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
+            $rc = $notification_stmt->bind_param('ss', $content, $user_id);
+
+            // Execute
             $stmt->execute();
+            $notification_stmt->execute();
 
             //declare a variable which will be passed to alert function
-            if ($stmt) {
+            if ($stmt && $notification_stmt) {
                 $success = "Treaty Created Successfully";
             } else {
                 $err = "Please Try Again Or Try Later";
@@ -215,6 +227,11 @@ include("assets/inc/head.php");
                                     <label>Treaty Description</label>
                                     <textarea cols="30" rows="10" class="md-input" name="b_summary" required></textarea>
                                 </div>
+                            </div>
+                            <!--Notification Content-->
+                            <div class="uk-form-row" style="display:none">
+                                <label>Content</label>
+                                <input type="text" required name="content" value="<?= $row->title; ?>, Has been created." class="md-input" />
                             </div>
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
