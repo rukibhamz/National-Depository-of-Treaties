@@ -1,17 +1,17 @@
 <?php
 require_once('sudo/assets/config/config.php');
-$docs_id = $_GET['docs_id'];
-$ret = "SELECT * FROM  iL_Books WHERE b_id = ?";
+$docs_id = $_GET['doc_id'];
+$ret = "SELECT * FROM  tbl_treaties WHERE id = ?";
 $stmt = $mysqli->prepare($ret);
 $stmt->bind_param('s', $docs_id);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($row = $res->fetch_object()) {
     //load default book cover page if book is missing a cover image
-    if ($row->b_coverimage == '') {
-        $cover_image = "<img src='sudo/assets/img/books/Image12.jpg' class='img-fluid img-thumbnail' alt='Book Image'>";
+    if ($row->b_file == '') {
+        $cover_image = "<img src='sudo/assets/magazines/default.png' class='img-fluid img-thumbnail' alt='Book Image'>";
     } else {
-        $cover_image = "<img src='sudo/assets/img/books/$row->b_coverimage' class='img-fluid img-thumbnail' alt='Book Image'>";
+        $cover_image = "<img src='sudo/assets/img/books/$row->b_file' class='img-fluid img-thumbnail' alt='Book Image'>";
     }
 ?>
     <!doctype html>
@@ -20,7 +20,7 @@ while ($row = $res->fetch_object()) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Home - National Depository Of Treaties</title>
+        <title>Treaty - National Depository Of Treaties</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -47,9 +47,9 @@ while ($row = $res->fetch_object()) {
 
     <style>
         div.pdfobject-container {
-    height: 50rem;
-    border: 1rem solid rgba(0, 0, 0, .1);
-}
+            height: 50rem;
+            border: 1rem solid rgba(0, 0, 0, .1);
+        }
     </style>
 
     <body data-spy="scroll" data-target="#mainmenu" data-offset="50">
@@ -71,7 +71,7 @@ while ($row = $res->fetch_object()) {
                                 <span class="icon-bar"></span>
                             </button>
                             <!--Logo-->
-                            <a href="#sc1" class="navbar-left show"><img src="images/logo-2.png" alt="Treaty_DataBase" width="70%" class="img-responsive"></a>
+                            <a href="index.php" class="navbar-left show"><img src="images/logo-2.png" alt="Treaty_DataBase" width="70%" class="img-responsive"></a>
                             <div class="space-10"></div>
                         </div>
                         <!--Toggle-button-->
@@ -79,21 +79,15 @@ while ($row = $res->fetch_object()) {
                         <!--Mainmenu list-->
                         <div class="collapse navbar-collapse navbar-right" id="mainmenu">
                             <ul class="nav navbar-nav nav-white text-uppercase">
-                                <li class="active">
-                                    <a href="#sc1">Home</a>
-                                </li>
                                 <li>
+                                    <a href="index.php">Home</a>
+                                </li>
+                                <li class="active">
                                     <a href="treaties.php">CATALOGUES</a>
                                 </li>
                                 <li>
                                     <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
                                 </li>
-                                <!-- <li>
-                                <a href="lib_user/pages_std_index.php">LOGIN</a>
-                            </li>
-                                    <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>-->
                                 <li>
                                     <a href="sudo/pages_sudo_index.php">LOGIN</a>
                                 </li>
@@ -111,7 +105,7 @@ while ($row = $res->fetch_object()) {
                     <div class="row wow fadeInUp">
                         <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
                             <div class="jumbotron">
-                                <h1 class="text-white">Choose Your Book and Proceed To Borrowing It</h1>
+                                <h1 class="text-white">View Treaty</h1>
                             </div>
                             <div class="title-bar white">
                                 <ul class="list-inline list-unstyled">
@@ -131,15 +125,17 @@ while ($row = $res->fetch_object()) {
             <div class="space-80"></div>
             <div class="container">
                 <div class="row">
+                    <div class="col-6 pull-right">
+                        <a href="treaties.php" class="btn btn-primary"> Back</a>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-xs-12 col-md-12">
                         <div class="space-30"></div>
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
                                 <div class="category-item well green">
                                     <div class="media">
-                                        <!-- <div>
-                                            <?php echo $cover_image; ?>
-                                        </div> -->
                                         <div class="md-card">
                                             <?php
                                             $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
@@ -147,23 +143,23 @@ while ($row = $res->fetch_object()) {
 
                                             if (in_array($file_ext, $allowed_extensions)) {
                                                 echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
-        <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
-        <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
-        <button class='btn btn-success'>
-        &ensp;Download
-        </button></a>
-    </div>";
+                                            <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
+                                            <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
+                                            <button class='btn btn-success'>
+                                            &ensp;Download
+                                            </button></a>
+                                        </div>";
                                             } else {
                                                 echo "";
                                             }
                                             ?>
                                         </div>
                                         <div class="md-card">
-                                            <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['docs_id'] ?>">
+                                            <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">
                                             </div>
                                         </div>
                                         <div class="media-body">
-                                            <h5><?php echo $row->b_title; ?></h5>
+                                            <h5><?php echo $row->title; ?></h5>
                                             <div class="space-10"></div>
                                             <p><?php echo $row->b_summary; ?></p>
                                         </div>
@@ -198,12 +194,12 @@ while ($row = $res->fetch_object()) {
         <script src="js/main.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
-            const docsContainer = document.getElementById('<?= 'preview-', $_GET['docs_id'] ?>')
+            const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
             const fileName = docsContainer.getAttribute('data-value');
             const fileExt = fileName.split(".").pop();
             // console.log(fileExt, fileName, docsContainer, 'hello =>', typeof fileExt)
             if (fileExt === 'pdf') {
-                PDFObject.embed(`sudo/assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['docs_id'] ?>");
+                PDFObject.embed(`sudo/assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");
             }
         </script>
 

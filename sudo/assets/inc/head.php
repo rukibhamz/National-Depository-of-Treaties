@@ -84,45 +84,31 @@
 
     <?php } ?>
     <script>
-        function getBookId(val)
+        function getTreatyId(val)
 
         {
             $.ajax({
-                //get book ID
+                //get treaty ID
                 type: "POST",
                 url: "ajax.php",
-                data: 'bookCategoryName=' + val,
+                data: 'sudoTreatyCategoryName=' + val,
                 success: function(data) {
-                    //alert(data);
-                    $('#BookCategoryID').val(data);
+                    $('#sudoTreatyCategoryID').val(data);
                 }
             });
 
         }
 
-        function getStudentDetails(val)
+        function getStatusId(val)
 
         {
             $.ajax({
-                //get student Name
+                //get status ID
                 type: "POST",
                 url: "ajax.php",
-                data: 'studentiLibNumber=' + val,
+                data: 'sudoTreatyStatusName=' + val,
                 success: function(data) {
-                    //alert(data);
-                    $('#studentName').val(data);
-                }
-            });
-
-            $.ajax({
-
-                //get student ID
-                type: "POST",
-                url: "ajax.php",
-                data: 'studentName=' + val,
-                success: function(data) {
-                    //alert(data);
-                    $('#studentID').val(data);
+                    $('#sudoTreatyStatusID').val(data);
                 }
             });
 

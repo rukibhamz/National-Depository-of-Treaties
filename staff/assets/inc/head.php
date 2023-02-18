@@ -82,59 +82,73 @@
 
     <?php } ?>
     <script>
-        function getBookId(val)
+        function getTreatyId(val)
 
         {
             $.ajax({
                 //get book ID
                 type: "POST",
                 url: "ajax.php",
-                data: 'bookCategoryName=' + val,
+                data: 'treatyCategoryName=' + val,
                 success: function(data) {
-                    //alert(data);
-                    $('#BookCategoryID').val(data);
+                    $('#TreatyCategoryID').val(data);
                 }
             });
 
         }
 
-        function getStudentDetails(val)
+        function getStatusId(val)
 
         {
             $.ajax({
-                //get student Name
+                //get book ID
                 type: "POST",
                 url: "ajax.php",
-                data: 'studentiLibNumber=' + val,
+                data: 'treatyStatusName=' + val,
                 success: function(data) {
-                    //alert(data);
-                    $('#studentName').val(data);
-                }
-            });
-
-            $.ajax({
-
-                //get student ID
-                type: "POST",
-                url: "ajax.php",
-                data: 'studentName=' + val,
-                success: function(data) {
-                    //alert(data);
-                    $('#studentID').val(data);
+                    $('#TreatyStatusID').val(data);
                 }
             });
 
         }
 
-        function printContent(el)
-        //printContent
-        {
-            var restorepage = $('body').html();
-            var printcontent = $('#' + el).clone();
-            $('body').empty().html(printcontent);
-            window.print();
-            $('body').html(restorepage);
-        }
+        // function getStudentDetails(val)
+
+        // {
+        //     $.ajax({
+        //         //get student Name
+        //         type: "POST",
+        //         url: "ajax.php",
+        //         data: 'studentiLibNumber=' + val,
+        //         success: function(data) {
+        //             //alert(data);
+        //             $('#studentName').val(data);
+        //         }
+        //     });
+
+        //     $.ajax({
+
+        //         //get student ID
+        //         type: "POST",
+        //         url: "ajax.php",
+        //         data: 'studentName=' + val,
+        //         success: function(data) {
+        //             //alert(data);
+        //             $('#studentID').val(data);
+        //         }
+        //     });
+
+        // }
+
+        // function printContent(el)
+        // //printContent
+        // {
+        //     var restorepage = $('body').html();
+        //     var printcontent = $('#' + el).clone();
+        //     $('body').empty().html(printcontent);
+        //     window.print();
+        //     $('body').html(restorepage);
+        // }
     </script>
 
 

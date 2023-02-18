@@ -31,10 +31,10 @@
                     <span class="menu_title">Treaties</span>
                 </a>
                 <ul>
-                    <li><a href="treaty_sudo_submitted_treaties.php">Submitted</a></li>
+                    <li><a href="treaty_sudo_all_treaties.php">All Treaties</a></li>
                     <li><a href="treaty_sudo_published_treaties.php">Published</a></li>
-                    <li><a href="treaty_sudo_unpublished_treaties.php">Unpublished</a></li>
-                    <li><a href="treaty_sudo_rejected_treaties.php">Rejected</a></li>
+                    <li><a href="treaty_sudo_revised_treaties.php">Revised</a></li>
+                    <li><a href="treaty_sudo_running_treaties.php">Running</a></li>
                     <li><a href="treaty_sudo_upload_treaties.php">Upload Treaty</a></li>
                 </ul>
             </li>
@@ -60,6 +60,18 @@
                     <li><a href="pages_sudo_manage_categories.php">Manage</a></li>
                 </ul>
             </li>
+
+            <!--Manage Status-->
+            <li title="Status">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                    <span class="menu_title">Treaty Status</span>
+                </a>
+                <ul>
+                    <li><a href="treaty_sudo_add_status.php">Add</a></li>
+                    <li><a href="treaty_sudo_manage_status.php">Manage</a></li>
+                </ul>
+            </li>
             <!--password resets-->
             <li title="Password Resets">
                 <a href="#">
@@ -67,8 +79,7 @@
                     <span class="menu_title">Password Resets</span>
                 </a>
                 <ul>
-                    <li><a href="pages_sudo_manage_librarian_password_resets.php">Manage users</a></li>
-                    <li><a href="pages_sudo_manage_student_password_resets.php">Manage uploader</a></li>
+                    <li><a href="pages_sudo_manage_staff_password_resets.php">Manage uploader</a></li>
                 </ul>
             </li>
         </ul>

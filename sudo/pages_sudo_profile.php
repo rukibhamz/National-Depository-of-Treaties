@@ -22,8 +22,8 @@
     <!-- main sidebar -->
     <?php
         include("assets/inc/sidebar.php"); 
-        $id = $_SESSION['id'];
-        $ret="SELECT * FROM  iL_sudo  WHERE id = ? "; 
+        $id = $_SESSION['sudo_id'];
+        $ret="SELECT * FROM  il_sudo  WHERE id = ? "; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->bind_param('i', $id);
         $stmt->execute() ;//ok
@@ -726,8 +726,8 @@
                                         <?php
 
                                             //display all notifications
-                                            $id = $_SESSION['id'];
-                                            $ret="SELECT * FROM  iL_notifications  WHERE user_id = ? "; 
+                                            $id = $_SESSION['sudo_id'];
+                                            $ret="SELECT * FROM  il_notifications  WHERE user_id = ? "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->bind_param('i', $id);
                                             $stmt->execute() ;//ok
@@ -758,7 +758,7 @@
                                 <h3 class="heading_c uk-margin-bottom">Sudo Users(Admins) Accounts</h3>
                                 <ul class="md-list md-list-addon uk-margin-bottom">
                                     <?php
-                                            $ret="SELECT * FROM  iL_sudo"; 
+                                            $ret="SELECT * FROM  il_sudo"; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             //$stmt->bind_param('i', $id);
                                             $stmt->execute() ;//ok

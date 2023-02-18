@@ -4,6 +4,26 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 
+if (isset($_GET['d_id'])) {
+    $id = intval($_GET['d_id']);
+    $adn = "DELETE FROM tbl_staff WHERE id = ?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+    if ($stmt) {
+        $success = "Staff Deleted";
+?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+<?php
+    } else {
+        $err = "Try Again Later";
+    }
+}
 ?>
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
@@ -31,17 +51,16 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Upload Access</a></li>
                 <li><span>Manage Uploaders</span></li>
             </ul>
         </div>
         <div id="page_content_inner">
             <?php
-                $ret = "SELECT * FROM iL_Books";
-                $stmt = $mysqli->prepare($ret);
-                $stmt->execute();
-                $res = $stmt->get_result();
-                $numRows = $res->num_rows;
+            $ret = "SELECT * FROM tbl_staff";
+            $stmt = $mysqli->prepare($ret);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $numRows = $res->num_rows;
             ?>
             <h3 class="heading_a uk-margin-bottom text">Manage Accounts ( <?= $numRows ?> )</h3>
             <div class="md-card uk-margin-medium-bottom">
@@ -50,7 +69,7 @@ include("assets/inc/head.php");
                     <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <th>Name</th>
-                            <th>Identification No</th>
+                            <th>Staff No</th>
                             <th>Email Address</th>
                             <th>Account Status</th>
                             <th>Action</th>
@@ -58,25 +77,25 @@ include("assets/inc/head.php");
 
                         <tbody>
                             <?php
-                            $ret = "SELECT * FROM  iL_Books";
+                            $ret = "SELECT * FROM  tbl_staff";
                             $stmt = $mysqli->prepare($ret);
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();
                             while ($row = $res->fetch_object()) {
                             ?>
                                 <tr>
-                                    <td class="uk-text-truncate"><?php echo $row->b_title; ?></td>
-                                    <td><?php echo $row->b_author; ?></td>
-                                    <td><?php echo $row->bc_name; ?></td>
-                                    <td><?php echo $row->b_copies; ?> Copies</td>
+                                    <td><?= $row->name; ?></td>
+                                    <td><?= $row->number; ?></td>
+                                    <td><?= $row->email; ?></td>
+                                    <td><?= $row->acc_status; ?></td>
                                     <td>
-                                        <a href="pages_sudo_view_book.php?docs_id=<?php echo $row->b_id; ?>">
-                                            <span class='uk-badge uk-badge-black'>View</span>
+                                        <a href="treaty_sudo_view_staff.php?id=<?= $row->id; ?>">
+                                            <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
-                                        <a href="pages_sudo_view_book.php?docs_id=<?php echo $row->b_id; ?>">
-                                            <span class='uk-badge uk-badge-success'>Update</span>
+                                        <a href="treaty_sudo_edit_staff.php?id=<?= $row->id; ?>">
+                                            <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
-                                        <a href="pages_sudo_view_book.php?docs_id=<?php echo $row->b_id; ?>">
+                                        <a href="treaty_sudo_upload_manage_access.php?d_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>

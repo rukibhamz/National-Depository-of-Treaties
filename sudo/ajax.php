@@ -1,50 +1,32 @@
 <?php
 include('assets/config/pdoconfig.php');
-if(!empty($_POST["bookCategoryName"])) 
-{	
-    //get instructor id
-    $id=$_POST['bookCategoryName'];
-    $stmt = $DB_con->prepare("SELECT * FROM iL_BookCategories WHERE  bc_name = :id");
+// -----------
+if (!empty($_POST["sudoTreatyCategoryName"])) {
+    //get category id
+    $id = $_POST['sudoTreatyCategoryName'];
+    $stmt = $DB_con->prepare("SELECT * FROM tbl_treatiescategory WHERE name = :id");
     $stmt->execute(array(':id' => $id));
 ?>
 <?php
-    while($row=$stmt->fetch(PDO::FETCH_ASSOC))
-{
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 ?>
-<?php echo htmlentities($row['bc_id']); ?>
+<?php echo htmlentities($row['id']); ?>
 <?php
-}
+    }
 }
 
-if(!empty($_POST["studentiLibNumber"])) 
-{	
-    //get student name
-    $id=$_POST['studentiLibNumber'];
-    $stmt = $DB_con->prepare("SELECT * FROM iL_Students WHERE  s_number = :id");
+// -----------
+if (!empty($_POST["sudoTreatyStatusName"])) {
+    //get status id
+    $id = $_POST['sudoTreatyStatusName'];
+    $stmt = $DB_con->prepare("SELECT * FROM tbl_status WHERE name = :id");
     $stmt->execute(array(':id' => $id));
 ?>
 <?php
-    while($row=$stmt->fetch(PDO::FETCH_ASSOC))
-{
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 ?>
-<?php echo htmlentities($row['s_name']); ?>
+<?php echo htmlentities($row['id']); ?>
 <?php
-}
-}
-
-if(!empty($_POST["studentName"])) 
-{	
-    //get student id
-    $id=$_POST['studentName'];
-    $stmt = $DB_con->prepare("SELECT * FROM iL_Students WHERE  s_number = :id");
-    $stmt->execute(array(':id' => $id));
-?>
-<?php
-    while($row=$stmt->fetch(PDO::FETCH_ASSOC))
-{
-?>
-<?php echo htmlentities($row['s_id']); ?>
-<?php
-}
+    }
 }
 

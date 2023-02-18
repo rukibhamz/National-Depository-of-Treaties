@@ -4,61 +4,71 @@ include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
 //generate random librarian number
-$length = 5;
+$length = 3;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
 //create a librarian account
-if (isset($_POST['add_librarian'])) {
+if (isset($_POST['add_uploader'])) {
     $error = 0;
-    if (isset($_POST['l_name']) && !empty($_POST['l_name'])) {
-        $l_name = mysqli_real_escape_string($mysqli, trim($_POST['l_name']));
+    if (isset($_POST['name']) && !empty($_POST['name'])) {
+        $s_name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
     } else {
         $error = 1;
-        $err = "Librarian name cannot be empty";
+        $err = "Staff name cannot be empty";
     }
-    if (isset($_POST['l_email']) && !empty($_POST['l_email'])) {
-        $l_email = mysqli_real_escape_string($mysqli, trim($_POST['l_email']));
+    if (isset($_POST['email']) && !empty($_POST['email'])) {
+        $s_email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
     } else {
         $error = 1;
-        $err = "Librarian email cannot be empty";
+        $err = "Staff email cannot be empty";
     }
-    if (isset($_POST['l_number']) && !empty($_POST['l_number'])) {
-        $l_number = mysqli_real_escape_string($mysqli, trim($_POST['l_number']));
+    if (isset($_POST['phone']) && !empty($_POST['phone'])) {
+        $s_phone = mysqli_real_escape_string($mysqli, trim($_POST['phone']));
     } else {
         $error = 1;
-        $err = "Librarian email cannot be empty";
+        $err = "Staff phone number cannot be empty";
     }
+    if (isset($_POST['acc_status']) && !empty($_POST['acc_status'])) {
+        $s_acc_status = mysqli_real_escape_string($mysqli, trim($_POST['acc_status']));
+    } else {
+        $error = 1;
+        $err = "Staff status cannot be empty";
+    }
+
     if (!$error) {
-        $sql = "SELECT * FROM  iL_Librarians WHERE  l_number='$l_number' || l_email ='$l_email' ";
+        $sql = "SELECT * FROM tbl_staff WHERE email ='$s_email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($l_number == $row['l_number']) {
-                $err = "Librarian number already exists";
+            if ($s_number == $row['number']) {
+                $err = "Staff number already exists";
             } else {
-                $err = "Librarian email already exists";
+                $err = "Staff email already exists";
             }
         } else {
 
-            $l_number = $_POST['l_number'];
-            $l_name = $_POST['l_name'];
-            $l_phone = $_POST['l_phone'];
-            $l_email = $_POST['l_email'];
-            $l_pwd = sha1(md5($_POST['l_pwd']));
-            $l_adr = $_POST['l_adr'];
-            $l_bio = $_POST['l_bio'];
-            $l_acc_status = $_POST['l_acc_status'];
+            $s_name = $_POST['name'];
+            $s_email = $_POST['email'];
+            $s_phone = $_POST['phone'];
+            $s_pwd = sha1(md5($_POST['pwd']));
+            $s_number = $_POST['number'];
+            $s_adr = $_POST['adr'];
+            $s_bio = $_POST['bio'];
+            $s_acc_status = $_POST['acc_status'];
+
+            // $s_pic = $_FILES["p_pic"]["name"];
+            // move_uploaded_file($_FILES["p_pic"]["tmp_name"], "assets/profile_img/" . $_FILES["p_pic"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO iL_Librarians (l_number, l_name, l_phone, l_email, l_pwd, l_adr, l_bio, l_acc_status) VALUES (?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO tbl_staff (name, email, phone, pwd, number, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
-            //bind paramaters
-            $rc = $stmt->bind_param('ssssssss', $l_number, $l_name, $l_phone, $l_email, $l_pwd, $l_adr, $l_bio, $l_acc_status);
+            //bind parameters
+            $rc = $stmt->bind_param('ssssssss', $s_name, $s_email, $s_phone, $s_pwd, $s_number, $s_adr, $s_bio, $s_acc_status);
             $stmt->execute();
 
-            //declare a varible which will be passed to alert function
+            //declare a variable which will be passed to alert function
             if ($stmt) {
-                $success = "Librarian Account Created";
+                $success = "Staff Account Created";
             } else {
                 $err = "Please Try Again Or Try Later";
             }
@@ -92,7 +102,7 @@ include("assets/inc/head.php");
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><a href="#">Upload Access</a></li>
+                <li><a href="treaty_sudo_upload_manage_access.php">Manage Access</a></li>
                 <li><span>Add New Uploader</span></li>
             </ul>
         </div>
@@ -107,41 +117,59 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Full Name</label>
-                                    <input type="text" required name="l_name" class="md-input" />
-                                </div>
-                                <div class="uk-form-row">
-                                    <label>Identification Number</label>
-                                    <input type="email" required name="l_email" class="md-input" />
+                                    <input type="text" required name="name" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Email Address</label>
-                                    <input type="text" required name="l_acc_status" value="Active" class="md-input" />
+                                    <input type="email" required name="email" class="md-input" />
+                                </div>
+                                <div class="uk-form-row">
+                                    <label>Phone Number</label>
+                                    <input type="tel" required name="phone" class="md-input" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Password</label>
-                                    <input type="text" requied name="l_adr" class="md-input" />
+                                    <input type="password" required name="pwd" class="md-input" />
                                 </div>
                             </div>
 
                             <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
-                                    <label>Mobile Number</label>
-                                    <input type="text" required readonly value="iLib-<?php echo $Number; ?>" name="l_number" class="md-input label-fixed" />
+                                    <label>Staff ID Number</label>
+                                    <input type="text" required readonly value="FMOJ-<?= $Number; ?>" name="number" class="md-input label-fixed" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>User Address</label>
-                                    <input type="text" required name="l_addr" class="md-input" />
+                                    <input type="text" required name="adr" class="md-input" autocomplete="street-address" />
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Short Description Bio</label>
-                                    <input type="text" required name="l_bio" class="md-input" />
+                                    <input type="text" required name="bio" class="md-input" />
                                     <!-- <textarea cols="30" required rows="3" class="md-input" name="l_bio"></textarea> -->
                                 </div>
                                 <div class="uk-form-row">
                                     <label>Account Status</label>
-                                    <input type="text" required name="l_status" class="md-input" />
+                                    <select required name="acc_status" id="acc_status" class="md-input">
+                                        <option value="">--Select Staff Status--</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Suspended">Suspended</option>
+                                    </select>
+
                                 </div>
                             </div>
+
+
+                            <!-- <div class="uk-width-medium-2-2">
+                                <div id="file_upload-drop" class="uk-file-upload">
+                                    <p class="uk-text">Upload Profile Picture</p>
+                                    <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" required name="p_pic" type="file" accept="image/*"></a>
+                                </div>
+                                <div id="file_upload-progressbar" class="uk-progress uk-hidden">
+                                    <div class="uk-progress-bar" style="width:100%">0%</div>
+                                </div>
+                            </div> -->
+
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <div class="uk-input-group">
@@ -185,28 +213,6 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
-    <!-- altair common functions/helpers -->
-    <script src="assets/js/altair_admin_common.min.js"></script>
-
-
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
 </body>
 
 </html>

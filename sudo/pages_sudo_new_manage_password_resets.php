@@ -1,48 +1,52 @@
 <?php
-    session_start();
-    include('assets/config/config.php');
-    include('assets/config/checklogin.php');
-    check_login();
-    //delete student account.
-    if(isset($_GET['deleteAccount']))
-   {
-         $id=intval($_GET['deleteAccount']);
-         $adn="DELETE FROM  iL_Students  WHERE s_id = ?";
-         $stmt= $mysqli->prepare($adn);
-         $stmt->bind_param('i',$id);
-         $stmt->execute();
-         $stmt->close();	 
-   
-            if($stmt)
-            {
-                $info = "Account Deleted";
-            }
-            else
-            {
-                $err = "Try Again Later";
-            }
-     }
-?>    
+session_start();
+include('assets/config/config.php');
+include('assets/config/checklogin.php');
+check_login();
+//delete student account.
+if (isset($_GET['deleteAccount'])) {
+    $id = intval($_GET['deleteAccount']);
+    $adn = "DELETE FROM  iL_Students  WHERE s_id = ?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+    if ($stmt) {
+        $info = "Account Deleted";
+?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+<?php
+    } else {
+        $err = "Try Again Later";
+    }
+}
+?>
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php 
-    include("assets/inc/head.php");
+<!--[if gt IE 9]><!-->
+<html lang="en"> <!--<![endif]-->
+<?php
+include("assets/inc/head.php");
 ?>
+
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
     <?php
-        include("assets/inc/nav.php");
+    include("assets/inc/nav.php");
     ?>
     <!-- main header end -->
     <!-- main sidebar -->
     <?php
-        include("assets/inc/sidebar.php");
+    include("assets/inc/sidebar.php");
     ?>
     <!-- main sidebar end -->
 
     <div id="page_content">
-    <!--BreadCrumps-->
+        <!--BreadCrumps-->
         <div id="top_bar">
             <ul id="breadcrumbs">
                 <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
@@ -58,61 +62,55 @@
                     <div class="dt_colVis_buttons"></div>
                     <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                         <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>iLib Student No</th>
-                            <th>Phone No.</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Gender</th>
-                            <th>Acc Status</th>
-                            <th>Actions</th>
-                        </tr>
-                      
+                            <tr>
+                                <th>Name</th>
+                                <th>iLib Student No</th>
+                                <th>Phone No.</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Gender</th>
+                                <th>Acc Status</th>
+                                <th>Actions</th>
+                            </tr>
+
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  iL_Students"; 
-                                $stmt= $mysqli->prepare($ret) ;
-                                $stmt->execute() ;//ok
-                                $res=$stmt->get_result();
-                                while($row=$res->fetch_object())
-                                {
-                                     //use .danger, .warning, .success according to account status
-                                     if($row->s_acc_status == 'Active')
-                                     {
-                                        $account_status = "<td class='uk-text-success'>$row->s_acc_status</td>";
-                                     }
-                                     elseif($row->s_acc_status == 'Pending')
-                                     {
-                                         $account_status = "<td class='uk-text-warning'>$row->s_acc_status</td>";
-                                     }
-                                     else
-                                     {
-                                         $account_status = "<td class='uk-text-danger'>$row->s_acc_status</td>";
-                                     }
+                            $ret = "SELECT * FROM  iL_Students";
+                            $stmt = $mysqli->prepare($ret);
+                            $stmt->execute(); //ok
+                            $res = $stmt->get_result();
+                            while ($row = $res->fetch_object()) {
+                                //use .danger, .warning, .success according to account status
+                                if ($row->s_acc_status == 'Active') {
+                                    $account_status = "<td class='uk-text-success'>$row->s_acc_status</td>";
+                                } elseif ($row->s_acc_status == 'Pending') {
+                                    $account_status = "<td class='uk-text-warning'>$row->s_acc_status</td>";
+                                } else {
+                                    $account_status = "<td class='uk-text-danger'>$row->s_acc_status</td>";
+                                }
                             ?>
                                 <tr>
-                                    <td><?php echo $row->s_name;?></td>
-                                    <td><?php echo $row->s_number;?></td>
-                                    <td><?php echo $row->s_phone;?></td>
-                                    <td><?php echo $row->s_email;?></td>
-                                    <td><?php echo $row->s_adr;?></td>
-                                    <td><?php echo $row->s_sex;?></td>
-                                    <?php echo $account_status;?>
+                                    <td><?php echo $row->s_name; ?></td>
+                                    <td><?php echo $row->s_number; ?></td>
+                                    <td><?php echo $row->s_phone; ?></td>
+                                    <td><?php echo $row->s_email; ?></td>
+                                    <td><?php echo $row->s_adr; ?></td>
+                                    <td><?php echo $row->s_sex; ?></td>
+                                    <?php echo $account_status; ?>
                                     <td>
-                                        <a href="pages_sudo_view_student.php?student_number=<?php echo $row->s_number;?>">
+                                        <a href="pages_sudo_view_student.php?student_number=<?php echo $row->s_number; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
-                                        <a href="pages_sudo_edit_student.php?student_number=<?php echo $row->s_number;?>">
+                                        <a href="pages_sudo_edit_student.php?student_number=<?php echo $row->s_number; ?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
-                                        <a href="pages_sudo_manage_student.php?deleteAccount=<?php echo $row->s_id;?>">
+                                        <a href="pages_sudo_manage_student.php?deleteAccount=<?php echo $row->s_id; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
                                     </td>
                                 </tr>
 
-                            <?php }?>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -121,7 +119,7 @@
         </div>
     </div>
     <!--Footer-->
-    <?php require_once('assets/inc/footer.php');?>
+    <?php require_once('assets/inc/footer.php'); ?>
     <!--Footer-->
 
     <!-- google web fonts -->
@@ -137,7 +135,7 @@
         (function() {
             var wf = document.createElement('script');
             wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
             wf.type = 'text/javascript';
             wf.async = 'true';
             var s = document.getElementsByTagName('script')[0];
@@ -170,16 +168,16 @@
 
     <!--  datatables functions -->
     <script src="assets/js/pages/plugins_datatables.min.js"></script>
-    
+
     <script>
         $(function() {
-            if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+            if (isHighDensity()) {
+                $.getScript("assets/js/custom/dense.min.js", function(data) {
                     // enable hires images
                     altair_helpers.retina_images();
                 });
             }
-            if(Modernizr.touch) {
+            if (Modernizr.touch) {
                 // fastClick (touch devices)
                 FastClick.attach(document.body);
             }
@@ -297,15 +295,15 @@
                     .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g app_theme_h app_theme_i app_theme_dark')
                     .addClass(this_theme);
 
-                if(this_theme == '') {
+                if (this_theme == '') {
                     localStorage.removeItem('altair_theme');
-                    $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                    $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                 } else {
                     localStorage.setItem("altair_theme", this_theme);
-                    if(this_theme == 'app_theme_dark') {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.materialblack.min.css')
+                    if (this_theme == 'app_theme_dark') {
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.materialblack.min.css')
                     } else {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                     }
                 }
 
@@ -313,10 +311,10 @@
 
             // hide style switcher
             $document.on('click keyup', function(e) {
-                if( $switcher.hasClass('switcher_active') ) {
+                if ($switcher.hasClass('switcher_active')) {
                     if (
-                        ( !$(e.target).closest($switcher).length )
-                        || ( e.keyCode == 27 )
+                        (!$(e.target).closest($switcher).length) ||
+                        (e.keyCode == 27)
                     ) {
                         $switcher.removeClass('switcher_active');
                     }
@@ -324,81 +322,81 @@
             });
 
             // get theme from local storage
-            if(localStorage.getItem("altair_theme") !== null) {
-                $theme_switcher.children('li[data-app-theme='+localStorage.getItem("altair_theme")+']').click();
+            if (localStorage.getItem("altair_theme") !== null) {
+                $theme_switcher.children('li[data-app-theme=' + localStorage.getItem("altair_theme") + ']').click();
             }
 
 
-        // toggle mini sidebar
+            // toggle mini sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
+            if ((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
                 $mini_sidebar_toggle.iCheck('check');
             }
 
             $mini_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_mini", '1');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 });
 
-        // toggle slim sidebar
+            // toggle slim sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
+            if ((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
                 $slim_sidebar_toggle.iCheck('check');
             }
 
             $slim_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_slim", '1');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 });
 
-        // toggle boxed layout
+            // toggle boxed layout
 
-            if((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
+            if ((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
                 $boxed_layout_toggle.iCheck('check');
                 $body.addClass('boxed_layout');
                 $(window).resize();
             }
 
             $boxed_layout_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_layout", 'boxed');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_layout');
                     location.reload(true);
                 });
 
-        // main menu accordion mode
-            if($sidebar_main.hasClass('accordion_mode')) {
+            // main menu accordion mode
+            if ($sidebar_main.hasClass('accordion_mode')) {
                 $accordion_mode_toggle.iCheck('check');
             }
 
             $accordion_mode_toggle
-                .on('ifChecked', function(){
+                .on('ifChecked', function() {
                     $sidebar_main.addClass('accordion_mode');
                 })
-                .on('ifUnchecked', function(){
+                .on('ifUnchecked', function() {
                     $sidebar_main.removeClass('accordion_mode');
                 });
 

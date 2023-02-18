@@ -3,8 +3,8 @@
     *Load naviagation partial with logged in sudo session
     */
 
-    $id = $_SESSION['l_id'];
-    $ret="SELECT * FROM  iL_Librarians  WHERE l_id = ? "; 
+    $id = $_SESSION['id'];
+    $ret="SELECT * FROM  tbl_staff  WHERE id = ? "; 
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i', $id);
     $stmt->execute() ;//ok
@@ -12,7 +12,7 @@
     while($row=$res->fetch_object())
     {
         //set automatically logged in user default image if they have not updated their pics
-        if($row->l_dpic == '')
+        if($row->pic == '')
         {
             $profile_picture = "
                 <img src='../sudo/assets/img/avatars/user_icon.png' class='md-user-image' alt='User Image'>
@@ -20,7 +20,7 @@
         }
         else
         {
-            $profile_picture = "<img src='../sudo/assets/img/avatars/librarians/$row->l_dpic' class='md-user-image' alt='User Image'>
+            $profile_picture = "<img src='../sudo/assets/img/avatars/librarians/$row->pic' class='md-user-image' alt='User Image'>
             ";
         }
 
@@ -29,7 +29,7 @@
     /*
         Notifications Counter
     */  
-    $result ="SELECT count(*) FROM iL_notifications ";//get the number of notifications for logged in user
+    $result ="SELECT count(*) FROM il_notifications ";//get the number of notifications for logged in user
     $stmt = $mysqli->prepare($result);
     $stmt->execute();
     $stmt->bind_result($notifications_cnt);
@@ -66,7 +66,7 @@
                                                 <ul class="md-list md-list-addon">
                                                     <?php
                                                         //display all notifications
-                                                        $ret="SELECT * FROM  iL_notifications "; 
+                                                        $ret="SELECT * FROM  il_notifications "; 
                                                         $stmt= $mysqli->prepare($ret) ;
                                                         $stmt->execute() ;//ok
                                                         $res=$stmt->get_result();

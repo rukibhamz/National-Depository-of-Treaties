@@ -1,46 +1,50 @@
 <?php
-    session_start();
-    include('assets/config/config.php');
-    include('assets/config/checklogin.php');
-    check_login();
+session_start();
+include('assets/config/config.php');
+include('assets/config/checklogin.php');
+check_login();
 
-    //delete mail
-    if(isset($_GET['deleteMail']))
-   {
-         $id=intval($_GET['deleteMail']);
-         $adn="DELETE FROM  iL_sendMails  WHERE sm_id = ?";
-         $stmt= $mysqli->prepare($adn);
-         $stmt->bind_param('i',$id);
-         $stmt->execute();
-         $stmt->close();	 
-   
-            if($stmt)
-            {
-                $info = "Deleted";
-            }
-            else
-            {
-                $err = "Try Again Later";
-            }
-     }
-    
+//delete mail
+if (isset($_GET['deleteMail'])) {
+    $id = intval($_GET['deleteMail']);
+    $adn = "DELETE FROM  iL_sendMails  WHERE sm_id = ?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+    if ($stmt) {
+        $info = "Deleted";
+?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+<?php
+    } else {
+        $err = "Try Again Later";
+    }
+}
+
 ?>
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en"> <!--<![endif]-->
 
 <?php
-    include("assets/inc/head.php");
+include("assets/inc/head.php");
 ?>
+
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
-        <?php
-            include("assets/inc/nav.php");
-        ?>
+    <?php
+    include("assets/inc/nav.php");
+    ?>
     <!-- main header end -->
     <!-- main sidebar -->
     <?php
-        include("assets/inc/sidebar.php");
+    include("assets/inc/sidebar.php");
     ?>
     <!-- main sidebar end -->
 
@@ -64,41 +68,40 @@
                             All Send Mails Replies
                         </div>
                         <!--Start Messanges-->
-                            <?php
-                                $sm_id = $_GET['sm_id'];
-                                $ret="SELECT * FROM  iL_receivedMails  WHERE sm_id =?"; 
-                                $stmt= $mysqli->prepare($ret) ;
-                                $stmt->bind_param('i', $sm_id);
-                                $stmt->execute() ;//ok
-                                $res=$stmt->get_result();
-                                while($row=$res->fetch_object())
-                                {
-                                    //timestamp to DD-MM-YYYY
-                                    $tsamp = $row->created_at;
-                            ?>
-                                <ul class="hierarchical_slide">
-                                    <li>
-                                        <span class="md-card-list-item-date uk-text-success"><?php echo date("d-M-Y h:m:s", strtotime($tsamp));?></span>
-                                        <div class="md-card-list-item-select">
-                                            <input type="checkbox" data-md-icheck />
+                        <?php
+                        $sm_id = $_GET['sm_id'];
+                        $ret = "SELECT * FROM  iL_receivedMails  WHERE sm_id =?";
+                        $stmt = $mysqli->prepare($ret);
+                        $stmt->bind_param('i', $sm_id);
+                        $stmt->execute(); //ok
+                        $res = $stmt->get_result();
+                        while ($row = $res->fetch_object()) {
+                            //timestamp to DD-MM-YYYY
+                            $tsamp = $row->created_at;
+                        ?>
+                            <ul class="hierarchical_slide">
+                                <li>
+                                    <span class="md-card-list-item-date uk-text-success"><?php echo date("d-M-Y h:m:s", strtotime($tsamp)); ?></span>
+                                    <div class="md-card-list-item-select">
+                                        <input type="checkbox" data-md-icheck />
+                                    </div>
+                                    <div class="md-card-list-item-avatar-wrapper">
+                                        <img src="assets/img/avatars/user_icon.png" class="md-card-list-item-avatar" alt="" />
+                                    </div>
+                                    <div class="md-card-list-item-sender">
+                                        <span><?php echo $row->sm_senderNo; ?> <?php echo $row->sm_senderName; ?></span>
+                                    </div>
+                                    <div class="md-card-list-item-subject">
+                                        <span class="uk-text-truncate"><?php echo $row->sm_title; ?> </span>
+                                    </div>
+                                    <div class="md-card-list-item-content-wrapper">
+                                        <div class="md-card-list-item-content">
+                                            <?php echo $row->sm_reply; ?>
                                         </div>
-                                        <div class="md-card-list-item-avatar-wrapper">
-                                            <img src="assets/img/avatars/user_icon.png" class="md-card-list-item-avatar" alt="" />
-                                        </div>
-                                        <div class="md-card-list-item-sender">
-                                            <span><?php echo $row->sm_senderNo;?> <?php echo $row->sm_senderName;?></span>
-                                        </div>
-                                        <div class="md-card-list-item-subject">
-                                            <span class="uk-text-truncate"><?php echo $row->sm_title;?> </span>
-                                        </div>
-                                        <div class="md-card-list-item-content-wrapper">
-                                            <div class="md-card-list-item-content">
-                                                <?php echo $row->sm_reply;?> 
-                                        </div>
-                                    </li>
+                                </li>
 
-                                </ul>
-                            <?php }?>
+                            </ul>
+                        <?php } ?>
                         <!--End Messanges -->
                     </div>
 
@@ -109,10 +112,11 @@
     </div>
 
     <!--Footer-->
-    <?php require_once('assets/inc/footer.php');?>
+    <?php require_once('assets/inc/footer.php'); ?>
     <!--Footer-->
     <!-- google web fonts -->
-    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
         WebFontConfig = {
             google: {
                 families: [
@@ -124,7 +128,7 @@
         (function() {
             var wf = document.createElement('script');
             wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
             wf.type = 'text/javascript';
             wf.async = 'true';
             var s = document.getElementsByTagName('script')[0];
@@ -143,16 +147,16 @@
 
     <!--  mailbox functions -->
     <script src="assets/js/pages/page_mailbox.min.js"></script>
-    
+
     <script>
         $(function() {
-            if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+            if (isHighDensity()) {
+                $.getScript("assets/js/custom/dense.min.js", function(data) {
                     // enable hires images
                     altair_helpers.retina_images();
                 });
             }
-            if(Modernizr.touch) {
+            if (Modernizr.touch) {
                 // fastClick (touch devices)
                 FastClick.attach(document.body);
             }
@@ -164,10 +168,17 @@
     </script>
 
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
         ga('create', 'UA-65191727-1', 'auto');
         ga('send', 'pageview');
     </script>
@@ -279,15 +290,15 @@
                     .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g app_theme_h app_theme_i app_theme_dark')
                     .addClass(this_theme);
 
-                if(this_theme == '') {
+                if (this_theme == '') {
                     localStorage.removeItem('altair_theme');
-                    $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                    $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                 } else {
                     localStorage.setItem("altair_theme", this_theme);
-                    if(this_theme == 'app_theme_dark') {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.materialblack.min.css')
+                    if (this_theme == 'app_theme_dark') {
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.materialblack.min.css')
                     } else {
-                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                        $('#kendoCSS').attr('href', 'bower_components/kendo-ui/styles/kendo.material.min.css');
                     }
                 }
 
@@ -295,10 +306,10 @@
 
             // hide style switcher
             $document.on('click keyup', function(e) {
-                if( $switcher.hasClass('switcher_active') ) {
+                if ($switcher.hasClass('switcher_active')) {
                     if (
-                        ( !$(e.target).closest($switcher).length )
-                        || ( e.keyCode == 27 )
+                        (!$(e.target).closest($switcher).length) ||
+                        (e.keyCode == 27)
                     ) {
                         $switcher.removeClass('switcher_active');
                     }
@@ -306,81 +317,81 @@
             });
 
             // get theme from local storage
-            if(localStorage.getItem("altair_theme") !== null) {
-                $theme_switcher.children('li[data-app-theme='+localStorage.getItem("altair_theme")+']').click();
+            if (localStorage.getItem("altair_theme") !== null) {
+                $theme_switcher.children('li[data-app-theme=' + localStorage.getItem("altair_theme") + ']').click();
             }
 
 
-        // toggle mini sidebar
+            // toggle mini sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
+            if ((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
                 $mini_sidebar_toggle.iCheck('check');
             }
 
             $mini_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_mini", '1');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 });
 
-        // toggle slim sidebar
+            // toggle slim sidebar
 
             // change input's state to checked if mini sidebar is active
-            if((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
+            if ((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
                 $slim_sidebar_toggle.iCheck('check');
             }
 
             $slim_sidebar_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_sidebar_slim", '1');
                     localStorage.removeItem('altair_sidebar_mini');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_sidebar_slim');
                     location.reload(true);
                 });
 
-        // toggle boxed layout
+            // toggle boxed layout
 
-            if((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
+            if ((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
                 $boxed_layout_toggle.iCheck('check');
                 $body.addClass('boxed_layout');
                 $(window).resize();
             }
 
             $boxed_layout_toggle
-                .on('ifChecked', function(event){
+                .on('ifChecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.setItem("altair_layout", 'boxed');
                     location.reload(true);
                 })
-                .on('ifUnchecked', function(event){
+                .on('ifUnchecked', function(event) {
                     $switcher.removeClass('switcher_active');
                     localStorage.removeItem('altair_layout');
                     location.reload(true);
                 });
 
-        // main menu accordion mode
-            if($sidebar_main.hasClass('accordion_mode')) {
+            // main menu accordion mode
+            if ($sidebar_main.hasClass('accordion_mode')) {
                 $accordion_mode_toggle.iCheck('check');
             }
 
             $accordion_mode_toggle
-                .on('ifChecked', function(){
+                .on('ifChecked', function() {
                     $sidebar_main.addClass('accordion_mode');
                 })
-                .on('ifUnchecked', function(){
+                .on('ifUnchecked', function() {
                     $sidebar_main.removeClass('accordion_mode');
                 });
 

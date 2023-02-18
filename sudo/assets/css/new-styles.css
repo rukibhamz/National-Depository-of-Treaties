@@ -170,10 +170,36 @@ div.password_level {
     position: relative;
 }
 
-div.password_level span.password_toggle{
+div.password_level span.password_toggle {
     position: absolute;
     top: 10%;
     cursor: pointer;
 }
 
-/* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push origin-remote */
+@media (max-width:768px) {
+    div#page_content_inner {
+        padding: 2rem 1rem;
+    }
+
+    body {
+        padding: 2rem 1rem;
+    }
+
+    div.dt_colVis_buttons > div.dt-buttons.btn-group {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+    div#footer > p{
+        margin: 10px 0;
+    }
+}
+
+ span.trim {
+    width: 50ch;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push remote-origin */
