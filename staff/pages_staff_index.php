@@ -9,7 +9,7 @@ include('assets/config/config.php');
 //password reset token
 $length = 20;
 $token =  substr(str_shuffle('0123456789QWERTYUIOPLKJHGFDSAZXCVBNM'), 1, $length);
-$ln = 10;
+$ln = 6;
 $dummy_pwd =  substr(str_shuffle('0123456789QWERTYUIOPLKJHGFDSAZXCVBNM'), 1, $ln);
 
 //signin
@@ -42,15 +42,15 @@ if (isset($_POST['Reset_pwd'])) {
     $pr_status = $_POST['pr_status'];
 
     //Insert Captured information to a database table
-    $query = "INSERT INTO il_passwordresets (pr_useremail, pr_usertype, pr_token, pr_dummypwd, pr_status) VALUES (?,?,?,?,?)";
+    $query = "INSERT INTO il_passwordresets (pr_useremail, pr_usertype, pr_dummypwd, pr_token, pr_status) VALUES (?,?,?,?,?)";
     $stmt = $mysqli->prepare($query);
-    //bind paramaters
-    $rc = $stmt->bind_param('sssss', $pr_useremail, $pr_usertype, $pr_token, $pr_dummypwd, $pr_status);
+    //bind parameters
+    $rc = $stmt->bind_param('sssss', $pr_useremail, $pr_usertype, $pr_dummypwd, $pr_token, $pr_status);
     $stmt->execute();
 
-    //declare a varible which will be passed to alert function
+    //declare a variable which will be passed to alert function
     if ($stmt) {
-        $success = "Password Reset Instructions Sent To Your Inbox";
+        $success = "Password Reset Instructions has been sent to the administrator";
     } else {
         $err = "Please Try Again Or Try Later";
     }
@@ -113,22 +113,22 @@ include("assets/inc/head.php");
                     </div>
                     <div class="uk-form-row" style="display:none">
                         <label for="login_email_reset">User Type</label>
-                        <input class="md-input" name="pr_usertype" value="Librarian" type="text" id="login_email_reset" />
+                        <input class="md-input" name="pr_usertype" value="Staff" type="text" id="login_email_reset" />
                     </div>
                     <div class="uk-form-row" style="display:none">
                         <label for="login_email_reset">Token</label>
-                        <input class="md-input" name="pr_token" value="<?php echo $token; ?>" type="text" id="login_email_reset" />
+                        <input class="md-input" name="pr_token" value="<?= $token; ?>" type="text" id="login_email_reset" />
                     </div>
                     <div class="uk-form-row" style="display:none">
-                        <label for="login_email_reset">Your email address</label>
-                        <input class="md-input" name="pr_dummypwd" value="<?php echo $dummy_pwd; ?>" type="text" id="login_email_reset" />
+                        <label for="login_email_reset">New Password</label>
+                        <input class="md-input" name="pr_dummypwd" value="<?= $dummy_pwd; ?>" type="text" id="login_email_reset" />
                     </div>
                     <div class="uk-form-row" style="display:none">
                         <label for="login_email_reset">Reset Status</label>
                         <input class="md-input" name="pr_status" value="Pending" type="text" id="login_email_reset" />
                     </div>
                     <div class="uk-margin-medium-top">
-                        <input type="submit" value="Reset password" name="Reset_pwd" class="md-btn md-btn-primary md-btn-block" />
+                        <input type="submit" value="Reset password" name="Reset_pwd" class="md-btn md-btn-success md-btn-block" />
                     </div>
                 </form>
             </div>
