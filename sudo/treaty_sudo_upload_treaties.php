@@ -20,7 +20,7 @@ if (isset($_SESSION['sudo_id'])) {
 $length = 5;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
-//add new treaty
+//add new book
 if (isset($_POST['add_treaty'])) {
     $error = 0;
     if (isset($_POST['title']) && !empty($_POST['title'])) {
@@ -47,48 +47,63 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty category cannot be empty";
     }
-    if (isset($_POST['b_summary']) && !empty($_POST['b_summary'])) {
-        $b_summary = mysqli_real_escape_string($mysqli, trim($_POST['b_summary']));
-    } else {
-        $error = 1;
-        $err = "Treaty description cannot be empty";
-    }
-    if (!$error) { {
-            $title  = $_POST['title'];
-            $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
-            $res = mysqli_query($mysqli, $sql);
-            if (mysqli_num_rows($res) > 0) {
-                $row = mysqli_fetch_assoc($res);
-                if ($title == $row['title']) {
-                    $err =  "Treaty title already exists";
-                } else {
-                    $err =  "Treaty title already exists";
-                }
-                $signatory = $_POST['signatory'];
-                $b_publisher = $_POST['b_publisher'];
-                $tc_id = $_POST['tc_id'];
-                $tc_name = $_POST['tc_name'];
-                $b_summary = $_POST['b_summary'];
-                $treaty_year = $_POST['treaty_year'];
-                $s_status = $_POST['s_status'];
-                $s_id = $_POST['s_id'];
 
-                $b_file = $_FILES["b_file"]["name"];
-                move_uploaded_file($_FILES["b_file"]["tmp_name"], "./assets/magazines/" . $_FILES["b_file"]["name"]);
+    if (!$error) {
+        $title  = $_POST['title'];
+        $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($title == $row['title']) {
+                $err =  "Treaty title already exists";
+            } else {
+                $err =  "Treaty title already exists";
+            }
+        } else {
+            $signatory = $_POST['signatory'];
+            $b_publisher = $_POST['b_publisher'];
+            $tc_id = $_POST['tc_id'];
+            $tc_name = $_POST['tc_name'];
+            $b_summary = $_POST['b_summary'];
+            $treaty_year = $_POST['treaty_year'];
+            $s_status = $_POST['s_status'];
+            $s_id = $_POST['s_id'];
+            $b_file = $_FILES["b_file"]["name"];
 
-                //Insert Captured information to a database table
-                $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
-                $stmt = $mysqli->prepare($query);
-                //bind parameters
-                $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
-                $stmt->execute();
+            if (!empty($b_file)) {
+                // move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets/magazines/" . $_FILES["b_file"]["name"]);
+                move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets" . DIRECTORY_SEPARATOR . "magazines" . DIRECTORY_SEPARATOR . $_FILES["b_file"]["name"]);
 
-                //declare a variable which will be passed to alert function
-                if ($stmt) {
-                    $success = "Treaty Created Successfully";
-                } else {
-                    $err = "Please Try Again Or Try Later";
-                }
+            } else {
+                $err = "Please select a file to upload.";
+            }
+
+            // $b_file = $_FILES["b_file"]["name"];
+            // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
+
+            //Insert Captured information to a database table
+            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $notification = "INSERT INTO il_notifications (content, user_id) VALUES(?,?)";
+
+            $stmt = $mysqli->prepare($query);
+            //---Post a notification that someone has reported a book lost--//
+            $content = "Treaty <strong>$title</strong>, created successfully.";
+            $notification = "INSERT INTO il_notifications (content, user_id) VALUES(?,?)";
+            $notification_stmt = $mysqli->prepare($notification);
+
+            //bind parameters
+            $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
+            $rc = $notification_stmt->bind_param('ss', $content, $user_id);
+
+            // Execute
+            $stmt->execute();
+            $notification_stmt->execute();
+
+            //declare a variable which will be passed to alert function
+            if ($stmt && $notification_stmt) {
+                $success = "Treaty Created Successfully";
+            } else {
+                $err = "Please Try Again Or Try Later";
             }
         }
     }
@@ -202,7 +217,7 @@ include("assets/inc/head.php");
                                 <div id="file_upload-drop" class="uk-file-upload">
                                     <p class="uk-text">Drop Treaty Document</p>
                                     <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*,.pdf"></a>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*,.pdf" required></a>
                                     <div class="space-20"></div>
                                     <div id="file_name"></div>
                                 </div>
@@ -214,7 +229,7 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Description</label>
-                                    <textarea cols="30" rows="10" class="md-input" name="b_summary" required></textarea>
+                                    <textarea cols="30" rows="10" class="md-input" name="b_summary"></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">

@@ -15,12 +15,12 @@
         if($row->pic == '')
         {
             $profile_picture = "
-                <img src='../sudo/assets/img/avatars/user_icon.png' class='md-user-image' alt='User Image'>
+                <img src='../sudo/assets/profile_img/user_icon.png' class='md-user-image' alt='User Image'>
             ";
         }
         else
         {
-            $profile_picture = "<img src='../sudo/assets/img/avatars/librarians/$row->pic' class='md-user-image' alt='User Image'>
+            $profile_picture = "<img src='../sudo/assets/profile_img/$row->pic' class='md-user-image' alt='User Image'>
             ";
         }
 

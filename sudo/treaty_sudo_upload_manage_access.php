@@ -160,24 +160,6 @@ include("assets/inc/head.php");
     <!--  datatables functions -->
     <script src="assets/js/pages/plugins_datatables.min.js"></script>
 
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
 </body>
 
 </html>

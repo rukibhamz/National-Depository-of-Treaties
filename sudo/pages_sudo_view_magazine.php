@@ -108,24 +108,7 @@
     <script src="assets/js/altair_admin_common.min.js"></script>
 
 
-    <script>
-        $(function() {
-            if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if(Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
+
 
     <div id="style_switcher" style="display: none;">
         <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>

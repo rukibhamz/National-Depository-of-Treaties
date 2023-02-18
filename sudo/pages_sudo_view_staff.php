@@ -71,7 +71,7 @@
                 <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
                     <div class="uk-width-large-10-10">
                         <div class="md-card">
-                            <div class="user_heading user_heading_bg" style="background-image: url('assets/img/gallery/Image10.jpg')">
+                            <div class="user_heading user_heading_bg" style="background-image: url('assets/img/Menu_bg.png')">
                                 <div class="bg_overlay">
                                     <div class="user_heading_menu hidden-print">
                                         <div class="uk-display-inline-block"><i class="md-icon md-icon-light material-icons" id="page_print">&#xE8ad;</i></div>

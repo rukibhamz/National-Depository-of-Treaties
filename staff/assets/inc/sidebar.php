@@ -3,14 +3,6 @@
     <a href="pages_staff_dashboard.php">
         <div class="sidebar_main_header">
             <div class="sidebar_logo">
-                <!-- <a href="pages_staff_dashboard.php" class="sSidebar_hide sidebar_logo_large">
-                    <img class="logo_regular" src="../sudo/assets/img/new-logo.png" alt="" height="15" width="71"/>
-                    <img class="logo_light" src="../sudo/assets/img/new-logo.png" alt="" height="15" width="71"/>
-                </a>
-                <a href="pages_staff_dashboard.php" class="sSidebar_show sidebar_logo_small">
-                    <img class="logo_regular" src="../sudo/assets/img/new-logo.png" alt="" height="32" width="32"/>
-                    <img class="logo_light" src="../sudo/assets/img/new-logo.png" alt="" height="32" width="32"/>
-                </a> -->
             </div>
         </div>
     </a>

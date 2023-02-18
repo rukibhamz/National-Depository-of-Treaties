@@ -7,10 +7,20 @@ check_login();
 $length = 5;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
-//create a librarian account
+//create a staff account
 if (isset($_POST['update_staff'])) {
 
     $id = $_GET['id'];
+    //   -----
+    // Get the staff details from the staff table
+    $query = "SELECT name FROM tbl_staff WHERE id = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $oldname = $row['name'];
+    //   -----
     $name = $_POST['name'];
     $phone = $_POST['phone'];
     $adr = $_POST['adr'];
@@ -22,10 +32,20 @@ if (isset($_POST['update_staff'])) {
     $stmt = $mysqli->prepare($query);
     //bind parameters
     $rc = $stmt->bind_param('sssssi', $name, $phone, $adr, $bio, $acc_status, $id);
+
+    // -------
+
+    // Update the b_publisher column in the treaty table
+    $query = "UPDATE tbl_treaties SET b_publisher = ? WHERE b_publisher = ?";
+    $publisher_stmt = $mysqli->prepare($query);
+    $publisher_stmt->bind_param('ss', $name, $oldname);
+
+    // ------
     $stmt->execute();
+    $publisher_stmt->execute();
 
     //declare a variable which will be passed to alert function
-    if ($stmt) {
+    if ($stmt && $publisher_stmt) {
         $success = 'Staff Account Updated' && header("refresh:1;url=treaty_sudo_upload_manage_access.php");
     } else {
         $err = "Please Try Again Or Try Later" && header("refresh:1;url=treaty_sudo_upload_manage_access.php");;
@@ -86,7 +106,7 @@ include("assets/inc/head.php");
                                     </div>
                                     <div class="uk-form-row">
                                         <label>Email Address</label>
-                                        <input type="email" value="<?= $row->email; ?>" required readonly name="email" class="md-input" />
+                                        <input type="email" value="<?= $row->email; ?>" required name="email" class="md-input" />
                                     </div>
                                     <div class="uk-form-row">
                                         <label>Phone Number</label>
@@ -167,24 +187,6 @@ include("assets/inc/head.php");
     <script src="assets/js/altair_admin_common.min.js"></script>
 
 
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
 </body>
 
 </html>

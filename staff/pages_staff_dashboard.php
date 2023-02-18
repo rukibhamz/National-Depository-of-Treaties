@@ -304,24 +304,6 @@ include("assets/inc/head.php");
     <!--  dashbord functions -->
     <script src="assets/js/pages/dashboard.min.js"></script>
 
-    <script>
-        $(function() {
-            if (isHighDensity()) {
-                $.getScript("assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if (Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
     <!-- page specific plugins -->
     <!-- datatables -->
     <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>

@@ -55,7 +55,7 @@
                     <div class="uk-width-large-7-10">
                         <div class="md-card">
 
-                            <div class="user_heading user_heading_bg" style="background-image: url('assets/img/gallery/Image10.jpg')">
+                            <div class="user_heading user_heading_bg" style="background-image: url('assets/img/Menu_bg.png')">
 
                                 <div class="bg_overlay">
                                     <div class="user_heading_menu hidden-print">
@@ -302,8 +302,8 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="assets/img/gallery/Image10.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                    <img src="assets/img/gallery/Image10.jpg" alt=""/>
+                                                <a href="assets/img/Menu_bg.png" data-uk-lightbox="{group:'user-photos'}">
+                                                    <img src="assets/img/Menu_bg.png" alt=""/>
                                                 </a>
                                             </div>
                                             <div>
@@ -839,24 +839,7 @@
     <script src="assets/js/altair_admin_common.min.js"></script>
 
 
-    <script>
-        $(function() {
-            if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
-                    // enable hires images
-                    altair_helpers.retina_images();
-                });
-            }
-            if(Modernizr.touch) {
-                // fastClick (touch devices)
-                FastClick.attach(document.body);
-            }
-        });
-        $window.load(function() {
-            // ie fixes
-            altair_helpers.ie_fix();
-        });
-    </script>
+
 
    
     <div id="style_switcher" style="display: none;">

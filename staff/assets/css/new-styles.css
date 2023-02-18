@@ -170,7 +170,7 @@ div.password_level {
     position: relative;
 }
 
-div.password_level span.password_toggle{
+div.password_level span.password_toggle {
     position: absolute;
     top: 10%;
     cursor: pointer;
@@ -183,4 +183,11 @@ span.trim {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+ul.scroll_within {
+    height: 30rem;
+    max-height: 30rem;
+    overflow-y: auto;
+}
+
 /* git add . && git commit -m 'feat: remove the executable files and update the dashboard view' && git push && git push remote-origin */
