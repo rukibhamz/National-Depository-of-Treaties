@@ -47,33 +47,50 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty category cannot be empty";
     }
-
+    if (isset($_POST['b_summary']) && !empty($_POST['b_summary'])) {
+        $b_summary = mysqli_real_escape_string($mysqli, trim($_POST['b_summary']));
+    } else {
+        $error = 1;
+        $err = "Treaty description cannot be empty";
+    }
     if (!$error) { {
             $title  = $_POST['title'];
-            $signatory = $_POST['signatory'];
-            $b_publisher = $_POST['b_publisher'];
-            $tc_id = $_POST['tc_id'];
-            $tc_name = $_POST['tc_name'];
-            $b_summary = $_POST['b_summary'];
-            $treaty_year = $_POST['treaty_year'];
-            $s_status = $_POST['s_status'];
-            $s_id = $_POST['s_id'];
-
-            $b_file = $_FILES["b_file"]["name"];
-            move_uploaded_file($_FILES["b_file"]["tmp_name"], "./assets/magazines/" . $_FILES["b_file"]["name"]);
-
-            //Insert Captured information to a database table
-            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            //bind parameters
-            $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
-            $stmt->execute();
-
-            //declare a variable which will be passed to alert function
-            if ($stmt) {
-                $success = "Treaty Created Successfully";
+            $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
+            $res = mysqli_query($mysqli, $sql);
+            if (mysqli_num_rows($res) > 0) {
+                $row = mysqli_fetch_assoc($res);
+                if ($title == $row['title']) {
+                    $err =  "Treaty title already exists";
+                } else {
+                    $err =  "Treaty title already exists";
+                }
             } else {
-                $err = "Please Try Again Or Try Later";
+                $title  = $_POST['title'];
+                $signatory = $_POST['signatory'];
+                $b_publisher = $_POST['b_publisher'];
+                $tc_id = $_POST['tc_id'];
+                $tc_name = $_POST['tc_name'];
+                $b_summary = $_POST['b_summary'];
+                $treaty_year = $_POST['treaty_year'];
+                $s_status = $_POST['s_status'];
+                $s_id = $_POST['s_id'];
+
+                $b_file = $_FILES["b_file"]["name"];
+                move_uploaded_file($_FILES["b_file"]["tmp_name"], "./assets/magazines/" . $_FILES["b_file"]["name"]);
+
+                //Insert Captured information to a database table
+                $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                $stmt = $mysqli->prepare($query);
+                //bind parameters
+                $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
+                $stmt->execute();
+
+                //declare a variable which will be passed to alert function
+                if ($stmt) {
+                    $success = "Treaty Created Successfully";
+                } else {
+                    $err = "Please Try Again Or Try Later";
+                }
             }
         }
     }
@@ -187,17 +204,19 @@ include("assets/inc/head.php");
                                 <div id="file_upload-drop" class="uk-file-upload">
                                     <p class="uk-text">Drop Treaty Document</p>
                                     <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*, .pdf"></a>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*,.pdf"></a>
+                                    <div class="space-20"></div>
+                                    <div id="file_name"></div>
                                 </div>
                                 <div id="file_upload-progressbar" class="uk-progress uk-hidden">
-                                    <div class="uk-progress-bar" style="width:0">0%</div>
+                                    <div class="uk-progress-bar" style="width:0">0</div>
                                 </div>
                             </div>
 
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Description</label>
-                                    <textarea cols="30" rows="10" class="md-input" name="b_summary"></textarea>
+                                    <textarea cols="30" rows="10" class="md-input" name="b_summary" required></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">
@@ -243,6 +262,16 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
+    <script src="assets/js/pages/forms_file_upload.min.js"></script>
+    <script>
+        const fileUpload = document.getElementById("file_upload-select");
+        const fileNameElement = document.getElementById("file_name");
+
+        document.getElementById("file_upload-drop").addEventListener("change", (event) => {
+            const fileName = event.target.files[0].name;
+            fileNameElement.innerText = `Selected File Name : ${fileName}`;
+        });
+    </script>
 </body>
 
 </html>

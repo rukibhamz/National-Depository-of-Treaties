@@ -221,3 +221,7 @@ aside.side_query ul li {
     letter-spacing: 0.05em;
     color: #717970;
 }
+
+.cursor_pointer {
+    cursor: pointer;
+}

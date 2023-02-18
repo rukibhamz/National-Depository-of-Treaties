@@ -3,6 +3,17 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
+if (isset($_SESSION['id'])) {
+    // Get the user's ID and other details from the session
+    $user_id = $_SESSION['id'];
+    $result = "SELECT * FROM tbl_staff WHERE id = ?";
+    $stmt = $mysqli->prepare($result);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_object();
+    $stmt->close();
+}
 //delete book  
 if (isset($_GET['deleteBook'])) {
     $id = intval($_GET['deleteBook']);
@@ -69,14 +80,14 @@ include("assets/inc/head.php");
 
                         <tbody>
                             <?php
-                            $ret = "SELECT * FROM  tbl_treaties";
+                            $ret = "SELECT * FROM tbl_treaties WHERE b_publisher= '$user->name'";
                             $stmt = $mysqli->prepare($ret);
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();
                             while ($row = $res->fetch_object()) {
                             ?>
                                 <tr>
-                                    <td><?= $row->title; ?></td>
+                                    <td class="uk-text-truncate"><span class="trim"><?php echo $row->title; ?></span></td>
                                     <td><?= $row->b_publisher; ?></td>
                                     <td><?= $row->tc_name; ?></td>
                                     <td>

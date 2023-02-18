@@ -130,7 +130,7 @@ require_once('sudo/assets/config/config.php');
                                     <div class="tab-pane fade in active" id="treaty">
                                         <form action="treaties.php">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Enter document title">
+                                                <input type="text" class="form-control" placeholder="Enter document name" name="treaty">
                                                 <div class="input-group-btn">
                                                     <button type="submit" class="btn btn-primary px-3">Search <i class="icofont icofont-search-alt-2"></i></button>
                                                 </div>
@@ -197,8 +197,8 @@ require_once('sudo/assets/config/config.php');
             <div class="row">
                 <!--Show Book Categories-->
                 <?php
-                //Fetch all book categories
-                $ret = "SELECT * FROM  	tbl_treatiescategory";
+                //Fetch all treaty categories
+                $ret = "SELECT * FROM tbl_treatiescategory";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
@@ -209,7 +209,7 @@ require_once('sudo/assets/config/config.php');
                         <div class="category-item well blue">
                             <div>
                                 <!-- <p>Newly added treaties</p> -->
-                                <small><?= $row->code; ?></small>
+                                
                                 <h3><?= $row->name; ?></h3>
                                 <p class="trim"><?= $row->description; ?></p>
                                 <div class="text-center">

@@ -31,15 +31,16 @@ if (isset($_POST['update_treaty'])) {
     $b_summary = $_POST['b_summary'];
     $treaty_year = $_POST['treaty_year'];
     $s_status = $_POST['s_status'];
+    $s_id = $_POST['s_id'];
 
     // $b_file = $_FILES["b_file"]["name"];
     // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
     //Insert Captured information to a database table
-    $query = "UPDATE tbl_treaties SET title=?, signatory=?, b_publisher=?, tc_id=?, tc_name=?, b_summary=?, treaty_year=?, s_status=? WHERE id =?";
+    $query = "UPDATE tbl_treaties SET title=?, signatory=?, b_publisher=?, tc_id=?, tc_name=?, b_summary=?, treaty_year=?, s_id=?, s_status=? WHERE id =?";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
-    $rc = $stmt->bind_param('ssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $doc_id);
+    $rc = $stmt->bind_param('sssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $s_id, $s_status, $doc_id);
     $stmt->execute();
 
     //declare a varible which will be passed to alert function
@@ -109,20 +110,25 @@ include("assets/inc/head.php");
                                     </div>
                                     <div class="uk-form-row">
                                         <label>Treaty Status</label>
-                                        <select required name="s_status" id="s_status" class="md-input">
+                                        <select required name="s_status"  onChange="getStatusId(this.value);" id="s_status" class="md-input">
                                             <?php
-                                            $ret = "SELECT DISTINCT s_status FROM tbl_treaties";
+                                            $ret = "SELECT * FROM tbl_status";
+                                            //$ret = "SELECT DISTINCT s_status FROM tbl_treaties";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
                                             $selected_status = $row->s_status ? $row->s_status : '';
                                             while ($row1 = $res->fetch_object()) {
-                                                $selected = ($row1->s_status == $selected_status) ? 'selected' : '';
+                                                $selected = ($row1->name == $selected_status) ? 'selected' : '';
                                             ?>
-                                                <option value="<?= $row1->s_status ?>" <?= $selected ?>><?= $row1->s_status ?></option>
+                                                <option value="<?= $row1->name ?>" <?= $selected ?>><?= $row1->name ?></option>
                                             <?php } ?>
                                         </select>
 
+                                    </div>
+                                    <div class="uk-form-row" style="display:none">
+                                        <label>Treaty Status ID</label>
+                                        <input type="text" id="TreatyStatusID" value="<?= $row->s_id ?>" required name="s_id" class="md-input" readonly />
                                     </div>
                                 </div>
 
@@ -181,7 +187,7 @@ include("assets/inc/head.php");
                                         while ($row = $res->fetch_object()) {
 
                                         ?>
-                                            <textarea cols="30" rows="10" class="md-input" name="b_summary"><?= $row->b_summary; ?></textarea>
+                                            <textarea cols="30" rows="10" class="md-input" name="b_summary" required><?= $row->b_summary; ?></textarea>
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -252,7 +258,6 @@ include("assets/inc/head.php");
             altair_helpers.ie_fix();
         });
     </script>
-
 </body>
 
 </html>

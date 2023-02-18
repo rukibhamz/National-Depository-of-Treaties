@@ -50,7 +50,7 @@
                       
                         <tbody>
                             <?php
-                                $ret="SELECT * FROM  fmoj_staff"; 
+                                $ret="SELECT * FROM  tbl_staff"; 
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->execute() ;//ok
                                 $res=$stmt->get_result();

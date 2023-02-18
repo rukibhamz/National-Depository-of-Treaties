@@ -6,22 +6,28 @@ check_login();
 //delete status 
 if (isset($_GET['d_id'])) {
     $id = intval($_GET['d_id']);
-    $adn = "DELETE FROM tbl_status  WHERE id = ?";
-    $stmt = $mysqli->prepare($adn);
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $stmt->close();
-
-    if ($stmt) {
-        $success = "Treaty Status Deleted";
-?>
-        <script>
-            // Remove the query parameter from the URL
-            window.history.replaceState({}, document.title, window.location.pathname);
-        </script>
-<?php
+    $code = $_GET['d_id'];
+    $forbidden_categories = array('1', '2', '3');
+    if (in_array($code, $forbidden_categories)) {
+        $err = "Cannot delete this status";
     } else {
-        $err = "Try Again Later";
+        $adn = "DELETE FROM tbl_status  WHERE id = ?";
+        $stmt = $mysqli->prepare($adn);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->close();
+
+        if ($stmt) {
+            $success = "Treaty Status Deleted";
+?>
+            <script>
+                // Remove the query parameter from the URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            </script>
+<?php
+        } else {
+            $err = "Try Again Later";
+        }
     }
 }
 ?>

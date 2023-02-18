@@ -7,7 +7,7 @@ check_login();
 if (isset($_SESSION['id'])) {
     // Get the user's ID and other details from the session
     $user_id = $_SESSION['id'];
-    $result = "SELECT * FROM fmoj_staff WHERE id = ?";
+    $result = "SELECT * FROM tbl_staff WHERE id = ?";
     $stmt = $mysqli->prepare($result);
     $stmt->bind_param('i', $user_id);
     $stmt->execute();
@@ -47,8 +47,24 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty category cannot be empty";
     }
-
-    if (!$error) { {
+    if (isset($_POST['b_summary']) && !empty($_POST['b_summary'])) {
+        $b_summary = mysqli_real_escape_string($mysqli, trim($_POST['b_summary']));
+    } else {
+        $error = 1;
+        $err = "Treaty description cannot be empty";
+    }
+    if (!$error) {
+        $title  = $_POST['title'];
+        $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($title == $row['title']) {
+                $err =  "Treaty title already exists";
+            } else {
+                $err =  "Treaty title already exists";
+            }
+        } else {
             $title  = $_POST['title'];
             $signatory = $_POST['signatory'];
             $b_publisher = $_POST['b_publisher'];
@@ -187,7 +203,9 @@ include("assets/inc/head.php");
                                 <div id="file_upload-drop" class="uk-file-upload">
                                     <p class="uk-text">Drop Treaty Document</p>
                                     <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*, .pdf"></a>
+                                    <a class="uk-form-file md-btn">choose file<input id="file_upload-select" name="b_file" type="file" accept="image/*,.pdf"></a>
+                                    <div class="space-20"></div>
+                                    <div id="file_name"></div>
                                 </div>
                                 <div id="file_upload-progressbar" class="uk-progress uk-hidden">
                                     <div class="uk-progress-bar" style="width:0">0%</div>
@@ -197,7 +215,7 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Description</label>
-                                    <textarea cols="30" rows="10" class="md-input" name="b_summary"></textarea>
+                                    <textarea cols="30" rows="10" class="md-input" name="b_summary" required></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">
@@ -243,7 +261,16 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
+    <script src="assets/js/pages/forms_file_upload.min.js"></script>
+    <script>
+        const fileUpload = document.getElementById("file_upload-select");
+        const fileNameElement = document.getElementById("file_name");
 
+        document.getElementById("file_upload-drop").addEventListener("change", (event) => {
+            const fileName = event.target.files[0].name;
+            fileNameElement.innerText = `Selected File Name : ${fileName}`;
+        });
+    </script>
 </body>
 
 </html>
