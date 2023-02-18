@@ -178,7 +178,7 @@ include("assets/inc/head.php");
                                     while ($row = $res->fetch_object()) {
                                     ?>
                                         <tr>
-                                            <td class="uk-text-truncate"><?php echo $row->title; ?></td>
+                                            <td class="uk-text-truncate"><span class="trim"><?php echo $row->title; ?></span></td>
                                             <td class="uk-text-primary"><?php echo $row->b_publisher; ?></td>
                                             <td><?php echo $row->tc_name; ?></td>
                                         </tr>

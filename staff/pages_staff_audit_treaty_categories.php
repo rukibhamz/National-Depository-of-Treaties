@@ -81,7 +81,7 @@ include("assets/inc/head.php");
                                 <tr>
                                     <td><?php echo $row->code; ?></td>
                                     <td><?php echo $row->name; ?></td>
-                                    <td><?php echo $row->desc; ?></td>
+                                    <td><?php echo $row->description; ?></td>
                                     <td>
                                         <a href="pages_staff_view_treaty_category.php?category_code=<?php echo $row->code; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>

@@ -47,9 +47,23 @@ if (isset($_POST['add_treaty'])) {
         $error = 1;
         $err = "Treaty category cannot be empty";
     }
-
-    if (!$error) { {
+    if (isset($_POST['b_summary']) && !empty($_POST['b_summary'])) {
+        $b_summary = mysqli_real_escape_string($mysqli, trim($_POST['b_summary']));
+    } else {
+        $error = 1;
+        $err = "Treaty description cannot be empty";
+    }
+    if (!$error) { 
             $title  = $_POST['title'];
+            $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
+            $res = mysqli_query($mysqli, $sql);
+            if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($title == $row['title']) {
+                $err =  "Treaty title already exists";
+            } else {
+                $err =  "Treaty title already exists";
+            }
             $signatory = $_POST['signatory'];
             $b_publisher = $_POST['b_publisher'];
             $tc_id = $_POST['tc_id'];
@@ -199,7 +213,7 @@ include("assets/inc/head.php");
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Description</label>
-                                    <textarea cols="30" rows="10" class="md-input" name="b_summary"></textarea>
+                                    <textarea cols="30" rows="10" class="md-input" name="b_summary" required></textarea>
                                 </div>
                             </div>
                             <div class="uk-width-medium-2-2">
