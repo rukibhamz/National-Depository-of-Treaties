@@ -141,7 +141,7 @@ while ($row = $res->fetch_object()) {
                                             $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
                                             $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
 
-                                            if (in_array($file_ext, $allowed_extensions) && $row->b_file != "") {
+                                            if (in_array($file_ext, $allowed_extensions)) {
                                                 echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
                                             <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
                                             <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
@@ -155,17 +155,8 @@ while ($row = $res->fetch_object()) {
                                             ?>
                                         </div>
                                         <div class="md-card">
-                                            <?php
-                                            $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
-                                            $allowed_extensions = array('pdf');
-                                            if (in_array($file_ext, $allowed_extensions) && $row->b_file != "") {
-                                            ?>
-                                                <div data-value='<?= $row->b_file ?>' id="<?= 'preview-', $doc_id ?>"></div>
-                                            <?php
-                                            } else {
-                                                echo "No Preview Available";
-                                            }
-                                            ?>
+                                            <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">
+                                            </div>
                                         </div>
                                         <div class="media-body">
                                             <h5><?php echo $row->title; ?></h5>

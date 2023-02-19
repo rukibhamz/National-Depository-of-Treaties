@@ -139,14 +139,14 @@ require_once('sudo/assets/config/config.php');
                         <?php
                         if (isset($_GET['treaty'])) {
                             $treaty = $_GET['treaty'];
-                            $ret = "SELECT * FROM tbl_treaties WHERE CONCAT(title, tc_name, s_status) LIKE ?";
+                            $ret = "SELECT * FROM tbl_treaties WHERE CONCAT(title, tc_name, s_status) LIKE ? ORDER BY id DESC";
                             $stmt = $mysqli->prepare($ret);
                             $treaty_query = "%$treaty%";
                             $stmt->bind_param('s', $treaty_query);
                             $stmt->execute();
                             $res = $stmt->get_result();
                         } else {
-                            $ret = "SELECT * FROM tbl_treaties";
+                            $ret = "SELECT * FROM tbl_treaties ORDER BY id DESC";
                             $res = $mysqli->query($ret);
                         }
 
