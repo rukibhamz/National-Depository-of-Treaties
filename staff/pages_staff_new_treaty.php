@@ -82,7 +82,7 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
             $b_file = $_FILES["b_file"]["name"];
 
             if (!empty($b_file)) {
-                move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets/magazines/" . $_FILES["b_file"]["name"]);
+                move_uploaded_file($_FILES["b_file"]["tmp_name"], ".." . DIRECTORY_SEPARATOR . "sudo" . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "magazines" . DIRECTORY_SEPARATOR . $_FILES["b_file"]["name"]);
                 // move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets" . DIRECTORY_SEPARATOR . "magazines" . DIRECTORY_SEPARATOR . $_FILES["b_file"]["name"]);
             } else {
                 $err = "Please select a file to upload.";
