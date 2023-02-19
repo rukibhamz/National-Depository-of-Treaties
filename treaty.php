@@ -141,7 +141,7 @@ while ($row = $res->fetch_object()) {
                                             $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
                                             $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
 
-                                            if (in_array($file_ext, $allowed_extensions)) {
+                                            if (in_array($file_ext, $allowed_extensions) && $row->b_file != "") {
                                                 echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
                                             <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
                                             <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
@@ -150,13 +150,22 @@ while ($row = $res->fetch_object()) {
                                             </button></a>
                                         </div>";
                                             } else {
-                                                echo "";
+                                                echo "No Preview Available";
                                             }
                                             ?>
                                         </div>
                                         <div class="md-card">
-                                            <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">
-                                            </div>
+                                            <?php
+                                            $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
+                                            $allowed_extensions = array('pdf');
+                                            if (in_array($file_ext, $allowed_extensions) && $row->b_file != "") {
+                                            ?>
+                                                <div data-value='<?= $row->b_file ?>' id="<?= 'preview-', $doc_id ?>"></div>
+                                            <?php
+                                            } else {
+                                                echo "No Preview Available";
+                                            }
+                                            ?>
                                         </div>
                                         <div class="media-body">
                                             <h5><?php echo $row->title; ?></h5>
