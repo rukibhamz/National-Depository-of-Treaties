@@ -137,7 +137,6 @@ while ($row = $res->fetch_object()) {
                                 <div class="category-item well green">
                                     <div class="media">
                                         <div class="md-card">
-                                            <!-- Image preview -->
                                             <?php
                                             $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
                                             $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');

@@ -39,7 +39,8 @@ include("assets/inc/head.php");
                 <ul id="breadcrumbs">
                     <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
                     <li><a href="treaty_sudo_all_treaties.php">All Treaty</a></li>
-                    <li><span><?= $row->title; ?></span></li>
+                      <!-- <li><span><?= $row->title; ?></span></li> -->
+                      <li><span><?= strlen($row->title) > 60 ? substr($row->title, 0, 50) . '...' : $row->title; ?></span></li>
                 </ul>
             </div>
 
@@ -147,15 +148,11 @@ include("assets/inc/head.php");
                                                     $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
 
                                                     if (in_array($file_ext, $allowed_extensions)) {
-                                                        echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
-                                                    <img src='assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
-                                                    <a download href='assets/magazines/{$row->b_file}' class='download-imag'>
-                                                    <button class='btn btn-success'>
-                                                    &ensp;Download
-                                                    </button></a>
+                                                        echo "<div style='margin-bottom: 2rem; max-height: 25%; max-width: 25%; padding-bottom: 1rem;'>
+                                                    <img src='assets/magazines/{$row->b_file}' alt='{$row->b_file}' width='img-responsive' />
+                                                    <a download class='btn btn-primary' href='assets/magazines/{$row->b_file}' class='download-imag'>
+                                                    <i class='icofont icofont-download-alt'></i>&nbsp;Download</a>
                                                 </div>";
-                                                    } else {
-                                                        echo "";
                                                     }
                                                     ?>
                                                 </div>
@@ -210,13 +207,17 @@ include("assets/inc/head.php");
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
         const fileName = docsContainer.getAttribute('data-value');
         const fileExt = fileName.split(".").pop();
-        if (fileExt === 'pdf') {
+        if (screen.width < 768 && fileExt === 'pdf') {
+            var pdfUrl = `assets/magazines/${fileName}`;
+            // var pdfHtml = '<object data="' + pdfUrl + '" type="application/pdf" width="100%" height="100%"></object>';
+            let pdfHtml = `<a href="${pdfUrl}" download="${fileName}" class="btn btn-primary"><i class="icofont icofont-download-alt"></i>&ensp;Download PDF</a>`;
+            document.getElementById("pdf-container").innerHTML = pdfHtml;
+        } else if (fileExt === 'pdf' && screen.width >= 768) {
             PDFObject.embed(`assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");
         }
     </script>

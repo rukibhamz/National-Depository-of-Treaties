@@ -195,7 +195,6 @@ include("assets/inc/head.php");
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
 
-
 </body>
 
 </html>
