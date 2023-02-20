@@ -75,19 +75,10 @@ require_once('sudo/assets/config/config.php');
                                 <a href="treaties.php">CATALOGUES</a>
                             </li>
                             <li>
-                                <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
+                                <a href="staff/pages_staff_index.php" title="Staff Login">UPLOAD TREATY</a>
                             </li>
-                            <!-- <li>
-                                <a href="lib_user/pages_std_index.php">LOGIN</a>
-                            </li>
-                                    <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>-->
-                            <!-- <li>
-                                <a href="staff/pages_staff_index.php">Uploader Login</a>
-                            </li> -->
                             <li>
-                                <a href="sudo/pages_sudo_index.php">LOGIN</a>
+                                <a href="sudo/pages_sudo_index.php" title="Admin Login">LOGIN</a>
                             </li>
                         </ul>
                     </div>
@@ -171,7 +162,7 @@ require_once('sudo/assets/config/config.php');
     <section>
         <div class="space-80"></div>
         <div class="container">
-            <div class="row">
+            <div class="row" style="margin-left:0.15rem; margin-right: 0.15rem">
                 <div class="col-12 text-center">
                     <h2>About the <span class="text-primary">Treaty Database</span> </h2>
                     <div class="space-20"></div>
@@ -182,7 +173,7 @@ require_once('sudo/assets/config/config.php');
                         </ul>
                     </div>
                     <div class="space-30"></div>
-                    <p class="text-left text_lg" style="text-align: center;">The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for
+                    <p class="text-left text_lg">The National Depository of Treaties under the Federal Ministry of Justice in Nigeria is responsible for
                         the safekeeping and management of international agreements, conventions, and treaties entered into by the Nigerian government with
                         other countries and international organizations. The depository serves as a repository of all the official documents related to these
                         agreements and ensures that they are easily accessible to relevant stakeholders, including government officials, researchers, and the

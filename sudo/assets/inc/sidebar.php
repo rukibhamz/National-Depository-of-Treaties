@@ -18,7 +18,7 @@
 
             </li>
             <li title="Treaties">
-                <a href="#">
+                <a href="">
                     <span class="menu_icon"><i class="material-icons">&#xE8D4;</i></span>
                     <span class="menu_title">Treaties</span>
                 </a>
@@ -32,7 +32,7 @@
             </li>
             <!--Upload Access-->
             <li title="Upload Access">
-                <a href="#">
+                <a href="">
                     <span class="menu_icon"><i class="material-icons">&#xE2C3;</i></span>
                     <span class="menu_title">Upload Access</span>
                 </a>
@@ -43,7 +43,7 @@
             </li>
             <!--Manage Category-->
             <li title="Category Access">
-                <a href="#">
+                <a href="">
                     <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
                     <span class="menu_title">Treaty Categories</span>
                 </a>
@@ -55,7 +55,7 @@
 
             <!--Manage Status-->
             <li title="Status">
-                <a href="#">
+                <a href="">
                     <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
                     <span class="menu_title">Treaty Status</span>
                 </a>
@@ -66,7 +66,7 @@
             </li>
             <!--password resets-->
             <li title="Password Resets">
-                <a href="#">
+                <a href="">
                     <span class="menu_icon"><i class="material-icons">lock</i></span>
                     <span class="menu_title">Password Resets</span>
                 </a>

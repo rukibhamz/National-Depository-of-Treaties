@@ -9,9 +9,9 @@ $res = $stmt->get_result();
 while ($row = $res->fetch_object()) {
     //load default book cover page if book is missing a cover image
     if ($row->b_file == '') {
-        $cover_image = "<img src='sudo/assets/magazines/default.png' class='img-fluid img-thumbnail' alt='Book Image'>";
+        $cover_image = "<img src='sudo/assets/magazines/default.png' class='img-responsive img-thumbnail' alt='Book Image'>";
     } else {
-        $cover_image = "<img src='sudo/assets/img/books/$row->b_file' class='img-fluid img-thumbnail' alt='Book Image'>";
+        $cover_image = "<img src='sudo/assets/img/books/$row->b_file' class='img-responsive img-thumbnail' alt='Book Image'>";
     }
 ?>
     <!doctype html>
@@ -86,10 +86,10 @@ while ($row = $res->fetch_object()) {
                                     <a href="treaties.php">CATALOGUES</a>
                                 </li>
                                 <li>
-                                    <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
+                                    <a href="staff/pages_staff_index.php" title="Staff Login">UPLOAD TREATY</a>
                                 </li>
                                 <li>
-                                    <a href="sudo/pages_sudo_index.php">LOGIN</a>
+                                    <a href="sudo/pages_sudo_index.php" title="Admin Login">LOGIN</a>
                                 </li>
                             </ul>
                         </div>
@@ -137,31 +137,31 @@ while ($row = $res->fetch_object()) {
                                 <div class="category-item well green">
                                     <div class="media">
                                         <div class="md-card">
+                                            <!-- Image preview -->
                                             <?php
                                             $file_ext = pathinfo($row->b_file, PATHINFO_EXTENSION);
                                             $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
 
                                             if (in_array($file_ext, $allowed_extensions)) {
-                                                echo "<div style='margin-bottom: 2rem; max-height: 30%; max-width: 30%; padding-bottom: 1rem'>
-                                            <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' />
-                                            <a download href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
-                                            <button class='btn btn-success'>
-                                            &ensp;Download
-                                            </button></a>
+                                                echo "<div style='margin-bottom: 2rem; max-height: 25%; max-width: 25%; padding-bottom: 1rem;'>
+                                            <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' width='img-responsive' />
+                                            <a download class='btn btn-primary' href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
+                                            &ensp;Download</a>
                                         </div>";
-                                            } else {
-                                                echo "No Preview Available";
                                             }
                                             ?>
                                         </div>
                                         <div class="md-card">
+                                            <!-- Preview for desktop view -->
                                             <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">
                                             </div>
+                                            <!-- Mobile View -->
+                                            <div id="pdf-container"></div>
                                         </div>
                                         <div class="media-body">
-                                            <h5><?php echo $row->title; ?></h5>
+                                            <h5><?= $row->title; ?></h5>
                                             <div class="space-10"></div>
-                                            <p><?php echo $row->b_summary; ?></p>
+                                            <p><?= $row->b_summary; ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -197,8 +197,12 @@ while ($row = $res->fetch_object()) {
             const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
             const fileName = docsContainer.getAttribute('data-value');
             const fileExt = fileName.split(".").pop();
-            // console.log(fileExt, fileName, docsContainer, 'hello =>', typeof fileExt)
-            if (fileExt === 'pdf') {
+            if (screen.width < 768 && fileExt === 'pdf') {
+                var pdfUrl = `sudo/assets/magazines/${fileName}`;
+                // var pdfHtml = '<object data="' + pdfUrl + '" type="application/pdf" width="100%" height="100%"></object>';
+                let pdfHtml = `<a href="${pdfUrl}" download="${fileName}" class="btn btn-primary">Download PDF</a>`;
+                document.getElementById("pdf-container").innerHTML = pdfHtml;
+            } else if (fileExt === 'pdf' && screen.width >= 768) {
                 PDFObject.embed(`sudo/assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");
             }
         </script>

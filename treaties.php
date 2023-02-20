@@ -66,10 +66,10 @@ require_once('sudo/assets/config/config.php');
                                 <a href="treaties.php">CATALOGUES</a>
                             </li>
                             <li>
-                                <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
+                                <a href="staff/pages_staff_index.php" title="Staff Login">UPLOAD TREATY</a>
                             </li>
                             <li>
-                                <a href="sudo/pages_sudo_index.php">LOGIN</a>
+                                <a href="sudo/pages_sudo_index.php" title="Admin Login">LOGIN</a>
                             </li>
                         </ul>
                     </div>

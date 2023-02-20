@@ -44,7 +44,7 @@ include("assets/inc/head.php");
             </div>
 
             <div id="page_content_inner">
-                <div class="space-30"></div>
+                <div class="space-10"></div>
                 <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
                     <div class="uk-width-large-10-10">
                         <div class="md-card">
