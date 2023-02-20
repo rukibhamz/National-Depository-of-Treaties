@@ -44,7 +44,6 @@ include("assets/inc/head.php");
                 <ul id="breadcrumbs">
                     <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
                     <li><a href="pages_staff_manage_treaty.php">Document Inventory</a></li>
-                    <!-- <li><span><?= $row->title; ?></span></li> -->
                     <li><span><?= strlen($row->title) > 60 ? substr($row->title, 0, 50) . '...' : $row->title; ?></span></li>
 
                 </ul>

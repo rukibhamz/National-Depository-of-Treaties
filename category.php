@@ -171,13 +171,13 @@ require_once('sudo/assets/config/config.php');
                     <?php
                     if (isset($_GET['year'])) {
                         $selectedYear = $_GET['year'];
-                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id AND treaty_year = ?";
+                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id AND treaty_year = ? ORDER BY treaty_year DESC";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->bind_param('s', $selectedYear);
                         $stmt->execute();
                         $res = $stmt->get_result();
                     } else {
-                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id";
+                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id ORDER BY treaty_year DESC";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute();
                         $res = $stmt->get_result();

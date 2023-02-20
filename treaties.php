@@ -139,14 +139,14 @@ require_once('sudo/assets/config/config.php');
                         <?php
                         if (isset($_GET['treaty'])) {
                             $treaty = $_GET['treaty'];
-                            $ret = "SELECT * FROM tbl_treaties WHERE CONCAT(title, tc_name, s_status) LIKE ? ORDER BY id DESC";
+                            $ret = "SELECT * FROM tbl_treaties WHERE CONCAT(title, tc_name, s_status) LIKE ? ORDER BY treaty_year DESC";
                             $stmt = $mysqli->prepare($ret);
                             $treaty_query = "%$treaty%";
                             $stmt->bind_param('s', $treaty_query);
                             $stmt->execute();
                             $res = $stmt->get_result();
                         } else {
-                            $ret = "SELECT * FROM tbl_treaties ORDER BY id DESC";
+                            $ret = "SELECT * FROM tbl_treaties ORDER BY treaty_year DESC";
                             $res = $mysqli->query($ret);
                         }
 
@@ -162,6 +162,7 @@ require_once('sudo/assets/config/config.php');
                                             <div class="media-body">
                                                 <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
                                                 <h6>Category: <?= $row->tc_name; ?></h6>
+                                                <h6>Year: <?= $row->treaty_year; ?></h6>
                                                 <h6>Status: <i><?= $row->s_status; ?></i></h6>
                                                 <div class="space-10"></div>
                                                 <div class="title-bar blue text-center">
