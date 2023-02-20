@@ -171,7 +171,7 @@ require_once('sudo/assets/config/config.php');
                                                 </div>
                                                 <div class="space-10"></div>
                                                 <div class="row">
-                                                    <div class="col-md-4"> <a href="treaty.php?doc_id=<?= $row->id; ?>" class="text-primary">View</a></div>
+                                                    <div class="col-md-4"> <a href="treaty.php?doc_id=<?= $row->id; ?>" class="text-primary">View&nbsp;<i class="icofont icofont-curved-double-right"></i></a></div>
 
                                                     <div class="col-md-8">
                                                         <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />

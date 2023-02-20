@@ -122,11 +122,11 @@ while ($row = $res->fetch_object()) {
             <!-- Header-jumbotron-end -->
         </header>
         <section>
-            <div class="space-80"></div>
+            <div class="space-30"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-6 pull-right">
-                        <a href="treaties.php" class="btn btn-primary"> Back</a>
+                        <a href="treaties.php" class="btn btn-primary" style="padding: 0.8rem"><i class="icofont icofont-arrow-left"></i>Back</a>
                     </div>
                 </div>
                 <div class="row">
@@ -146,7 +146,7 @@ while ($row = $res->fetch_object()) {
                                                 echo "<div style='margin-bottom: 2rem; max-height: 25%; max-width: 25%; padding-bottom: 1rem;'>
                                             <img src='sudo/assets/magazines/{$row->b_file}' alt='{$row->b_file}' width='img-responsive' />
                                             <a download class='btn btn-primary' href='sudo/assets/magazines/{$row->b_file}' class='download-imag'>
-                                            &ensp;Download</a>
+                                            <i class='icofont icofont-download-alt'></i>&nbsp;Download</a>
                                         </div>";
                                             }
                                             ?>
@@ -200,7 +200,7 @@ while ($row = $res->fetch_object()) {
             if (screen.width < 768 && fileExt === 'pdf') {
                 var pdfUrl = `sudo/assets/magazines/${fileName}`;
                 // var pdfHtml = '<object data="' + pdfUrl + '" type="application/pdf" width="100%" height="100%"></object>';
-                let pdfHtml = `<a href="${pdfUrl}" download="${fileName}" class="btn btn-primary">Download PDF</a>`;
+                let pdfHtml = `<a href="${pdfUrl}" download="${fileName}" class="btn btn-primary"><i class="icofont icofont-download-alt"></i>&ensp;Download PDF</a>`;
                 document.getElementById("pdf-container").innerHTML = pdfHtml;
             } else if (fileExt === 'pdf' && screen.width >= 768) {
                 PDFObject.embed(`sudo/assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");

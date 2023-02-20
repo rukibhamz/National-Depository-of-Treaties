@@ -8,6 +8,7 @@ include('assets/config/config.php');
 
 //signin
 if (isset($_POST['sudo_login'])) {
+    $_SESSION['loading'] = true;
     $email = $_POST['email'];
     $password = sha1(md5($_POST['password'])); //double encrypt to increase security
     $stmt = $mysqli->prepare("SELECT email, password, id  FROM il_sudo  WHERE email=? AND password=?"); //sql to log in user
@@ -18,10 +19,12 @@ if (isset($_POST['sudo_login'])) {
     $_SESSION['sudo_id'] = $id; //assign session to sudo id
 
     if ($rs) {
-        //if its sucessful
+        //if its successful
         header("location:pages_sudo_dashboard.php");
+        $_SESSION['loading'] = false;
     } else {
         $err = "Access Denied Please Check Your Credentials";
+        $_SESSION['loading'] = false;
     }
 }
 
@@ -62,6 +65,7 @@ $sudoNumber =  substr(str_shuffle('0123456789QWERTYUIOPLKJHGFDSAZXCVBNM'), 1, $l
 include("assets/inc/head.php");
 ?>
 
+
 <body>
     <div class="login_page">
         <div class="login_page_wrapper">
@@ -81,8 +85,13 @@ include("assets/inc/head.php");
                             <span class="uk-form-password-toggle password_toggle" onclick="handleToggle('login_password')">&#128065;</span>
                         </div>
                         <div class="uk-margin-medium-top">
-                            <input type="submit" name="sudo_login" value="Sign In" class="md-btn md-btn-success md-btn-block md-btn-learge" />
+                            <?php if ($_SESSION['loading'] == true) { ?>
+                                <button class="md-btn md-btn-success md-btn-block btn-large" type="button" id="loading">Logging in...</button>
+                            <?php } else { ?>
+                                <input type="submit" name="sudo_login" value="Sign In" class="md-btn md-btn-success md-btn-block md-btn-large" />
+                            <?php } ?>
                         </div>
+
 
                     </form>
                 </div>
@@ -180,6 +189,7 @@ include("assets/inc/head.php");
             input.type = input.type === "text" ? "password" : "text";
         }
     </script>
+
 
 </body>
 
