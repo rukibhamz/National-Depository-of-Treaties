@@ -133,7 +133,7 @@ require_once('sudo/assets/config/config.php');
                                         <select onchange="filterByYear()" name="treaty_year" id="treaty_year" class="form-control" />
                                         <option value="">--Select Year--</option>
                                         <?php
-                                        $ret = "SELECT DISTINCT treaty_year FROM tbl_treaties WHERE tc_id = $row1->id";
+                                        $ret = "SELECT DISTINCT treaty_year FROM tbl_treaties WHERE tc_id = $row1->id ORDER BY treaty_year ASC";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute(); //ok
                                         $res = $stmt->get_result();
