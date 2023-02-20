@@ -84,12 +84,18 @@ div.title-bar.white ul li i {
     background: #ffffff;
 }
 
-input.md-btn-success {
+button.md-btn-success, input.md-btn-success {
     background: #18A655;
     border-radius: 6.2181px;
     padding: 1rem 3rem;
 }
 
+input[type="button"][disabled] {
+    opacity: 0.5; /* or any other style you want to apply */
+    cursor: not-allowed;
+  }
+
+  
 label {
     font-family: 'Open Sans';
     font-style: normal;

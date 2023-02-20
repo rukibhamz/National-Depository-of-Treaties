@@ -4,6 +4,7 @@
     */
 
 session_start();
+$_SESSION['loading'] = false;
 include('assets/config/config.php');
 
 //password reset token
@@ -14,6 +15,7 @@ $dummy_pwd =  substr(str_shuffle('0123456789QWERTYUIOPLKJHGFDSAZXCVBNM'), 1, $ln
 
 //signin
 if (isset($_POST['staff_login'])) {
+    $_SESSION['loading'] = true;
     $l_email = $_POST['l_email'];
     $l_pwd = sha1(md5($_POST['l_pwd'])); //double encrypt to increase security
     print_r($l_email,$l_pwd);
@@ -27,8 +29,10 @@ if (isset($_POST['staff_login'])) {
     if ($rs) {
         //if its sucessfull
         header("location:pages_staff_dashboard.php");
+        $_SESSION['loading'] = false;
     } else {
         $err = "Access Denied Please Check Your Credentials";
+        $_SESSION['loading'] = false;
     }
 }
 
@@ -88,8 +92,13 @@ include("assets/inc/head.php");
                         <input class="md-input" required type="password" id="login_password" name="l_pwd" />
                         <span class="uk-form-password-toggle password_toggle" onclick="handleToggle('login_password')">&#128065;</span>
                     </div>
+
                     <div class="uk-margin-medium-top">
-                        <input type="submit" name="staff_login" value="Sign In to Upload" class="md-btn md-btn-success md-btn-block md-btn-large" />
+                            <div id="loading-spinner" style="display:none;">
+                                <input type="button" class="md-btn md-btn-success md-btn-block md-btn-large" value="Logging in..." type="button" disabled id="loading" />
+                            </div>
+                            
+                        <input type="submit" id="staff_login" name="staff_login" value="Sign In to Upload" class="md-btn md-btn-success md-btn-block md-btn-large" />
                     </div>
 
                 </form>
@@ -172,6 +181,13 @@ include("assets/inc/head.php");
             let input = document.getElementById(id);
             input.type = input.type === "text" ? "password" : "text";
         }
+        var button = document.getElementById('staff_login');
+        var loadingSpinner = document.getElementById('loading-spinner');
+
+        button.addEventListener('click', function() {
+            button.style.display = 'none';
+            loadingSpinner.style.display = 'block';
+        });
     </script>
 
 </body>

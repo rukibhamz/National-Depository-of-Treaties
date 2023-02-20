@@ -4,6 +4,7 @@
     */
 
 session_start();
+$_SESSION['loading'] = false;
 include('assets/config/config.php');
 
 //signin
@@ -39,7 +40,7 @@ if (isset($_POST['sudo_signup'])) {
     //Insert Captured information to a database table
     $query = "INSERT INTO il_sudo (username, email, password, number) VALUES (?,?,?,?)";
     $stmt = $mysqli->prepare($query);
-    //bind paramaters
+    //bind parameters
     $rc = $stmt->bind_param('ssss', $username, $email, $password, $number);
     $stmt->execute();
 
@@ -58,7 +59,8 @@ $sudoNumber =  substr(str_shuffle('0123456789QWERTYUIOPLKJHGFDSAZXCVBNM'), 1, $l
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!-->
-<html lang="en"> <!--<![endif]-->
+<html lang="en">
+<!--<![endif]-->
 
 <?php
 //load head partial
@@ -85,14 +87,12 @@ include("assets/inc/head.php");
                             <span class="uk-form-password-toggle password_toggle" onclick="handleToggle('login_password')">&#128065;</span>
                         </div>
                         <div class="uk-margin-medium-top">
-                            <?php if ($_SESSION['loading'] == true) { ?>
-                                <button class="md-btn md-btn-success md-btn-block btn-large" type="button" id="loading">Logging in...</button>
-                            <?php } else { ?>
-                                <input type="submit" name="sudo_login" value="Sign In" class="md-btn md-btn-success md-btn-block md-btn-large" />
-                            <?php } ?>
+                            <div id="loading-spinner" style="display:none;">
+                                <input type="button" class="md-btn md-btn-success md-btn-block md-btn-large" value="Logging in..." type="button" disabled id="loading" />
+                            </div>
+
+                            <input type="submit" id="sudo_login" name="sudo_login" value="Sign In" class="md-btn md-btn-success md-btn-block md-btn-large" />
                         </div>
-
-
                     </form>
                 </div>
                 <!-- Display None -->
@@ -100,8 +100,10 @@ include("assets/inc/head.php");
                     <button type="button" class="uk-position-top-right uk-close uk-margin-right uk-margin-top back_to_login"></button>
                     <h2 class="heading_b uk-text-success">Can't log in?</h2>
                     <p>Here’s the info to get you back in to your account as quickly as possible.</p>
-                    <p>First, try the easiest thing: if you remember your password but it isn’t working, make sure that Caps Lock is turned off, and that your username is spelled correctly, and then try again.</p>
-                    <p>If your password still isn’t working, it’s time to <a href="#" id="password_reset_show">reset your password</a>.</p>
+                    <p>First, try the easiest thing: if you remember your password but it isn’t working, make sure that
+                        Caps Lock is turned off, and that your username is spelled correctly, and then try again.</p>
+                    <p>If your password still isn’t working, it’s time to <a href="#" id="password_reset_show">reset
+                            your password</a>.</p>
                 </div>
                 <div class="md-card-content large-padding" id="login_password_reset" style="display: none">
                     <button type="button" class="uk-position-top-right uk-close uk-margin-right uk-margin-top back_to_login"></button>
@@ -188,7 +190,15 @@ include("assets/inc/head.php");
             let input = document.getElementById(id);
             input.type = input.type === "text" ? "password" : "text";
         }
+        var button = document.getElementById('sudo_login');
+        var loadingSpinner = document.getElementById('loading-spinner');
+
+        button.addEventListener('click', function() {
+            button.style.display = 'none';
+            loadingSpinner.style.display = 'block';
+        });
     </script>
+
 
 
 </body>

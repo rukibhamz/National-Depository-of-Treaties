@@ -19,7 +19,7 @@
             </li>
             <li title="Upload Treaty">
                 <a href="pages_staff_new_treaty.php">
-                    <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                    <span class="menu_icon"><i class="material-icons">&#xE2C3;</i></span>
                     <span class="menu_title">Upload Treaty</span>
                 </a>
             </li>

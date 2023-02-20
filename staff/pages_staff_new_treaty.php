@@ -3,6 +3,7 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
+$_SESSION['loading'] = false;
 
 if (isset($_SESSION['id'])) {
     // Get the user's ID and other details from the session
@@ -24,9 +25,9 @@ if (isset($_POST['add_treaty']) && $user->acc_status != 'Active') {
     $err = "Your account has been suspended, please contact the ADMIN";
 }
 
-//add new book
+//add new treaty
 if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
-
+    $_SESSION['loading'] = true;
     $error = 0;
     if (isset($_POST['title']) && !empty($_POST['title'])) {
         $title = mysqli_real_escape_string($mysqli, trim($_POST['title']));
@@ -60,8 +61,12 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
     }
     if (!$error) {
         $title  = $_POST['title'];
-        $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
-        $res = mysqli_query($mysqli, $sql);
+        $sql = "SELECT * FROM tbl_treaties WHERE title=? ";
+        $stmt = mysqli_prepare($mysqli, $sql);
+        mysqli_stmt_bind_param($stmt, 's', $title);
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+        // $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if ($title == $row['title']) {
@@ -112,8 +117,10 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
             //declare a variable which will be passed to alert function
             if ($stmt && $notification_stmt) {
                 $success = "Treaty Created Successfully";
+                $_SESSION['loading'] = false;
             } else {
                 $err = "Please Try Again Or Try Later";
+                $_SESSION['loading'] = false;
             }
         }
     }
@@ -246,8 +253,12 @@ include("assets/inc/head.php");
                             </div>
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
+                                    <div id="loading-spinner" style="display:none;">
+                                        <input type="button" class="md-btn md-btn-success" value="Creating new treaty..." type="button" disabled id="loading" />
+                                    </div>
+
                                     <div class="uk-input-group">
-                                        <input type="submit" class="md-btn md-btn-success" name="add_treaty" value="Add Treaty" />
+                                        <input type="submit" id="submit_button" class="md-btn md-btn-success" name="add_treaty" value="Add Treaty" />
                                     </div>
                                 </div>
                             </div>
@@ -295,6 +306,14 @@ include("assets/inc/head.php");
         document.getElementById("file_upload-drop").addEventListener("change", (event) => {
             const fileName = event.target.files[0].name;
             fileNameElement.innerText = `Selected File Name : ${fileName}`;
+        });
+
+        var button = document.getElementById('submit_button');
+        var loadingSpinner = document.getElementById('loading-spinner');
+
+        button.addEventListener('click', function() {
+            button.style.display = 'none';
+            loadingSpinner.style.display = 'block';
         });
     </script>
 </body>

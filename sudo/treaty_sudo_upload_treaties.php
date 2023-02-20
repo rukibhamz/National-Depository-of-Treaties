@@ -3,6 +3,7 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
+$_SESSION['loading'] = false;
 
 if (isset($_SESSION['sudo_id'])) {
     // Get the user's ID and other details from the session
@@ -16,12 +17,13 @@ if (isset($_SESSION['sudo_id'])) {
     $stmt->close();
 }
 
-//generate random librarian number
+//generate random staff number
 $length = 5;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
 //add new book
 if (isset($_POST['add_treaty'])) {
+    $_SESSION['loading'] = true;
     $error = 0;
     if (isset($_POST['title']) && !empty($_POST['title'])) {
         $title = mysqli_real_escape_string($mysqli, trim($_POST['title']));
@@ -71,9 +73,8 @@ if (isset($_POST['add_treaty'])) {
             $b_file = $_FILES["b_file"]["name"];
 
             if (!empty($b_file)) {
-                move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets/magazines/" . $_FILES["b_file"]["name"]);
-                // move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets" . DIRECTORY_SEPARATOR . "magazines" . DIRECTORY_SEPARATOR . $_FILES["b_file"]["name"]);
-
+                // move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets/magazines/" . $_FILES["b_file"]["name"]);
+                move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets" . DIRECTORY_SEPARATOR . "magazines" . DIRECTORY_SEPARATOR . $_FILES["b_file"]["name"]);
             } else {
                 $err = "Please select a file to upload.";
             }
@@ -102,8 +103,10 @@ if (isset($_POST['add_treaty'])) {
             //declare a variable which will be passed to alert function
             if ($stmt && $notification_stmt) {
                 $success = "Treaty Created Successfully";
+                $_SESSION['loading'] = false;
             } else {
                 $err = "Please Try Again Or Try Later";
+                $_SESSION['loading'] = false;
             }
         }
     }
@@ -234,8 +237,12 @@ include("assets/inc/head.php");
                             </div>
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
+                                    <div id="loading-spinner" style="display:none;">
+                                        <input type="button" class="md-btn md-btn-success" value="Creating new treaty..." type="button" disabled id="loading" />
+                                    </div>
+
                                     <div class="uk-input-group">
-                                        <input type="submit" class="md-btn md-btn-success" name="add_treaty" value="Add Treaty" />
+                                        <input type="submit" id="submit_button" class="md-btn md-btn-success" name="add_treaty" value="Add Treaty" />
                                     </div>
                                 </div>
                             </div>
@@ -283,6 +290,15 @@ include("assets/inc/head.php");
         document.getElementById("file_upload-drop").addEventListener("change", (event) => {
             const fileName = event.target.files[0].name;
             fileNameElement.innerText = `Selected File Name : ${fileName}`;
+        });
+
+
+        var button = document.getElementById('submit_button');
+        var loadingSpinner = document.getElementById('loading-spinner');
+
+        button.addEventListener('click', function() {
+            button.style.display = 'none';
+            loadingSpinner.style.display = 'block';
         });
     </script>
 </body>
