@@ -225,3 +225,8 @@ aside.side_query ul li {
 .cursor_pointer {
     cursor: pointer;
 }
+
+ul.overflow_display{
+    max-height: 30rem;
+    overflow-y: auto;
+}
