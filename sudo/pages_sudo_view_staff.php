@@ -42,13 +42,13 @@
             }
 
             //use .danger, .warning, .success according to account status
-            if($row->acc_status == 'Active')
+            if($row->acc_status == 'active')
             {
                $account_status = "<span class='md-list-heading uk-text-success'>$row->acc_status</span>";
                
 
             }
-            elseif($row->acc_status == 'Pending')
+            elseif($row->acc_status == 'inactive')
             {
                 $account_status = "<span class='md-list-heading uk-text-warning'>$row->acc_status</span>";
             }

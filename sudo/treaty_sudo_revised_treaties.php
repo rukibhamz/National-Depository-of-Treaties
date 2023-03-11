@@ -49,6 +49,7 @@ include("assets/inc/head.php");
                     <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <th>Title</th>
+                            <th>Status</th>
                             <th>Signatory</th>
                             <th>Publisher</th>
                             <th>Category</th>
@@ -63,9 +64,17 @@ include("assets/inc/head.php");
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();
                             while ($row = $res->fetch_object()) {
+                                if ($row->approved == 1) {
+                                    $btn_status = "<td><span class='uk-badge uk-badge-primary'>Approved</span>
+                            </td>";
+                                } else {
+                                    $btn_status = "<td><span class='uk-badge uk-badge-default'>Pending</span>
+                            </td>";
+                                }
                             ?>
                                 <tr>
-                                    <td><?= $row->title; ?></td>
+                                    <td><span class="trim"><?= $row->title; ?></span></td>
+                                    <?= $btn_status ?>
                                     <td><?= $row->signatory; ?></td>
                                     <td><?= $row->b_publisher; ?></td>
                                     <td><?= $row->tc_name; ?></td>

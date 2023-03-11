@@ -30,7 +30,7 @@ if ($res) {
     $Number = "FMOJ-0002";
 }
 
-//create a librarian account
+//create a staff account
 if (isset($_POST['add_uploader'])) {
     $error = 0;
     if (isset($_POST['name']) && !empty($_POST['name'])) {
@@ -59,44 +59,54 @@ if (isset($_POST['add_uploader'])) {
     }
 
     if (!$error) {
-        $sql = "SELECT * FROM tbl_staff WHERE email = '$email' OR name = '$name' OR number = '$number'";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($number == $row['number']) {
-                $err = "Staff number already exists";
-            } else if ($email == $row['email']) {
-                $err = "Staff email already exists";
+        // count the number of active staff accounts
+        $count_query = "SELECT COUNT(*) as count FROM tbl_staff WHERE acc_status = 'active'";
+        $count_result = mysqli_query($mysqli, $count_query);
+        $count_row = mysqli_fetch_assoc($count_result);
+        $active_count = $count_row['count'];
+
+        if ($active_count < 2) {
+            $sql = "SELECT * FROM tbl_staff WHERE email = '$email' OR name = '$name' OR number = '$number'";
+            $res = mysqli_query($mysqli, $sql);
+            if (mysqli_num_rows($res) > 0) {
+                $row = mysqli_fetch_assoc($res);
+                if ($number == $row['number']) {
+                    $err = "Staff number already exists";
+                } else if ($email == $row['email']) {
+                    $err = "Staff email already exists";
+                } else {
+                    $err = "Staff name already exists";
+                }
             } else {
-                $err = "Staff name already exists";
+
+                $s_name = $_POST['name'];
+                $s_email = $_POST['email'];
+                $s_phone = $_POST['phone'];
+                $s_pwd = sha1(md5($_POST['pwd']));
+                $s_number = $_POST['number'];
+                $s_adr = $_POST['adr'];
+                $s_bio = $_POST['bio'];
+                $s_acc_status = $_POST['acc_status'];
+
+                // $s_pic = $_FILES["p_pic"]["name"];
+                // move_uploaded_file($_FILES["p_pic"]["tmp_name"], "assets/profile_img/" . $_FILES["p_pic"]["name"]);
+
+                //Insert Captured information to a database table
+                $query = "INSERT INTO tbl_staff (name, email, phone, pwd, number, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
+                $stmt = $mysqli->prepare($query);
+                //bind parameters
+                $rc = $stmt->bind_param('ssssssss', $s_name, $s_email, $s_phone, $s_pwd, $s_number, $s_adr, $s_bio, $s_acc_status);
+                $stmt->execute();
+
+                //declare a variable which will be passed to alert function
+                if ($stmt) {
+                    $success = "Staff Account Created";
+                } else {
+                    $err = "Please Try Again Or Try Later";
+                }
             }
         } else {
-
-            $s_name = $_POST['name'];
-            $s_email = $_POST['email'];
-            $s_phone = $_POST['phone'];
-            $s_pwd = sha1(md5($_POST['pwd']));
-            $s_number = $_POST['number'];
-            $s_adr = $_POST['adr'];
-            $s_bio = $_POST['bio'];
-            $s_acc_status = $_POST['acc_status'];
-
-            // $s_pic = $_FILES["p_pic"]["name"];
-            // move_uploaded_file($_FILES["p_pic"]["tmp_name"], "assets/profile_img/" . $_FILES["p_pic"]["name"]);
-
-            //Insert Captured information to a database table
-            $query = "INSERT INTO tbl_staff (name, email, phone, pwd, number, adr, bio, acc_status) VALUES (?,?,?,?,?,?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            //bind parameters
-            $rc = $stmt->bind_param('ssssssss', $s_name, $s_email, $s_phone, $s_pwd, $s_number, $s_adr, $s_bio, $s_acc_status);
-            $stmt->execute();
-
-            //declare a variable which will be passed to alert function
-            if ($stmt) {
-                $success = "Staff Account Created";
-            } else {
-                $err = "Please Try Again Or Try Later";
-            }
+            $err = "Cannot create new staff account. The maximum number of (2) active staff accounts has been reached.";
         }
     }
 }
@@ -176,8 +186,8 @@ include("assets/inc/head.php");
                                     <label>Account Status</label>
                                     <select required name="acc_status" id="acc_status" class="md-input">
                                         <option value="">--Select Staff Status--</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Suspended">Suspended</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Suspended</option>
                                     </select>
 
                                 </div>

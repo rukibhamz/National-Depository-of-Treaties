@@ -40,10 +40,10 @@ include("assets/inc/head.php");
         }
 
         //use .danger, .warning, .success according to account status
-        if ($row->acc_status == 'Active') {
-            $account_status = "<span class='md-list-heading uk-text-success'>$row->acc_status</span>";
+        if ($row->acc_status == 'active') {
+            $account_status = "<span class='md-list-heading uk-text-success'>Active</span>";
         } else {
-            $account_status = "<span class='md-list-heading uk-text-danger'>$row->acc_status</span>";
+            $account_status = "<span class='md-list-heading uk-text-warning'>Suspended</span>";
         }
     ?>
         <div id="page_content">

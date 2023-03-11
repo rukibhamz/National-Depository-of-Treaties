@@ -3,18 +3,53 @@ session_start();
 include('assets/config/config.php');
 include('assets/config/checklogin.php');
 check_login();
-
-if (isset($_GET['d_id'])) {
-    $id = intval($_GET['d_id']);
-    $adn = "DELETE FROM  tbl_treaties  WHERE id = ?";
+if (isset($_SESSION['id'])) {
+    // Get the user's ID and other details from the session
+    $user_id = $_SESSION['id'];
+    $result = "SELECT * FROM tbl_staff WHERE id = ?";
+    $stmt = $mysqli->prepare($result);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_object();
+    $stmt->close();
+}
+//approve book  
+if (isset($_GET['approve_id'])) {
+    $id = intval($_GET['approve_id']);
+    $adn = "UPDATE tbl_treaties SET approved = true WHERE id = ?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('i', $id);
     $stmt->execute();
     $stmt->close();
 
     if ($stmt) {
-        $success = "Treaty Deleted";
+        $success = "Treaty status updated";
 ?>
+        <script>
+            // Remove the query parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+    <?php
+    } else {
+        $err = "Try Again Later";
+    }
+}
+
+
+// reject book
+
+if (isset($_GET['reject_id'])) {
+    $id = intval($_GET['reject_id']);
+    $adn = "UPDATE tbl_treaties SET approved = false WHERE id = ?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+    if ($stmt) {
+        $success = "Treaty status updated";
+    ?>
         <script>
             // Remove the query parameter from the URL
             window.history.replaceState({}, document.title, window.location.pathname);
@@ -46,35 +81,43 @@ include("assets/inc/head.php");
     <!-- main sidebar end -->
 
     <div id="page_content">
-        <div class="space-10"></div>
         <!--BreadCrumps-->
         <div id="top_bar">
             <ul id="breadcrumbs">
-                <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                <li><span>All Treaties</span></li>
+                <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
+                <li><span>Approve/Reject Treaties</span></li>
             </ul>
         </div>
         <div id="page_content_inner">
-            <?php
-            $ret = "SELECT * FROM tbl_treaties";
-            $stmt = $mysqli->prepare($ret);
-            $stmt->execute();
-            $res = $stmt->get_result();
-            $numRows = $res->num_rows;
-            ?>
-            <h3 class="heading_a uk-margin-bottom text">Number of Treaties ( <?= $numRows ?> )</h3>
+
+            <div style="display:flex; justify-content:space-between">
+                <h4 class="heading_a uk-margin-bottom">Treaty</h4>
+
+                <div class="uk-form-row" style="display: none">
+                    <select required onChange="getTreatyId(this.value);" name="tc_name" id="tc_name" class="md-input" />
+                    <option value="">Select Category</option>
+                    <?php
+                    $ret = "SELECT * FROM  tbl_treatiescategory";
+                    $stmt = $mysqli->prepare($ret);
+                    $stmt->execute(); //ok
+                    $res = $stmt->get_result();
+                    while ($row = $res->fetch_object()) {
+                    ?>
+                        <option value="<?= $row->name; ?>"><?= $row->code; ?> - <?= $row->name; ?></option>
+                    <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <!-- ----------- -->
             <div class="md-card uk-margin-medium-bottom">
                 <div class="md-card-content">
                     <div class="dt_colVis_buttons"></div>
                     <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <th>Title</th>
-                            <th>Approval Status</th>
-                            <th>Signatory</th>
-                            <th>Publisher</th>
-                            <th>Category</th>
                             <th>Status</th>
-                            <th>Year</th>
+                            <th>Author</th>
+                            <th>Category</th>
                             <th>Action</th>
                         </thead>
 
@@ -87,32 +130,28 @@ include("assets/inc/head.php");
                             while ($row = $res->fetch_object()) {
                                 if ($row->approved == 1) {
                                     $btn_status = "<td><span class='uk-badge uk-badge-primary'>Approved</span>
-                            </td>";
+                                    </td>";
+                                    $approval_status = "<a href='pages_supervisor_manage_treaty.php?reject_id=$row->id'>
+                                    <span class='uk-badge uk-badge-danger'>Reject</span>
+                                </a>";
                                 } else {
                                     $btn_status = "<td><span class='uk-badge uk-badge-default'>Pending</span>
                             </td>";
+                                    $approval_status = "<a href='pages_supervisor_manage_treaty.php?approve_id=$row->id'>
+                            <span class='uk-badge uk-badge-primary'>Approve</span>";
                                 }
                             ?>
                                 <tr>
                                     <td><span class="trim"><?= $row->title; ?></span></td>
                                     <?= $btn_status ?>
-                                    <td><?= $row->signatory; ?></td>
                                     <td><?= $row->b_publisher; ?></td>
                                     <td><?= $row->tc_name; ?></td>
-                                    <td><?= $row->s_status; ?></td>
-                                    <td><?= $row->treaty_year; ?></td>
                                     <td>
-                                        <a href="treaty_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
+                                        <a href="pages_staff_view_treaty.php?doc_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
-                                        <?php if ($sudo_user->role == 'super_admin') : ?>
-                                        <a href="treaty_sudo_edit_treaty.php?doc_id=<?= $row->id; ?>">
-                                            <span class='uk-badge uk-badge-primary'>Update</span>
-                                        </a>
-                                        <a href="treaty_sudo_all_treaties.php?d_id=<?= $row->id; ?>">
-                                            <span class='uk-badge uk-badge-danger'>Delete</span>
-                                        </a>
-                                        <?php endif; ?>
+                                        <?= $approval_status ?>
+
                                     </td>
                                 </tr>
 

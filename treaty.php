@@ -1,7 +1,7 @@
 <?php
 require_once('sudo/assets/config/config.php');
 $docs_id = $_GET['doc_id'];
-$ret = "SELECT * FROM  tbl_treaties WHERE id = ?";
+$ret = "SELECT * FROM  tbl_treaties WHERE id = ? AND approved = 1";
 $stmt = $mysqli->prepare($ret);
 $stmt->bind_param('s', $docs_id);
 $stmt->execute(); //ok
@@ -202,7 +202,8 @@ while ($row = $res->fetch_object()) {
                 let pdfHtml = `<a href="${pdfUrl}" download="${fileName}" class="btn btn-primary"><i class="icofont icofont-download-alt"></i>&ensp;Download PDF</a>`;
                 document.getElementById("pdf-container").innerHTML = pdfHtml;
             } else if (fileExt === 'pdf' && screen.width >= 768) {
-                PDFObject.embed(`sudo/assets/magazines/${fileName}`, "#<?= 'preview-', $_GET['doc_id'] ?>");
+                PDFObject.embed(`sudo/assets/magazines/${fileName}#toolbar=0`, "#<?= 'preview-', $_GET['doc_id'] ?>", { pdfOpenParams: { print: 0} });
+                
             }
         </script>
 

@@ -47,14 +47,14 @@ $stmt->fetch();
 $stmt->close();
 
 //2.0 : Number of Staff
-$result = "SELECT count(*) FROM tbl_staff WHERE acc_status='Active'";
+$result = "SELECT count(*) FROM tbl_staff WHERE acc_status='active'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($active_staff);
 $stmt->fetch();
 $stmt->close();
 
-$result = "SELECT count(*) FROM tbl_staff WHERE acc_status='Suspended'";
+$result = "SELECT count(*) FROM tbl_staff WHERE acc_status='inactive'";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($suspended_staff);
@@ -256,7 +256,7 @@ include("assets/inc/head.php");
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                             <h2 class="uk-margin-remove"><span class="countUpMe"><?= $suspended_staff; ?></span></h2>
                             <div class="space-10"></div>
-                            <p class="text">Suspended
+                            <p class="text">Inactive
                                 User</p>
 
                             <div class="space-10"></div>

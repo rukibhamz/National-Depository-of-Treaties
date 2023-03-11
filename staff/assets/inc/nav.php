@@ -1,8 +1,7 @@
 <?php
     /*
-    *Load naviagation partial with logged in sudo session
+    *Load naviagation partial with logged in staff session
     */
-
     $id = $_SESSION['id'];
     $ret="SELECT * FROM  tbl_staff  WHERE id = ? "; 
     $stmt= $mysqli->prepare($ret) ;
@@ -24,7 +23,7 @@
             ";
         }
 
-    //Implementation Of Messanges and Notifications
+    //Implementation Of Messages and Notifications
 
     /*
         Notifications Counter

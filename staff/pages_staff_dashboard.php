@@ -19,21 +19,49 @@ if (isset($_SESSION['id'])) {
     $stmt->close();
 }
 
-//1.Books
+//1.Treaty
 
 //1.0 : Number of all book categories in the library
 $result = "SELECT count(*) FROM tbl_treatiescategory";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($book_categories);
+$stmt->bind_result($treaty_categories);
 $stmt->fetch();
 $stmt->close();
 
-//1.1 : Number of all books no matter what category
+//1.1 : Number of all treaty no matter what category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE b_publisher = '$user->name' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($books);
+$stmt->bind_result($user_treaty);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE approved = 0 ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($pending);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($total);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_status";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($total_status);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE approved = 1 ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($approved);
 $stmt->fetch();
 $stmt->close();
 
@@ -61,7 +89,12 @@ $stmt->bind_result($mou);
 $stmt->fetch();
 $stmt->close();
 
+$userTreatyPercentage = round(($user_treaty / $total) * 100, 2);
+$diff = $total - $user_treaty;
+$otherTreatyPercentage = round(($diff / $total) * 100, 2);
 
+$pendingPercentage = ($pending / $total) * 100;
+$approvedPercentage = ($approved / $total) * 100;
 
 ?>
 <!doctype html>
@@ -95,68 +128,130 @@ include("assets/inc/head.php");
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                             <span class="uk-text-muted uk-text-small">Treaty Categories</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $book_categories; ?></noscript></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $treaty_categories; ?></noscript></span></h2>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Treaty</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $books; ?></noscript></span></h2>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Instruments</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $instruments; ?></noscript></span></h2>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Agreements</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $agreements; ?></noscript></span></h2>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <span class="uk-text-muted uk-text-small">Mou's</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $mou; ?></noscript></span></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pie Charts-->
-            <div class="uk-grid">
-                <div class="uk-width-1-1">
-                    <div class="md-card">
-                        <div class="md-card-toolbar">
-                            <div class="md-card-toolbar-actions">
-                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
-                                <!-- <i class="md-icon material-icons" id="print" onclick="printContent('Print_Content');">&#xE8ad;</i> -->
-                                <i class="md-icon material-icons">&#xE5D5;</i>
-
-                            </div>
-                        </div>
-                        <div class="md-card-content">
-                            <div class="mGraph-wrapper">
-                                <div id="PieChart" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+                <?php if ($user->role == 'supervisor') : ?>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Number of Status</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $total_status; ?></noscript></span></h2>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Number of Treaty</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $total; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Pending Treaty</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $pending; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Approved Treaty</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $approved; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if ($user->role == 'staff') : ?>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Treaty</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $user_treaty; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Instruments</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $instruments; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Agreements</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $agreements; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Mou's</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $mou; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
+
+            <!-- Pie Charts Supervisor-->
+            <?php if ($user->role == 'supervisor') : ?>
+                <div class="uk-grid">
+                    <div class="uk-width-1-1">
+                        <div class="md-card">
+                            <div class="md-card-toolbar">
+                                <div class="md-card-toolbar-actions">
+                                    <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                    <i class="md-icon material-icons">&#xE5D5;</i>
+
+                                </div>
+                            </div>
+                            <div class="md-card-content">
+                                <div class="mGraph-wrapper">
+                                    <div id="PieChart_supervisor" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <!-- Pie Charts Staff-->
+            <?php if ($user->role == 'staff') : ?>
+                <div class="uk-grid">
+                    <div class="uk-width-1-1">
+                        <div class="md-card">
+                            <div class="md-card-toolbar">
+                                <div class="md-card-toolbar-actions">
+                                    <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                    <i class="md-icon material-icons">&#xE5D5;</i>
+                                </div>
+                            </div>
+                            <div class="md-card-content">
+                                <div class="mGraph-wrapper">
+                                    <div id="PieChart_staff" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
@@ -166,19 +261,32 @@ include("assets/inc/head.php");
                             <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                                 <thead>
                                     <th>Title</th>
+                                    <th>Status</th>
                                     <th>Publisher</th>
                                     <th>Category</th>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $ret = "SELECT * FROM tbl_treaties WHERE b_publisher= '$user->name'";
+                                    if ($user->role == 'supervisor') {
+                                        $ret = "SELECT * FROM tbl_treaties";
+                                    } else {
+                                        $ret = "SELECT * FROM tbl_treaties WHERE b_publisher= '$user->name'";
+                                    }
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
                                     while ($row = $res->fetch_object()) {
+                                        if ($row->approved == 1) {
+                                            $btn_status = "<td><span class='uk-badge uk-badge-primary'>Approved</span>
+                                    </td>";
+                                        } else {
+                                            $btn_status = "<td><span class='uk-badge uk-badge-default'>Pending</span>
+                                    </td>";
+                                        }
                                     ?>
                                         <tr>
-                                            <td class="uk-text-truncate"><span class="trim"><?php echo $row->title; ?></span></td>
+                                            <td><span class="trim"><?= $row->title; ?></span></td>
+                                            <?= $btn_status ?>
                                             <td class="uk-text-primary"><?php echo $row->b_publisher; ?></td>
                                             <td><?php echo $row->tc_name; ?></td>
                                         </tr>
@@ -222,57 +330,99 @@ include("assets/inc/head.php");
     <!--Load Canvas JS -->
     <script src="assets/js/canvasjs.min.js"></script>
     <!--Load Few Charts-->
-    <script>
-        window.onload = function() {
-            var Piechart = new CanvasJS.Chart("PieChart", {
-                exportEnabled: false,
-                animationEnabled: true,
-                title: {
-                    text: "Percentage Of Treaties Per Category"
-                },
-                legend: {
-                    cursor: "pointer",
-                    itemclick: explodePie
-                },
-                data: [{
-                    type: "pie",
-                    showInLegend: true,
-                    toolTipContent: "{name}: <strong>{y}%</strong>",
-                    indexLabel: "{name} - {y}%",
-                    dataPoints: [{
-                            y: <?php echo $instruments; ?>,
-                            name: "Instruments",
-                            exploded: true
-                        },
+    <?php if ($user->role === 'supervisor') : ?>
+        <script>
+            window.onload = function() {
 
-                        {
-                            y: <?php echo $agreements; ?>,
-                            name: " Agreements",
-                            exploded: true
-                        },
+                var Piechart = new CanvasJS.Chart("PieChart_supervisor", {
+                    exportEnabled: false,
+                    animationEnabled: true,
+                    title: {
+                        text: "Percentage Of Treaties Approval Status"
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        itemclick: explodePie
+                    },
+                    data: [{
+                        type: "pie",
+                        showInLegend: true,
+                        toolTipContent: "{name}: <strong>{y}%</strong>",
+                        indexLabel: "{name} - {y}%",
+                        dataPoints: [{
+                                y: <?= $approvedPercentage; ?>,
+                                name: "Approved",
+                                exploded: true
+                            },
 
-                        {
-                            y: <?php echo $mou; ?>,
-                            name: "Mou's",
-                            exploded: true
-                        }
-                    ]
-                }]
-            });
-            Piechart.render();
+                            {
+                                y: <?= $pendingPercentage; ?>,
+                                name: "Pending",
+                                exploded: true
+                            }
+                        ]
+                    }]
+                });
+                Piechart.render();
 
-        }
-
-        function explodePie(e) {
-            if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
-                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
-            } else {
-                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
             }
-            e.chart.render();
 
-        }
-    </script>
+            function explodePie(e) {
+                if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+                } else {
+                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+                }
+                e.chart.render();
+
+            }
+        </script>
+    <?php elseif ($user->role === 'staff') : ?>
+        <script>
+            window.onload = function() {
+                var staff_Piechart = new CanvasJS.Chart("PieChart_staff", {
+                    exportEnabled: false,
+                    animationEnabled: true,
+                    title: {
+                        text: "Percentage Of Treaties Uploaded Comparison"
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        itemclick: explodePie
+                    },
+                    data: [{
+                        type: "pie",
+                        showInLegend: true,
+                        toolTipContent: "{name}: <strong>{y}%</strong>",
+                        indexLabel: "{name} - {y}%",
+                        dataPoints: [{
+                                y: <?= $otherTreatyPercentage; ?>,
+                                name: "Treaties uploaded by other staffs",
+                                exploded: true
+                            },
+
+                            {
+                                y: <?= $userTreatyPercentage; ?>,
+                                name: "Treaties uploaded by me",
+                                exploded: true
+                            },
+                        ]
+                    }]
+                });
+                staff_Piechart.render();
+            }
+
+            function explodePie(e) {
+                if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+                } else {
+                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+                }
+                e.chart.render();
+
+            }
+        </script>
+    <?php endif; ?>
 
     <!-- common functions -->
     <script src="assets/js/common.min.js"></script>

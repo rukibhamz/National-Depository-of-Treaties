@@ -57,11 +57,11 @@
                                 while($row=$res->fetch_object())
                                 {
                                      //use .danger, .warning, .success according to account status
-                                     if($row->l_acc_status == 'Active')
+                                     if($row->l_acc_status == 'active')
                                      {
                                         $account_status = "<td class='uk-text-success'>$row->l_acc_status</td>";
                                      }
-                                     elseif($row->l_acc_status == 'Pending')
+                                     elseif($row->l_acc_status == 'inactive')
                                      {
                                          $account_status = "<td class='uk-text-warning'>$row->l_acc_status</td>";
                                      }

@@ -90,12 +90,14 @@ include("assets/inc/head.php");
                                         <a href="pages_sudo_view_treaty_category.php?category_code=<?php echo $row->code; ?>">
                                             <span class='uk-badge uk-badge-success'>View</span>
                                         </a>
+                                        <?php if ($sudo_user->role == 'super_admin') : ?>
                                         <a href="pages_sudo_edit_treaty_category.php?code=<?php echo $row->code; ?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
                                         <a href="pages_sudo_manage_categories.php?d_id=<?php echo $row->id; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
 

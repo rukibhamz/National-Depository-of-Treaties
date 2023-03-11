@@ -171,50 +171,53 @@ require_once('sudo/assets/config/config.php');
                     <?php
                     if (isset($_GET['year'])) {
                         $selectedYear = $_GET['year'];
-                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id AND treaty_year = ? ORDER BY treaty_year DESC";
+                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id AND treaty_year = ? AND approved = 1 ORDER BY treaty_year DESC";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->bind_param('s', $selectedYear);
                         $stmt->execute();
                         $res = $stmt->get_result();
                     } else {
-                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id ORDER BY treaty_year DESC";
+                        $ret = "SELECT * FROM tbl_treaties WHERE tc_id = $row1->id AND approved = 1 ORDER BY treaty_year DESC";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute();
                         $res = $stmt->get_result();
                     }
-
-                    while ($row = $res->fetch_object()) {
-                        // Display the data
+                    if ($res->num_rows > 0) {
+                        while ($row = $res->fetch_object()) {
+                            // Display the data
                     ?>
-                        <!-- PDF, DOCX -->
-                        <!-- Add a description field -->
-                        <div class="col-xs-12 col-sm-6 col-md-4">
-                            <div class="category-item well green">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
-                                        <h6>Category: <?= $row->tc_name; ?></h6>
-                                        <h6>Year: <?= $row->treaty_year; ?></h6>
-                                        <h6>Status: <i><?= $row->s_status; ?></i></h6>
-                                        <div class="space-5"></div>
-                                        <div class="title-bar blue text-center">
-                                            <ul class="list-inline list-unstyled">
-                                                <li><i class="icofont icofont-square"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div class="space-10"></div>
-                                        <div class="row">
-                                            <div class="col-md-4"> <a href="treaty.php?doc_id=<?php echo $row->id; ?>" class="text-primary">View</a></div>
+                            <!-- PDF, DOCX -->
+                            <!-- Add a description field -->
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <div class="category-item well green">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
+                                            <h6>Category: <?= $row->tc_name; ?></h6>
+                                            <h6>Year: <?= $row->treaty_year; ?></h6>
+                                            <h6>Status: <i><?= $row->s_status; ?></i></h6>
+                                            <div class="space-5"></div>
+                                            <div class="title-bar blue text-center">
+                                                <ul class="list-inline list-unstyled">
+                                                    <li><i class="icofont icofont-square"></i></li>
+                                                </ul>
+                                            </div>
+                                            <div class="space-10"></div>
+                                            <div class="row">
+                                                <div class="col-md-4"> <a href="treaty.php?doc_id=<?php echo $row->id; ?>" class="text-primary">View</a></div>
 
-                                            <div class="col-md-8">
-                                                <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
+                                                <div class="col-md-8">
+                                                    <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php } ?>
+                    <?php }
+                    } else {
+                        echo "<h3 class='text-center'>No Treaty Found!</h3>";
+                    } ?>
                 </div>
             </div>
             <div class="space-80"></div>

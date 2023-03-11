@@ -127,8 +127,8 @@ include("assets/inc/head.php");
                                         <label>Account Status</label>
                                         <select required name="acc_status" id="acc_status" class="md-input">
                                             <option value="">--Select Staff Status--</option>
-                                            <option value="Active" <?php if ($row->acc_status == "Active") echo "selected"; ?>>Active</option>
-                                            <option value="Suspended" <?php if ($row->acc_status == "Suspended") echo "selected"; ?>>Suspended</option>
+                                            <option value="active" <?php if ($row->acc_status == "active") echo "selected"; ?>>Active</option>
+                                            <option value="inactive" <?php if ($row->acc_status == "inactive") echo "selected"; ?>>Suspended</option>
                                         </select>
                                     </div>
                                 </div>

@@ -6,29 +6,56 @@ check_login();
 
 if (isset($_GET['d_id'])) {
     $id = intval($_GET['d_id']);
-    $adn = "DELETE FROM tbl_staff WHERE id = ?";
+    $adn = "UPDATE tbl_staff SET acc_status = 'inactive' WHERE id = ?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('i', $id);
     $stmt->execute();
     $stmt->close();
 
+
     if ($stmt) {
-        $success = "Staff Deleted";
+        $success = "Staff Account Suspended";
 ?>
-        <script>
-            // Remove the query parameter from the URL
-            window.history.replaceState({}, document.title, window.location.pathname);
-        </script>
+<script>
+// Remove the query parameter from the URL
+window.history.replaceState({}, document.title, window.location.pathname);
+</script>
+<?php
+    } else {
+        $err = "Try Again Later";
+    }
+}
+
+if (isset($_GET['a_id'])) {
+    $id = intval($_GET['a_id']);
+    $adn = "UPDATE tbl_staff SET acc_status = 'active' WHERE id = ?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+
+    if ($stmt) {
+        $success = "Staff Account Activated";
+?>
+<script>
+// Remove the query parameter from the URL
+window.history.replaceState({}, document.title, window.location.pathname);
+</script>
 <?php
     } else {
         $err = "Try Again Later";
     }
 }
 ?>
+
+
+
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!-->
-<html lang="en"> <!--<![endif]-->
+<html lang="en">
+<!--<![endif]-->
 <?php
 include("assets/inc/head.php");
 ?>
@@ -82,24 +109,36 @@ include("assets/inc/head.php");
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();
                             while ($row = $res->fetch_object()) {
+                                if ($row->acc_status == 'active') {
+                                    $account_status = "<td class='uk-text-success'>Active</td>";
+                                    $btn_status = "<a href='treaty_sudo_upload_manage_access.php?d_id=$row->id'>
+                            <span class='uk-badge uk-badge-warning'>Suspend</span>
+                            </a>";
+                            } else {
+                            $account_status = "<td class='uk-text-warning'>Suspended</td>";
+                            $btn_status = "<a href='treaty_sudo_upload_manage_access.php?a_id=$row->id'>
+                                <span class='uk-badge uk-badge-success'>Activate</span>
+                            </a>";
+                            }
+
                             ?>
-                                <tr>
-                                    <td><?= $row->name; ?></td>
-                                    <td><?= $row->number; ?></td>
-                                    <td><?= $row->email; ?></td>
-                                    <td><?= $row->acc_status; ?></td>
-                                    <td>
-                                        <a href="treaty_sudo_view_staff.php?id=<?= $row->id; ?>">
-                                            <span class='uk-badge uk-badge-success'>View</span>
-                                        </a>
-                                        <a href="treaty_sudo_edit_staff.php?id=<?= $row->id; ?>">
-                                            <span class='uk-badge uk-badge-primary'>Update</span>
-                                        </a>
-                                        <a href="treaty_sudo_upload_manage_access.php?d_id=<?= $row->id; ?>">
-                                            <span class='uk-badge uk-badge-danger'>Delete</span>
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td><?= $row->name; ?></td>
+                                <td><?= $row->number; ?></td>
+                                <td><?= $row->email; ?></td>
+                                <?= $account_status ?>
+                                <td>
+                                    <a href="treaty_sudo_view_staff.php?id=<?= $row->id; ?>">
+                                        <span class='uk-badge uk-badge-success'>View</span>
+                                    </a>
+                                    <?php if ($sudo_user->role == 'super_admin') : ?>
+                                    <a href="treaty_sudo_edit_staff.php?id=<?= $row->id; ?>">
+                                        <span class='uk-badge uk-badge-primary'>Update</span>
+                                    </a>
+                                    <?= $btn_status ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
 
                             <?php } ?>
                         </tbody>
@@ -115,23 +154,23 @@ include("assets/inc/head.php");
 
     <!-- google web fonts -->
     <script>
-        WebFontConfig = {
-            google: {
-                families: [
-                    'Source+Code+Pro:400,700:latin',
-                    'Roboto:400,300,500,700,400italic:latin'
-                ]
-            }
-        };
-        (function() {
-            var wf = document.createElement('script');
-            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-            wf.type = 'text/javascript';
-            wf.async = 'true';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(wf, s);
-        })();
+    WebFontConfig = {
+        google: {
+            families: [
+                'Source+Code+Pro:400,700:latin',
+                'Roboto:400,300,500,700,400italic:latin'
+            ]
+        }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
     </script>
 
     <!-- common functions -->

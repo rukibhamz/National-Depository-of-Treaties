@@ -118,18 +118,18 @@ require_once('sudo/assets/config/config.php');
 
                         <div>
                             <?php
-                              $selected_year = isset($_GET['treaty']) ? $_GET['treaty'] : '';
-                              $query_string = $_SERVER['QUERY_STRING'];
-                              $query_string = preg_replace('/\?treaty=[^&]+&?/', '', $query_string);
-                              if (!empty($query_string)) {
-                                  $query_string = '?' . $query_string;
-                              }
+                            $selected_treaty = isset($_GET['treaty']) ? $_GET['treaty'] : '';
+                            $query_string = $_SERVER['QUERY_STRING'];
+                            $query_string = preg_replace('/\?treaty=[^&]+&?/', '', $query_string);
+                            if (!empty($query_string)) {
+                                $query_string = '?' . $query_string;
+                            }
                             ?>
-
-                            <?php if ($selected_year) : ?>
-                                <a href="<?= $_SERVER['PHP_SELF'] . $query_string ?>" class="btn btn-primary">Clear Filter</a>
+                            <?php if ($selected_treaty) : ?>
+                                <button type="button" class="btn btn-primary" onclick="clearFilter()">Clear Filter</button>
                             <?php endif; ?>
                         </div>
+
                     </form>
                     <div class="space-10"></div>
                     <hr>
@@ -139,14 +139,14 @@ require_once('sudo/assets/config/config.php');
                         <?php
                         if (isset($_GET['treaty'])) {
                             $treaty = $_GET['treaty'];
-                            $ret = "SELECT * FROM tbl_treaties WHERE CONCAT(title, tc_name, s_status) LIKE ? ORDER BY treaty_year DESC";
+                            $ret = "SELECT * FROM tbl_treaties WHERE CONCAT(title, tc_name, s_status) LIKE ? AND approved = 1 ORDER BY treaty_year DESC";
                             $stmt = $mysqli->prepare($ret);
                             $treaty_query = "%$treaty%";
                             $stmt->bind_param('s', $treaty_query);
                             $stmt->execute();
                             $res = $stmt->get_result();
                         } else {
-                            $ret = "SELECT * FROM tbl_treaties ORDER BY treaty_year DESC";
+                            $ret = "SELECT * FROM tbl_treaties WHERE approved = 1 ORDER BY treaty_year DESC";
                             $res = $mysqli->query($ret);
                         }
 
@@ -271,6 +271,12 @@ require_once('sudo/assets/config/config.php');
             element.scrollIntoView({
                 behavior: 'smooth'
             });
+        }
+
+        function clearFilter() {
+            var url = window.location.href;
+            url = url.replace(/[\?&]treaty=[^&#]*(#.*)?$/, '');
+            window.location.href = url;
         }
     </script>
 

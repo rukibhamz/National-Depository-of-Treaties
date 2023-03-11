@@ -8,7 +8,8 @@ check_login();
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!-->
-<html lang="en"> <!--<![endif]-->
+<html lang="en">
+<!--<![endif]-->
 <?php
 include("assets/inc/head.php");
 ?>
@@ -49,6 +50,7 @@ include("assets/inc/head.php");
                     <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                         <thead>
                             <th>Title</th>
+                            <th>Status</th>
                             <th>Signatory</th>
                             <th>Publisher</th>
                             <th>Category</th>
@@ -63,19 +65,27 @@ include("assets/inc/head.php");
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();
                             while ($row = $res->fetch_object()) {
+                                if ($row->approved == 1) {
+                                    $btn_status = "<td><span class='uk-badge uk-badge-primary'>Approved</span>
+                            </td>";
+                                } else {
+                                    $btn_status = "<td><span class='uk-badge uk-badge-default'>Pending</span>
+                            </td>";
+                                }
                             ?>
-                                <tr>
-                                    <td><?= $row->title; ?></td>
-                                    <td><?= $row->signatory; ?></td>
-                                    <td><?= $row->b_publisher; ?></td>
-                                    <td><?= $row->tc_name; ?></td>
-                                    <td><?= $row->treaty_year; ?></td>
-                                    <td>
-                                        <a href="treaty_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
-                                            <span class='uk-badge uk-badge-success'>View</span>
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td><span class="trim"><?= $row->title; ?></span></td>
+                                <?= $btn_status ?>
+                                <td><?= $row->signatory; ?></td>
+                                <td><?= $row->b_publisher; ?></td>
+                                <td><?= $row->tc_name; ?></td>
+                                <td><?= $row->treaty_year; ?></td>
+                                <td>
+                                    <a href="treaty_sudo_view_treaty.php?doc_id=<?= $row->id; ?>">
+                                        <span class='uk-badge uk-badge-success'>View</span>
+                                    </a>
+                                </td>
+                            </tr>
 
                             <?php } ?>
                         </tbody>
@@ -91,23 +101,23 @@ include("assets/inc/head.php");
 
     <!-- google web fonts -->
     <script>
-        WebFontConfig = {
-            google: {
-                families: [
-                    'Source+Code+Pro:400,700:latin',
-                    'Roboto:400,300,500,700,400italic:latin'
-                ]
-            }
-        };
-        (function() {
-            var wf = document.createElement('script');
-            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-            wf.type = 'text/javascript';
-            wf.async = 'true';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(wf, s);
-        })();
+    WebFontConfig = {
+        google: {
+            families: [
+                'Source+Code+Pro:400,700:latin',
+                'Roboto:400,300,500,700,400italic:latin'
+            ]
+        }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
     </script>
 
     <!-- common functions -->

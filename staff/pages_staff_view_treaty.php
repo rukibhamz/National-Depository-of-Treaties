@@ -92,7 +92,7 @@ include("assets/inc/head.php");
                                                             <i class="md-list-addon-icon uk-text-primary material-icons">person</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->b_publisher; ?></span>
+                                                            <span class="md-list-heading"><?= $row->b_publisher; ?></span>
                                                             <span class="uk-text-small uk-text-muted">Author</span>
                                                         </div>
                                                     </li>
@@ -101,8 +101,20 @@ include("assets/inc/head.php");
                                                             <i class="md-list-addon-icon  uk-text-primary material-icons">theaters</i>
                                                         </div>
                                                         <div class="md-list-content">
-                                                            <span class="md-list-heading"><?php echo $row->s_status; ?></span>
+                                                            <span class="md-list-heading"><?= $row->s_status; ?></span>
                                                             <span class="uk-text-small uk-text-muted">Status</span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">verified_user</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">
+                                                                <?= $row->approved == 1 ? "Approved" : "Awaiting Approval"; ?>
+                                                            </span>
+                                                            <span class="uk-text-small uk-text-muted">Approval Status</span>
                                                         </div>
                                                     </li>
 
@@ -208,8 +220,8 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
-       <!-- altair common functions/helpers -->
-       <script src="assets/js/altair_admin_common.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="assets/js/altair_admin_common.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>

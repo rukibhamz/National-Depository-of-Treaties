@@ -2,6 +2,18 @@
 /*
     *Load naviagation partial with logged in sudo session
     */
+check_login();
+if (isset($_SESSION['sudo_id'])) {
+    // Get the user's ID and other details from the session
+    $user_id = $_SESSION['sudo_id'];
+    $result = "SELECT * FROM il_sudo WHERE id = ?";
+    $stmt = $mysqli->prepare($result);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $sudo_user = $result->fetch_object();
+    $stmt->close();
+}
 
 $id = $_SESSION['sudo_id'];
 $ret = "SELECT * FROM  il_sudo  WHERE id = ? ";
@@ -52,7 +64,8 @@ while ($row = $res->fetch_object()) {
 
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav user_actions">
-                        <li><a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">fullscreen</i></a></li>
+                        <li><a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">fullscreen</i></a>
+                        </li>
                         <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
                             <a href="#" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE7F4;</i><span class="uk-badge"><?php echo $notifications_cnt; ?></span></a>
                             <div class="uk-dropdown uk-dropdown-xlarge">

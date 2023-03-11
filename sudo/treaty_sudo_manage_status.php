@@ -89,9 +89,11 @@ include("assets/inc/head.php");
                                         <a href="treaty_sudo_edit_treaty_status.php?id=<?php echo $row->id; ?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
+                                        <?php if ($sudo_user->role == 'super_admin') : ?>
                                         <a href="treaty_sudo_manage_status.php?d_id=<?php echo $row->id; ?>">
                                             <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
 
