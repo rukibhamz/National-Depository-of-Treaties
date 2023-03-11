@@ -14,6 +14,10 @@ Digital Library is a web based and also desktop based library management system.
 2.1 Username: <b>staff002@FMOJ.org</b><br>
 2.2 Password: <b>demo</b><br>
 
+supervisor@FMOJ.org / staff001@FMOJ.org / staff001@FMOJ.org
+demo
+admin@FMOJ.org / perm_sec@FMOJ.org
+admin
 
 ## License
 
