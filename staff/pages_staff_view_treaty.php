@@ -43,7 +43,14 @@ include("assets/inc/head.php");
             <div id="top_bar">
                 <ul id="breadcrumbs">
                     <li><a href="pages_staff_dashboard.php">Dashboard</a></li>
-                    <li><a href="pages_staff_manage_treaty.php">Document Inventory</a></li>
+                    <li>
+                        <?php if ($user->role == 'supervisor') : ?>
+                            <a href="pages_supervisor_manage_treaty.php">Document Inventory</a>
+                        <?php endif; ?>
+                        <?php if ($user->role == 'staff') : ?>
+                            <a href="pages_staff_manage_treaty.php">Document Inventory</a>
+                        <?php endif; ?>
+                    </li>
                     <li><span><?= strlen($row->title) > 60 ? substr($row->title, 0, 50) . '...' : $row->title; ?></span></li>
 
                 </ul>
