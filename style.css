@@ -162,6 +162,9 @@ ul.list_item li {
 /* ======== */
 header.header_main {
     background-color: #008943;
+<<<<<<< Updated upstream
+}
+=======
 }
 
 /* TREATIES.PHP */
@@ -220,4 +223,13 @@ aside.side_query ul li {
     line-height: 27px;
     letter-spacing: 0.05em;
     color: #717970;
+}
+
+.cursor_pointer {
+    cursor: pointer;
+}
+
+ul.overflow_display{
+    max-height: 30rem;
+    overflow-y: auto;
 }
