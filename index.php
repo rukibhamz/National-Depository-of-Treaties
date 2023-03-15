@@ -266,7 +266,7 @@ if(isset($_POST["submit"]))
                                 <!-- <p>Newly added treaties</p> -->
                                 
                                 <h3><?= $row->name; ?></h3>
-                                <p class="trim"><?= $row->desc; ?></p>
+                                <p class="trim"><?= $row->description; ?></p>
                                 <div class="text-center">
 
                                     <div class="space-10"></div>

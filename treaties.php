@@ -200,10 +200,10 @@ require_once('sudo/assets/config/config.php');
                         <div class="sigle-sidebar">
                             <h4>Treaties Categories</h4>
                             <hr>
-                            <<<<<<< HEAD <ul id="category_list" class="list-unstyled menu-tip overflow_display">
-                                =======
+                             <ul id="category_list" class="list-unstyled menu-tip overflow_display">
+                                
                                 <ul id="category_list" class="list-unstyled menu-tip">
-                                    >>>>>>> 2bb304fc252b851d8d30dc1f7f7206c2f7911d56
+                                    
                                     <?php
                                     $ret = "SELECT * FROM  tbl_treatiescategory";
                                     $stmt = $mysqli->prepare($ret);
