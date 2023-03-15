@@ -67,7 +67,7 @@
             <div id="top_bar">
                 <ul id="breadcrumbs">
                     <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
-                    <li><a href="pages_sudo_manage_librarian_password_resets.php">Password Resets</a></li>
+                    <li><a href="pages_sudo_manage_staff_password_resets.php">Password Resets</a></li>
                     <li><span>Update Password</span></li>
                 </ul>
             </div>
