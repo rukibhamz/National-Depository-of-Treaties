@@ -273,9 +273,13 @@ require_once('sudo/assets/config/config.php');
                 behavior: 'smooth'
             });
         }
+
+        function clearFilter() {
+            var url = window.location.href;
+            url = url.replace(/[\?&]treaty=[^&#]*(#.*)?$/, '');
+            window.location.href = url;
+        }
     </script>
-
-
 <script>
     $("#search").on("keyup", function(){
         var value = $(this).val();
