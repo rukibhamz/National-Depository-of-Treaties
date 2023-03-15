@@ -30,6 +30,7 @@ require_once('sudo/assets/config/config.php');
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body data-spy="scroll" data-target="#mainmenu" data-offset="50">
@@ -66,16 +67,10 @@ require_once('sudo/assets/config/config.php');
                                 <a href="treaties.php">CATALOGUES</a>
                             </li>
                             <li>
-                                <a href="staff/pages_staff_index.php">UPLOAD TREATY</a>
+                                <a href="staff/pages_staff_index.php" title="Staff Login">UPLOAD TREATY</a>
                             </li>
-                            <!-- <li>
-                                <a href="lib_user/pages_std_index.php">LOGIN</a>
-                            </li>
-                                    <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
-                            </li>-->
                             <li>
-                                <a href="sudo/pages_sudo_index.php">LOGIN</a>
+                                <a href="sudo/pages_sudo_index.php" title="Admin Login">LOGIN</a>
                             </li>
                         </ul>
                     </div>
@@ -107,99 +102,92 @@ require_once('sudo/assets/config/config.php');
         <div class="space-100"></div>
         <!-- Header-jumbotron-end -->
     </header>
-    <section>
+    <section id="screen_view">
         <div class="space-80"></div>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-9 pull-right">
                     <h4>Search Box</h4>
                     <div class="space-5"></div>
-                    <form action="treaties.php" method="GET">
+                    <form action="treaties.php">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search_id" value="<?php if(isset($_GET['search_id'])){echo $_GET['search_id'];} ?>" placeholder="enter document name">
+                        <input type="text" class="form-control" placeholder="Enter document name" name="treaty" id="search">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-primary"><i class="icofont icofont-search-alt-2"></i></button>
                             </div>
                         </div>
-                    </form>
-                    <div class="space-30"></div>
-                    <div class="row" style="display: none;">
-                        <div class="pull-right col-xs-12 col-sm-7 col-md-6">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4" for="sort">Sont By : </label>
-                                    <div class="col-xs-8">
-                                        <div class="form-group">
-                                            <select name="sort" id="sort" class="form-control">
-                                                <option value="">Best Match</option>
-                                                <option value="">Best Document</option>
-                                                <option value="">Latest Document</option>
-                                                <option value="">Old Document</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+
+                        <div>
+                            <?php
+                              $selected_year = isset($_GET['treaty']) ? $_GET['treaty'] : '';
+                              $query_string = $_SERVER['QUERY_STRING'];
+                              $query_string = preg_replace('/\?treaty=[^&]+&?/', '', $query_string);
+                              if (!empty($query_string)) {
+                                  $query_string = '?' . $query_string;
+                              }
+                            ?>
+
+                            <?php if ($selected_year) : ?>
+                                <a href="<?= $_SERVER['PHP_SELF'] . $query_string ?>" class="btn btn-primary">Clear Filter</a>
+                            <?php endif; ?>
                         </div>
-                    </div>
+                    </form>
+                    <div class="space-10"></div>
                     <hr>
-                    <div class="space-20"></div>
+                    <div class="space-10"></div>
                     <div class="row">
-                        <!--Books-->
+                        <!--Treaty-->
                         <?php
-                            $ret = null;
-                            $res = null;
+                        if (isset($_GET['treaty'])) {
+                            $treaty = $_GET['treaty'];
+                            $ret = "SELECT * FROM tbl_treaties WHERE CONCAT(title, tc_name, s_status) LIKE ? ORDER BY treaty_year DESC";
+                            $stmt = $mysqli->prepare($ret);
+                            $treaty_query = "%$treaty%";
+                            $stmt->bind_param('s', $treaty_query);
+                            $stmt->execute();
+                            $res = $stmt->get_result();
+                        } else {
+                            $ret = "SELECT * FROM tbl_treaties ORDER BY treaty_year DESC";
+                            $res = $mysqli->query($ret);
+                        }
 
-                            if (isset($_GET['search_id'])) {
-                                $stud_id = $_GET['search_id'];
+                        if ($res->num_rows > 0) {
+                            while ($row = $res->fetch_object()) {
 
-                                // Debugging: print the query to the error log
-                                $ret = "SELECT * FROM tbl_treaties WHERE tc_name = ? OR signatory = ? OR title= ? ";
-                                error_log("SQL query: $ret");
-
-                                try {
-                                    $stmt = $mysqli->prepare($ret);
-                                    $stmt->bind_param("sss", $search_id, $search_id, $search_id);
-                                    $stmt->execute();
-                                    $res = $stmt->get_result();
-                                } catch (Exception $e) {
-                                    error_log("Error executing SQL query: " . $e->getMessage());
-                                    $res = null;
-                                }
-                            }
-
-                            if ($res != null) {
-                                while ($row = $res->fetch_object()) {
                         ?>
-                                    <div class="col-xs-12 col-md-6">
-                                        <div class="category-item well green">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h5><img src="images/file_icon.png" alt="<?= $row->title ?>" />&ensp;<span class="trim"><?= $row->title ?></span></h5>
-                                                    <h6>Category: <?= $row->tc_name ?></h6>
-                                                    <div class="space-10"></div>
-                                                    <div class="title-bar blue text-center">
-                                                        <ul class="list-inline list-unstyled">
-                                                            <li><i class="icofont icofont-square"></i></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="space-10"></div>
-                                                    <div class="row">
-                                                        <div class="col-md-4"><a href="treaty.php?doc_id=<?php echo $row->id ?>" class="text-primary">View</a></div>
-                                                        <div class="col-md-8">
-                                                            <img src="images/card-logo.png" alt="<?= $row->title ?>" class="img-responsive" />
-                                                        </div>
+                                <!-- PDF, DOCX -->
+                                <!-- Add a description field -->
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="category-item well green">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h5><img src="images/file_icon.png" alt='<?= $row->title; ?>' />&ensp;<span class="trim"><?= $row->title; ?></span></h5>
+                                                <h6>Category: <?= $row->tc_name; ?></h6>
+                                                <h6>Year: <?= $row->treaty_year; ?></h6>
+                                                <h6>Status: <i><?= $row->s_status; ?></i></h6>
+                                                <div class="space-10"></div>
+                                                <div class="title-bar blue text-center">
+                                                    <ul class="list-inline list-unstyled">
+                                                        <li><i class="icofont icofont-square"></i></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="space-10"></div>
+                                                <div class="row">
+                                                    <div class="col-md-4"> <a href="treaty.php?doc_id=<?= $row->id; ?>" class="text-primary">View&nbsp;<i class="icofont icofont-curved-double-right"></i></a></div>
+
+                                                    <div class="col-md-8">
+                                                        <img src="images/card-logo.png" alt='<?= $row->title; ?>' class="img-responsive" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                        <?php
-                                }
-                            } else {
-                                echo "No record";
-                            }
-                        ?>
+                                </div>
+                        <?php }
+                        } else {
+                            echo "<h3 class='text-center'>No Treaty Found!</h3>";
+                        } ?>
+                        <!--Treaty-->
 
                     </div>
                     <div class="space-60"></div>
@@ -212,39 +200,35 @@ require_once('sudo/assets/config/config.php');
                         <div class="sigle-sidebar">
                             <h4>Treaties Categories</h4>
                             <hr>
-                            <ul class="list-unstyled menu-tip">
+                            <ul id="category_list" class="list-unstyled menu-tip">
                                 <?php
-                                //Fetch all book categories
                                 $ret = "SELECT * FROM  tbl_treatiescategory";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
                                 while ($row = $res->fetch_object()) {
                                 ?>
-                                    <li><a href="#" class="text-success"><?php echo $row->name; ?></a></li>
+                                    <li><a href="" onclick="updateTreaty('<?= $row->name; ?>')" class="text-success"><?= $row->name; ?></a></li>
                                 <?php } ?>
                             </ul>
-                            <!-- <a href="#" class="btn btn-primary btn-xs">See All</a> -->
                         </div>
                         <div class="space-20"></div>
                         <div class="single-sidebar">
                             <h4>Treaties Status</h4>
                             <hr>
-                            <ul class="list-unstyled menu-tip">
-                                <li>
-                                    <input type="checkbox" name="Running" id="Running" data-md-icheck />
-                                    <label for="Running" class="inline-label">Running</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="Published" id="Published" data-md-icheck />
-                                    <label for="Published" class="inline-label">Published</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="Revised" id="Revised" data-md-icheck />
-                                    <label for="Revised" class="inline-label">Revised</label>
-                                </li>
-                            </ul>
-                            <!-- <a href="#" class="btn btn-primary btn-xs">See All</a> -->
+                            <form action="treaties.php">
+                                <ul id="status-list" class="list-unstyled menu-tip">
+                                    <?php
+                                    $ret = "SELECT * FROM  tbl_status";
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->execute(); //ok
+                                    $res = $stmt->get_result();
+                                    while ($row = $res->fetch_object()) {
+                                    ?>
+                                        <li><a href="" onclick="updateTreaty('<?= $row->name; ?>')" class="text-success"><?= $row->name; ?></a></li>
+                                    <?php } ?>
+                                </ul>
+                            </form>
                         </div>
                         <div class="space-20"></div>
                     </aside>
@@ -272,6 +256,45 @@ require_once('sudo/assets/config/config.php');
     <script src="js/plugins.js"></script>
     <!-- Active-JS -->
     <script src="js/main.js"></script>
+    <script>
+        const updateTreaty = (val) => {
+            const url = new URL(window.location.href);
+            url.searchParams.set('treaty', val);
+            window.history.replaceState({}, '', url);
+        }
+    </script>
+    <script>
+        // Check if treaty parameter exists in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('treaty')) {
+            // Scroll smoothly to screen_view element
+            const element = document.getElementById('screen_view');
+            element.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+
+<script>
+    $("#search").on("keyup", function(){
+        var value = $(this).val();
+
+        $(".category-item").each(function(index, element){
+            var title = $(this).find(".trim").text();
+            var category = $(this).find("h6:contains('Category')").text();
+            var year = $(this).find("h6:contains('Year')").text();
+            var status = $(this).find("h6:contains('Status')").text();
+
+            if(title.toLowerCase().indexOf(value.toLowerCase()) < 0 && category.toLowerCase().indexOf(value.toLowerCase()) < 0 && year.toLowerCase().indexOf(value.toLowerCase()) < 0 && status.toLowerCase().indexOf(value.toLowerCase()) < 0){
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+    });
+</script>
+
 
 </body>
 
