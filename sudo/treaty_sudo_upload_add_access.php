@@ -248,6 +248,8 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
+
+    <script src="assets/js/altair_admin_common.min.js"></script>
 </body>
 
 </html>

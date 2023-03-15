@@ -301,6 +301,8 @@ include("assets/inc/head.php");
             loadingSpinner.style.display = 'block';
         });
     </script>
+
+<script src="assets/js/altair_admin_common.min.js"></script>
 </body>
 
 </html>
