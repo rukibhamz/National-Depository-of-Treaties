@@ -30,6 +30,7 @@ require_once('sudo/assets/config/config.php');
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body data-spy="scroll" data-target="#mainmenu" data-offset="50">
@@ -110,7 +111,7 @@ require_once('sudo/assets/config/config.php');
                     <div class="space-5"></div>
                     <form action="treaties.php">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter document name" name="treaty">
+                            <input type="text" class="form-control" placeholder="Enter document name" name="treaty" id="search">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-primary"><i class="icofont icofont-search-alt-2"></i></button>
                             </div>
@@ -199,17 +200,20 @@ require_once('sudo/assets/config/config.php');
                         <div class="sigle-sidebar">
                             <h4>Treaties Categories</h4>
                             <hr>
-                            <ul id="category_list" class="list-unstyled menu-tip overflow_display">
-                                <?php
-                                $ret = "SELECT * FROM  tbl_treatiescategory";
-                                $stmt = $mysqli->prepare($ret);
-                                $stmt->execute(); //ok
-                                $res = $stmt->get_result();
-                                while ($row = $res->fetch_object()) {
-                                ?>
-                                    <li><a href="" onclick="updateTreaty('<?= $row->name; ?>')" class="text-success"><?= $row->name; ?></a></li>
-                                <?php } ?>
-                            </ul>
+                            <<<<<<< HEAD <ul id="category_list" class="list-unstyled menu-tip overflow_display">
+                                =======
+                                <ul id="category_list" class="list-unstyled menu-tip">
+                                    >>>>>>> 2bb304fc252b851d8d30dc1f7f7206c2f7911d56
+                                    <?php
+                                    $ret = "SELECT * FROM  tbl_treatiescategory";
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->execute(); //ok
+                                    $res = $stmt->get_result();
+                                    while ($row = $res->fetch_object()) {
+                                    ?>
+                                        <li><a href="" onclick="updateTreaty('<?= $row->name; ?>')" class="text-success"><?= $row->name; ?></a></li>
+                                    <?php } ?>
+                                </ul>
                         </div>
                         <div class="space-20"></div>
                         <div class="single-sidebar">
@@ -279,6 +283,18 @@ require_once('sudo/assets/config/config.php');
             window.location.href = url;
         }
     </script>
+    <<<<<<< HEAD=======<script>
+        $("#search").on("keyup", function(){
+        var value = $(this).val();
+
+        $(".category-item").each(function(index, element){
+        var title = $(this).find(".trim").text();
+        var category = $(this).find("h6:contains('Category')").text();
+        var year = $(this).find("h6:contains('Year')").text();
+        var status = $(this).find("h6:contains('Status')").text();
+
+        if(title.toLowerCase().indexOf(value.toLowerCase()) < 0 && category.toLowerCase().indexOf(value.toLowerCase()) < 0 && year.toLowerCase().indexOf(value.toLowerCase()) < 0 && status.toLowerCase().indexOf(value.toLowerCase()) < 0){ $(this).hide(); } else { $(this).show(); } }); }); </script>
+            >>>>>>> 2bb304fc252b851d8d30dc1f7f7206c2f7911d56
 
 
 </body>
