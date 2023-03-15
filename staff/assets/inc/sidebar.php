@@ -51,4 +51,4 @@
             <?php endif; ?>
         </ul>
     </div>
-</aside><?= $otherTreatyPercentage; ?>
+</aside>
