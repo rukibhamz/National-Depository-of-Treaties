@@ -54,7 +54,16 @@ if (isset($_POST['Reset_pwd'])) {
 
     //declare a variable which will be passed to alert function
     if ($stmt) {
-        $success = "Password Reset Instructions has been sent to the administrator";
+        //send email with the token to the user's email address
+        $to = $pr_useremail;
+        $subject = "Password Reset Token";
+        $reset_link = "https://treaties.justice.gov.ng/staff/pages_staff_reset_password.php?token=" . $pr_token;
+        $message = "Please click on the following link to reset your password: " . $reset_link;
+        $headers = "From: support@treaties.justice.gov.ng";
+        mail($to, $subject, $message, $headers);
+
+        $success = "Password Reset Instructions has been sent to your email";
+        
     } else {
         $err = "Please Try Again Or Try Later";
     }
