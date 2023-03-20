@@ -59,22 +59,22 @@ if (isset($_POST['change_pwd_btn'])) {
                 if ($result_set->num_rows == 1) {
                     $row = $result_set->fetch_assoc();
                     $pr_useremail = $row['pr_useremail'];
+                    $hash_pwd = sha1(md5($new_pwd));
 
                     // Query to update password in the database tbl_staff
-                    $query = "UPDATE tbl_staff SET pwd = ? WHERE email = ?";
-                    $stmt_pwd = $mysqli->prepare($query);
-                    $stmt_pwd->bind_param('si', $hash_pwd, $pr_useremail);
+                    $query = "UPDATE tbl_staff SET pwd=? WHERE email=?";
+                    $stmt = $mysqli->prepare($query);
+                    $stmt->bind_param('ss', $hash_pwd, $pr_useremail);
+                    $stmt->execute();
 
                     // Query to update the pr_status column in il_passwordresets table to "Changed"
                     $query = "UPDATE il_passwordresets SET pr_status = 'Changed' WHERE pr_token = ?";
                     $status_stmt = $mysqli->prepare($query);
                     $status_stmt->bind_param('s', $pr_token);
 
-                    $hash_pwd = sha1(md5($new_pwd));
-                    $stmt_pwd->execute();
                     $status_stmt->execute();
 
-                    $success = "Password Successfully Changed";
+                    $success = "Password Successfully Changed" && header("refresh:1;url=pages_staff_index.php");
                 } else {
                     $err = "Error Changing Password";
                 }

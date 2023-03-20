@@ -91,19 +91,19 @@ include("assets/inc/head.php");
                                     <?php
                                         //mailing password logic
 
-                                        if ($row->pr_status == 'Pending') {
-                                            echo    "
-                                                    <a href='pages_sudo_update_password.php?email=$row->pr_useremail&pass=$row->pr_dummypwd&pr_id=$row->pr_id&pr_status=Done'>
-                                                        <span class='uk-badge uk-badge-primary'>Change Passsword</span>
-                                                    </a>
-                                                 ";
-                                        } else {
-                                            echo   "
-                                                    <a href='mailto:$row->pr_useremail?subject=Password Reset Request&body=Token:$row->pr_token,New Password=$row->pr_dummypwd'>
-                                                        <span class='uk-badge uk-badge-success'>Send Mail</span>
-                                                    </a>
-                                                 ";
-                                        }
+                                        // if ($row->pr_status == 'Pending') {
+                                        //     echo    "
+                                        //             <a href='pages_sudo_update_password.php?email=$row->pr_useremail&pass=$row->pr_dummypwd&pr_id=$row->pr_id&pr_status=Done'>
+                                        //                 <span class='uk-badge uk-badge-primary'>Change Passsword</span>
+                                        //             </a>
+                                        //          ";
+                                        // } else {
+                                        //     echo   "
+                                        //             <a href='mailto:$row->pr_useremail?subject=Password Reset Request&body=Token:$row->pr_token,New Password=$row->pr_dummypwd'>
+                                        //                 <span class='uk-badge uk-badge-success'>Send Mail</span>
+                                        //             </a>
+                                        //          ";
+                                        // }
 
                                         ?>
                                     <a
