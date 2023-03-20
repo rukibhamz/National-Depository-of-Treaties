@@ -6,32 +6,87 @@
 session_start();
 $_SESSION['loading'] = false;
 include('assets/config/config.php');
+$is_validated = false;
+// VALIDATE TOKEN
+if (isset($_GET['validate_token'])) {
+    $pr_token = $_GET['validate_token'];
 
-//password reset token
-
-//signin
-
-
-//reset password
-if (isset($_POST['pwd_reset'])) {
-    $pr_token = $_POST['pr_token'];
-    
-    //Query the database to check if the token exists and is valid
-    $query = "SELECT pr_token FROM il_passwordresets WHERE pr_token = ?";
+    // Query the database to check if the token exists and is valid
+    $query = "SELECT pr_token FROM il_passwordresets WHERE pr_token = ? AND pr_status = 'Pending' LIMIT 1";
     $stmt = $mysqli->prepare($query);
     $stmt->bind_param('s', $pr_token);
     $stmt->execute();
-    $stmt->bind_result($pr_token); //bind result
-    $rs = $stmt->fetch();
-    
-    
-    if ($rs) {
+    $res = $stmt->get_result();
+
+    if ($res->num_rows == 1) {
         $success = "Token is valid";
+        $is_validated = true;
     } else {
         $err = "Invalid Token";
     }
-    }
+}
 
+//RESET PASSWORD 
+if (isset($_POST['change_pwd_btn'])) {
+    $error = 0;
+    if (isset($_POST['new_pwd']) && !empty($_POST['new_pwd'])) {
+        $new_pwd = $_POST['new_pwd'];
+
+        // Check if password is alphanumeric
+        if (!ctype_alnum($new_pwd)) {
+            $error = 1;
+            $err = "Password should only contain letters and numbers";
+        }
+
+        if (isset($_POST['c_new_pwd']) && !empty($_POST['c_new_pwd'])) {
+            $confirm_pwd = $_POST['c_new_pwd'];
+
+            // Check if confirm password matches new password
+            if ($new_pwd !== $confirm_pwd) {
+                $error = 1;
+                $err = "Passwords do not match";
+            }
+
+            // Check if there were no validation errors
+            if (!$error) {
+                // Query the database to check if the token exists and is valid
+                $query = "SELECT pr_useremail FROM il_passwordresets WHERE pr_token = ? AND pr_status = 'Pending' LIMIT 1";
+                $stmt = $mysqli->prepare($query);
+                $stmt->bind_param('s', $pr_token);
+                $stmt->execute();
+                $stmt->bind_result($pr_useremail);
+                $res = $stmt->fetch();
+
+                if ($res) {
+                    $hash_pwd = sha1(md5($new_pwd));
+                    //  query to update password in the database tbl_staff
+                    $query = "UPDATE tbl_staff SET pwd = ? WHERE email = ?";
+                    $stmt_pwd = $mysqli->prepare($query);
+                    $rc = $stmt_pwd->bind_param('si', $hash_pwd, $pr_useremail);
+                    $stmt_pwd->execute();
+
+                    // Update the pr_status column in il_passwordresets table to "Changed"
+                    // $query = "UPDATE il_passwordresets SET pr_status = 'Changed' WHERE pr_token = ?";
+                    // echo $pr_token;
+                    // $status_stmt = $mysqli->prepare($query);
+                    // $status_stmt->bind_param('s', $pr_token);
+
+                    // $status_stmt->execute();
+
+                    $success = "Password Successfully Changed";
+                } else {
+                    $err = "Error Changing Password";
+                }
+            }
+        } else {
+            $error = 1;
+            $err = "Confirm Password cannot be empty";
+        }
+    } else {
+        $error = 1;
+        $err = "Password cannot be empty";
+    }
+}
 
 ?>
 <!doctype html>
@@ -47,30 +102,50 @@ include("assets/inc/head.php");
 
 <body class="login_page">
 
-    <div class="login_page_wrapper">
-        <div class="md-card" id="login_card">
-            <div class="md-card-content large-padding" id="login_form">
-                <div class="login_heading">
-                    <h3 class="text">Password Reset portal</h3>
+    <?php if ($is_validated == true) : ?>
+        <div class="login_page_wrapper">
+            <div class="md-card" id="login_card">
+                <div class="md-card-content large-padding" id="login_form">
+                    <div class="login_heading">
+                        <h3 class="text">Change Password Reset Portal</h3>
+                    </div>
+
+
+                    <div class="md-card-content large-padding" id="change_pwd">
+                        <form method="POST">
+                            <div class="uk-form-row password_level">
+                                <label for="new_pwd">New Password</label>
+                                <input class="md-input" required type="password" id="new_pwd" name="new_pwd" minlength="4" />
+                                <span class="uk-form-password-toggle password_toggle" onclick="handleToggle('new_pwd')">&#128065;</span>
+                            </div>
+
+                            <div class="uk-form-row password_level">
+                                <label for="c_new_pwd">Confirm Password</label>
+                                <input class="md-input" required type="password" id="c_new_pwd" name="c_new_pwd" minlength="4" />
+                                <span class="uk-form-password-toggle password_toggle" onclick="handleToggle('c_new_pwd')">&#128065;</span>
+                            </div>
+
+                            <div id="loading-spinner" style="display:none;">
+                                <input type="button" class="md-btn md-btn-success md-btn-block md-btn-large" value="Loading..." type="button" disabled id="loading" />
+                            </div>
+
+                            <div class="uk-margin-medium-top">
+                                <input type="submit" value="Change password" name="change_pwd_btn" id="change_pwd_btn" class="md-btn md-btn-success md-btn-block" />
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-                
-            
-            <div class="md-card-content large-padding" id="login_form">
-                <form method="POST">
-                    <div class="uk-form-row">
-                        <label for="login_email_reset">Input Token</label>
-                        <input class="md-input" required name="pr_tokem" type="text" id="login_email_reset" />
-                    </div>
-                    <div class="uk-margin-medium-top">
-                        <input type="submit" value="Reset password" name="pwd_reset" class="md-btn md-btn-success md-btn-block" />
-                    </div>
-                </form>
+
+
             </div>
-
         </div>
+    <?php endif; ?>
 
-        
-    </div>
+    <!-- IF TOKEN IS NOT VALIDATED -->
+    <?php if ($is_validated == false) : ?>
+        <p>Hi Joyce</p>
+    <?php endif; ?>
     <!--Footer-->
     <?php require_once('assets/inc/footer.php'); ?>
     <!--Footer-->
@@ -101,8 +176,8 @@ include("assets/inc/head.php");
             let input = document.getElementById(id);
             input.type = input.type === "text" ? "password" : "text";
         }
-        var button = document.getElementById('staff_login');
-        var loadingSpinner = document.getElementById('loading-spinner');
+        const button = document.getElementById('change_pwd_btn');
+        const loadingSpinner = document.getElementById('loading-spinner');
 
         button.addEventListener('click', function() {
             button.style.display = 'none';

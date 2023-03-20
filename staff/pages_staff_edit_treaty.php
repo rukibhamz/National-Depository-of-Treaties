@@ -43,7 +43,7 @@ if (isset($_POST['update_treaty'])) {
     $rc = $stmt->bind_param('sssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $s_id, $s_status, $doc_id);
     $stmt->execute();
 
-    //declare a varible which will be passed to alert function
+    //declare a variable which will be passed to alert function
     if ($stmt) {
         $success = "Treaty Updated Successfully" && header("refresh:1;url=pages_staff_manage_treaty.php");
     } else {
