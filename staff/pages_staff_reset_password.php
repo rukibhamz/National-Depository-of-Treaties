@@ -107,7 +107,7 @@ include("assets/inc/head.php");
             <div class="md-card" id="login_card">
                 <div class="md-card-content large-padding" id="login_form">
                     <div class="login_heading">
-                        <h3 class="text">Change Password Reset Portal</h3>
+                        <h3 class="text">Change Password Portal</h3>
                     </div>
 
 
