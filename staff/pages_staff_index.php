@@ -1,7 +1,12 @@
 <?php
-/*
-        *   Handle staff Authentication Logic Here
-    */
+
+require '../Mailer/Mail.php';
+
+use Mailer\Mail;
+
+/**
+ * Handle staff Authentication Logic Here
+ */
 
 session_start();
 $_SESSION['loading'] = false;
@@ -38,7 +43,6 @@ if (isset($_POST['staff_login'])) {
 
 //reset password
 if (isset($_POST['Reset_pwd'])) {
-
     $pr_useremail = $_POST['pr_useremail'];
     $pr_usertype = $_POST['pr_usertype'];
     $pr_token = sha1(md5($_POST['pr_token']));
@@ -54,16 +58,21 @@ if (isset($_POST['Reset_pwd'])) {
 
     //declare a variable which will be passed to alert function
     if ($stmt) {
-        //send email with the token to the user's email address
-        $to = $pr_useremail;
-        $subject = "Password Reset Token";
-        $reset_link = "https://treaties.justice.gov.ng/staff/pages_staff_reset_password.php?token=" . $pr_token;
-        $message = "Please click on the following link to reset your password: " . $reset_link;
-        $headers = "From: support@treaties.justice.gov.ng";
-        mail($to, $subject, $message, $headers);
+        $mailer = new Mail(
+            host: 'practice.vaneduco.com',
+            username: 'admin@practice.vaneduco.com', //Your company email
+            password: 'SK]jZzzShD2=',
+            port: '465',
+            encryption: 'ssl'
+        );
 
-        $success = "Password Reset Instructions has been sent to your email";
-        
+        $mailer->setFrom('admin@practice.vaneduco.com');
+        $mailer->addAddress($_POST['pr_useremail']); //Form email
+        $mailer->setSubject('Reset Password');
+        $mailer->setHTMLBody('<b>Your password has been reset successfully</b>');
+        $mailer->sendMail();
+
+        $success = "Password Reset Instructions has been sent to the administrator";
     } else {
         $err = "Please Try Again Or Try Later";
     }
