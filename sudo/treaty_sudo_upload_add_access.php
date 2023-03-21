@@ -185,7 +185,7 @@ include("assets/inc/head.php");
                                 <div class="uk-form-row">
                                     <label>Account Status</label>
                                     <select required name="acc_status" id="acc_status" class="md-input">
-                                        <option value="">--Select Staff Status--</option>
+                                        <option value="" disabled selected>--Select Staff Status--</option>
                                         <option value="active">Active</option>
                                         <option value="inactive">Suspended</option>
                                     </select>
