@@ -3,6 +3,12 @@
 # Digital_Library
 Digital Library is a web based and also desktop based library management system.
 
+## Project Set up
+
+``` shell
+composer install
+```
+
 ## Login Credentials For Super User Account
 <!-- 1. Email:   <b>admin@FMOJ.org</b><br>
 2. Password :  <b>admin</b> <br> -->
