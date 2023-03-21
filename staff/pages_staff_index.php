@@ -59,16 +59,16 @@ if (isset($_POST['Reset_pwd'])) {
     //declare a variable which will be passed to alert function
     if ($stmt) {
         $mailer = new Mail(
-            host: 'practice.vaneduco.com',
-            username: 'admin@practice.vaneduco.com', //Your company email
-            password: 'SK]jZzzShD2=',
+            host: 'mail.fmojtreaties.org.ng',
+            username: 'admin@fmojtreaties.org.ng', //Your company email
+            password: '[2tJe@)YQ0x(',
             port: '465',
             encryption: 'ssl'
         );
         $reset_link = "http://fmojtreaties.org.ng/staff/pages_staff_reset_password.php?validate_token=" . $pr_token;
         $message = "Please click on the following link to reset your password: <a href='$reset_link'>Reset Link</a>";
 
-        $mailer->setFrom('admin@practice.vaneduco.com');
+        $mailer->setFrom('admin@fmojtreaties.org.ng');
         $mailer->addAddress($pr_useremail); //Form email
         $mailer->setSubject('Password Reset Token');
         $mailer->setHTMLBody($message);
