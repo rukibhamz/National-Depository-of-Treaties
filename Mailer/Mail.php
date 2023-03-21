@@ -17,9 +17,6 @@ class Mail {
 
     public function __construct(string $host, string $username, string $password, int $port = 465, ?string $encryption = null)
     {
-        ini_set("log_errors", 1);
-        ini_set("error_log", __DIR__ . "../errors/php-error.log");
-
         $this->mail = new PHPMailer(true);
         $this->mail->SMTPDebug = false; // To view errors
         $this->mail->SMTPAuth   = true;
