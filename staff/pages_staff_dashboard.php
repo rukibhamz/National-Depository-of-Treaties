@@ -89,6 +89,9 @@ $stmt->bind_result($mou);
 $stmt->fetch();
 $stmt->close();
 
+// check if $total is 0, if so, set it to 1 to avoid division by zero
+$total = $total ?: 1;
+
 $userTreatyPercentage = round(($user_treaty / $total) * 100, 2);
 $diff = $total - $user_treaty;
 $otherTreatyPercentage = round(($diff / $total) * 100, 2);
