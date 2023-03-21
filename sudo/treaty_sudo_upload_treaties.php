@@ -71,6 +71,7 @@ if (isset($_POST['add_treaty'])) {
             $s_status = $_POST['s_status'];
             $s_id = $_POST['s_id'];
             $b_file = $_FILES["b_file"]["name"];
+            $approved = true;
 
             if (!empty($b_file)) {
                 // move_uploaded_file($_FILES["b_file"]["tmp_name"], "assets/magazines/" . $_FILES["b_file"]["name"]);
@@ -83,7 +84,7 @@ if (isset($_POST['add_treaty'])) {
             // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id, approved) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             $notification = "INSERT INTO il_notifications (content, user_id) VALUES(?,?)";
 
             $stmt = $mysqli->prepare($query);
@@ -93,7 +94,7 @@ if (isset($_POST['add_treaty'])) {
             $notification_stmt = $mysqli->prepare($notification);
 
             //bind parameters
-            $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
+            $rc = $stmt->bind_param('sssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id, $approved);
             $rc = $notification_stmt->bind_param('ss', $content, $user_id);
 
             // Execute
