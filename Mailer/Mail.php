@@ -37,7 +37,7 @@ class Mail {
      */
     public function setFrom(string $address): void
     {
-        $this->mail->setFrom($address, 'Mailer');
+        $this->mail->setFrom($address, 'Federal Ministry of Justice');
     }
 
     /**
