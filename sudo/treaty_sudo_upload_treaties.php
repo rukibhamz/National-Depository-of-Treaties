@@ -282,6 +282,7 @@ include("assets/inc/head.php");
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
+    <script src="assets/js/altair_admin_common.min.js"></script>
     <script src="assets/js/pages/forms_file_upload.min.js"></script>
     <script>
         const fileUpload = document.getElementById("file_upload-select");
@@ -302,7 +303,6 @@ include("assets/inc/head.php");
         });
     </script>
 
-<script src="assets/js/altair_admin_common.min.js"></script>
 </body>
 
 </html>
