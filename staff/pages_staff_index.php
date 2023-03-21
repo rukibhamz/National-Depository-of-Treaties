@@ -1,4 +1,5 @@
 <?php
+
 require '../Mailer/Mail.php';
 
 use Mailer\Mail;
