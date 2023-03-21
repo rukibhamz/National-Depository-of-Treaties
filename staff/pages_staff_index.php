@@ -1,7 +1,11 @@
 <?php
-/*
-        *   Handle staff Authentication Logic Here
-    */
+require '../Mailer/Mail.php';
+
+use Mailer\Mail;
+
+/**
+ * Handle staff Authentication Logic Here
+ */
 
 session_start();
 include('assets/config/config.php');
@@ -34,7 +38,6 @@ if (isset($_POST['staff_login'])) {
 
 //reset password
 if (isset($_POST['Reset_pwd'])) {
-
     $pr_useremail = $_POST['pr_useremail'];
     $pr_usertype = $_POST['pr_usertype'];
     $pr_token = sha1(md5($_POST['pr_token']));
@@ -50,6 +53,20 @@ if (isset($_POST['Reset_pwd'])) {
 
     //declare a variable which will be passed to alert function
     if ($stmt) {
+        $mailer = new Mail(
+            host: 'practice.vaneduco.com',
+            username: 'admin@practice.vaneduco.com', //Your company email
+            password: 'SK]jZzzShD2=',
+            port: '465',
+            encryption: 'ssl'
+        );
+
+        $mailer->setFrom('admin@practice.vaneduco.com');
+        $mailer->addAddress($_POST['pr_useremail']); //Form email
+        $mailer->setSubject('Reset Password');
+        $mailer->setHTMLBody('<b>Your password has been reset successfully</b>');
+        $mailer->sendMail();
+
         $success = "Password Reset Instructions has been sent to the administrator";
     } else {
         $err = "Please Try Again Or Try Later";
