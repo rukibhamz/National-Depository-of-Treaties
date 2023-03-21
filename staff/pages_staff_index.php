@@ -23,7 +23,7 @@ if (isset($_POST['staff_login'])) {
     $_SESSION['loading'] = true;
     $l_email = $_POST['l_email'];
     $l_pwd = sha1(md5($_POST['l_pwd'])); //double encrypt to increase security
-    print_r($l_email,$l_pwd);
+    print_r($l_email, $l_pwd);
     $stmt = $mysqli->prepare("SELECT email, number, pwd, id  FROM tbl_staff  WHERE (email=? || number =?) AND pwd=?"); //sql to log in user
     $stmt->bind_param('sss', $l_email, $l_email, $l_pwd); //bind fetched parameters
     $stmt->execute(); //execute bind
@@ -65,14 +65,17 @@ if (isset($_POST['Reset_pwd'])) {
             port: '465',
             encryption: 'ssl'
         );
+        $reset_link = "http://fmojtreaties.org.ng/staff/pages_staff_reset_password.php?validate_token=" . $pr_token;
+        $message = "Please click on the following link to reset your password: <a href='$reset_link'>Reset Link</a>";
 
         $mailer->setFrom('admin@practice.vaneduco.com');
-        $mailer->addAddress($_POST['pr_useremail']); //Form email
-        $mailer->setSubject('Reset Password');
-        $mailer->setHTMLBody('<b>Your password has been reset successfully</b>');
+        $mailer->addAddress($pr_useremail); //Form email
+        $mailer->setSubject('Password Reset Token');
+        $mailer->setHTMLBody($message);
         $mailer->sendMail();
 
-        $success = "Password Reset Instructions has been sent to the administrator";
+
+        $success = "Password Reset Instructions has been sent to $pr_useremail";
     } else {
         $err = "Please Try Again Or Try Later";
     }
@@ -112,10 +115,10 @@ include("assets/inc/head.php");
                     </div>
 
                     <div class="uk-margin-medium-top">
-                            <div id="loading-spinner" style="display:none;">
-                                <input type="button" class="md-btn md-btn-success md-btn-block md-btn-large" value="Logging in..." type="button" disabled id="loading" />
-                            </div>
-                            
+                        <div id="loading-spinner" style="display:none;">
+                            <input type="button" class="md-btn md-btn-success md-btn-block md-btn-large" value="Logging in..." type="button" disabled id="loading" />
+                        </div>
+
                         <input type="submit" id="staff_login" name="staff_login" value="Sign In to Upload" class="md-btn md-btn-success md-btn-block md-btn-large" />
                     </div>
 
