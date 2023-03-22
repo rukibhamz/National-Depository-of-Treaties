@@ -123,7 +123,8 @@ include("assets/inc/head.php");
 
                         <tbody>
                             <?php
-                            $ret = "SELECT * FROM tbl_treaties";
+                             // $ret = "SELECT * FROM tbl_treaties WHERE approved = false";
+                             $ret = "SELECT * FROM tbl_treaties";
                             $stmt = $mysqli->prepare($ret);
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();

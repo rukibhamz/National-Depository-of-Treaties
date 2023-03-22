@@ -21,12 +21,12 @@ if (isset($_SESSION['id'])) {
 $length = 6;
 $Number =  substr(str_shuffle('0123456789'), 1, $length);
 
-if (isset($_POST['add_treaty']) && $user->acc_status != 'Active') {
+if (isset($_POST['add_treaty']) && $user->acc_status != 'active') {
     $err = "Your account has been suspended, please contact the ADMIN";
 }
 
 //add new treaty
-if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
+if (isset($_POST['add_treaty']) && $user->acc_status == 'active') {
     $_SESSION['loading'] = true;
     $error = 0;
     if (isset($_POST['title']) && !empty($_POST['title'])) {
@@ -60,13 +60,9 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
         $err = "Treaty description cannot be empty";
     }
     if (!$error) {
-        $title  = $_POST['title'];
-        $sql = "SELECT * FROM tbl_treaties WHERE title=? ";
-        $stmt = mysqli_prepare($mysqli, $sql);
-        mysqli_stmt_bind_param($stmt, 's', $title);
-        mysqli_stmt_execute($stmt);
-        $res = mysqli_stmt_get_result($stmt);
-        // $res = mysqli_query($mysqli, $sql);
+             $title  = $_POST['title'];
+        $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
+        $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if ($title == $row['title']) {
@@ -75,7 +71,6 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
                 $err =  "Treaty title already exists";
             }
         } else {
-            $title  = $_POST['title'];
             $signatory = $_POST['signatory'];
             $b_publisher = $_POST['b_publisher'];
             $tc_id = $_POST['tc_id'];
@@ -85,6 +80,7 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
             $s_status = $_POST['s_status'];
             $s_id = $_POST['s_id'];
             $b_file = $_FILES["b_file"]["name"];
+            $approved = false;
 
             if (!empty($b_file)) {
                 move_uploaded_file($_FILES["b_file"]["tmp_name"], ".." . DIRECTORY_SEPARATOR . "sudo" . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "magazines" . DIRECTORY_SEPARATOR . $_FILES["b_file"]["name"]);
@@ -97,7 +93,7 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
             // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id, approved) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             $notification = "INSERT INTO il_notifications (content, user_id) VALUES(?,?)";
 
             $stmt = $mysqli->prepare($query);
@@ -107,7 +103,7 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'Active') {
             $notification_stmt = $mysqli->prepare($notification);
 
             //bind parameters
-            $rc = $stmt->bind_param('ssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id);
+            $rc = $stmt->bind_param('sssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id, $approved);
             $rc = $notification_stmt->bind_param('ss', $content, $user_id);
 
             // Execute
