@@ -69,6 +69,20 @@ $stmt->bind_result($Instruments);
 $stmt->fetch();
 $stmt->close();
 
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Conventions' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($Conventions);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Protocols' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($Protocols);
+$stmt->fetch();
+$stmt->close();
+
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Agreements' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
@@ -82,6 +96,14 @@ $stmt->execute();
 $stmt->bind_result($Memorandum_of_Understanding);
 $stmt->fetch();
 $stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Treaty' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($Treaty);
+$stmt->fetch();
+$stmt->close();
+
 $ret = "SELECT * FROM  tbl_status";
 
 $result = "SELECT COUNT(*) FROM tbl_status";
@@ -466,14 +488,26 @@ include("assets/inc/head.php");
                 data: [{
                     type: "pie",
                     showInLegend: true,
-                    toolTipContent: "{name}: <strong>{y}%</strong>",
-                    indexLabel: "{name} - {y}%",
+                    toolTipContent: "{name}: <strong>{y}</strong>",
+                    indexLabel: "{name} - {y} (#percent%)",
                     dataPoints: [{
                             y: <?= $Instruments; ?>,
                             name: "Instruments",
                             exploded: true
                         },
 
+                        
+                        {
+                            y: <?= $Conventions; ?>,
+                            name: " Conventions",
+                            exploded: true
+                        },
+
+                        {
+                            y: <?= $Protocols; ?>,
+                            name: " Protocols",
+                            exploded: true
+                        },
                         {
                             y: <?= $Agreements; ?>,
                             name: " Agreements",
@@ -482,7 +516,13 @@ include("assets/inc/head.php");
 
                         {
                             y: <?= $Memorandum_of_Understanding; ?>,
-                            name: "Memorandum of Understanding",
+                            name: " M.O.U.",
+                            exploded: true
+                        },
+
+                        {
+                            y: <?= $Treaty; ?>,
+                            name: "Treaty",
                             exploded: true
                         }
                     ]
