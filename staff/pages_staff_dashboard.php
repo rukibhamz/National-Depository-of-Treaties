@@ -81,6 +81,27 @@ $stmt->bind_result($agreements);
 $stmt->fetch();
 $stmt->close();
 
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Conventions' AND b_publisher = '$user->name' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($conventions);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Protocols' AND b_publisher = '$user->name' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($protocols);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Treaty' AND b_publisher = '$user->name' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($treaty);
+$stmt->fetch();
+$stmt->close();
+
 //1.0.3 : Number Of Books under References Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Memorandum of Understanding' AND b_publisher = '$user->name' ";
 $stmt = $mysqli->prepare($result);
@@ -125,7 +146,7 @@ include("assets/inc/head.php");
         <div id="page_content_inner">
 
             <!--1.Treaty-->
-            <div class="uk-grid uk-grid-width-large-1-5 uk-grid-width-medium-1-3 uk-grid-medium uk-sortable sortable-handler hierarchical_show text-center" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-3 uk-grid-medium uk-sortable sortable-handler hierarchical_show text-center" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card">
                         <div class="md-card-content">
@@ -198,6 +219,33 @@ include("assets/inc/head.php");
                                 <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                                 <span class="uk-text-muted uk-text-small">Agreements</span>
                                 <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $agreements; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                        <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Conventions</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $conventions; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                        <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Protocols</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $protocols; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                        <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Treaty Category</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $treaty; ?></noscript></span></h2>
                             </div>
                         </div>
                     </div>
