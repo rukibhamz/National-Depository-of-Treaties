@@ -575,19 +575,6 @@ include("assets/inc/head.php");
                             name: "Instruments",
                             exploded: true
                         },
-
-                        
-                        {
-                            y: <?= $Conventions; ?>,
-                            name: " Conventions",
-                            exploded: true
-                        },
-
-                        {
-                            y: <?= $Protocols; ?>,
-                            name: " Protocols",
-                            exploded: true
-                        },
                         {
                             y: <?= $Agreements; ?>,
                             name: "Agreements",
