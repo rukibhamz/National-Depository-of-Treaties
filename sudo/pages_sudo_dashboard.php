@@ -84,6 +84,29 @@ $stmt->fetch();
 $stmt->close();
 $ret = "SELECT * FROM  tbl_status";
 
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Conventions' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($Conventions);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Protocols' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($Protocols);
+$stmt->fetch();
+$stmt->close();
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Treaty' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($TreatyCategory);
+$stmt->fetch();
+$stmt->close();
+
+// =====
+
 $result = "SELECT COUNT(*) FROM tbl_status";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
@@ -377,6 +400,63 @@ include("assets/inc/head.php");
                     </div>
                     <div class="space-10"></div>
                 </div>
+
+                   <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $Conventions; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Conventions</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
+
+                   <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $Protocols; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Protocols</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
+
+                   <div>
+                    <div class="md-card card-alt">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $TreatyCategory; ?></span></h2>
+                            <div class="space-10"></div>
+                            <p class="text">Treaty</p>
+
+                            <div class="space-10"></div>
+                            <div class="title-bar white">
+                                <ul class="list-inline list-unstyled">
+                                    <li><i class="icofont icofont-square"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-10"></div>
+                </div>
             </div>
             <!-- ----------- -->
             <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-1 uk-grid-large" data-uk-grid-margin>
@@ -476,7 +556,25 @@ include("assets/inc/head.php");
 
                         {
                             y: <?= $Agreements; ?>,
-                            name: " Agreements",
+                            name: "Agreements",
+                            exploded: true
+                        },
+
+                          {
+                            y: <?= $Conventions; ?>,
+                            name: "Conventions",
+                            exploded: true
+                        },
+
+                          {
+                            y: <?= $Protocols; ?>,
+                            name: "Protocols",
+                            exploded: true
+                        },
+
+                          {
+                            y: <?= $Treaty; ?>,
+                            name: "Treaty",
                             exploded: true
                         },
 
