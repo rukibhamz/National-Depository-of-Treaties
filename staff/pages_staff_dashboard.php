@@ -117,8 +117,8 @@ $userTreatyPercentage = round(($user_treaty / $total) * 100, 2);
 $diff = $total - $user_treaty;
 $otherTreatyPercentage = round(($diff / $total) * 100, 2);
 
-$pendingPercentage = ($pending / $total) * 100;
-$approvedPercentage = ($approved / $total) * 100;
+$pendingPercentage = round(($pending / $total) * 100, 1);
+$approvedPercentage = round(($approved / $total) * 100, 1);
 
 ?>
 <!doctype html>
@@ -222,7 +222,7 @@ include("assets/inc/head.php");
                             </div>
                         </div>
                     </div>
-                        <div>
+                    <div>
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
@@ -231,7 +231,7 @@ include("assets/inc/head.php");
                             </div>
                         </div>
                     </div>
-                        <div>
+                    <div>
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
@@ -240,7 +240,7 @@ include("assets/inc/head.php");
                             </div>
                         </div>
                     </div>
-                        <div>
+                    <div>
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
@@ -262,31 +262,28 @@ include("assets/inc/head.php");
             </div>
 
             <!-- Pie Charts Supervisor-->
-            <?php if ($user->role == 'supervisor') : ?>
-                <div class="uk-grid">
-                    <div class="uk-width-1-1">
-                        <div class="md-card">
-                            <div class="md-card-toolbar">
-                                <div class="md-card-toolbar-actions">
-                                    <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
-                                    <i class="md-icon material-icons">&#xE5D5;</i>
+            <div class="uk-grid">
+                <div class="<?= ($user->role == 'staff') ? 'uk-width-1-2' : 'uk-width-1-1'; ?>">
 
-                                </div>
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                <i class="md-icon material-icons">&#xE5D5;</i>
+
                             </div>
-                            <div class="md-card-content">
-                                <div class="mGraph-wrapper">
-                                    <div id="PieChart_supervisor" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
-                                </div>
+                        </div>
+                        <div class="md-card-content">
+                            <div class="mGraph-wrapper">
+                                <div id="PieChart_supervisor" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php endif; ?>
 
-            <!-- Pie Charts Staff-->
-            <?php if ($user->role == 'staff') : ?>
-                <div class="uk-grid">
-                    <div class="uk-width-1-1">
+                <!-- Pie Charts Staff-->
+                <?php if ($user->role == 'staff') : ?>
+                    <div class="uk-width-1-2">
                         <div class="md-card">
                             <div class="md-card-toolbar">
                                 <div class="md-card-toolbar-actions">
@@ -301,8 +298,8 @@ include("assets/inc/head.php");
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
 
             <div class="uk-grid">
                 <div class="uk-width-1-1">
@@ -350,7 +347,6 @@ include("assets/inc/head.php");
                 </div>
             </div>
         </div>
-
     </div>
     <!--Footer-->
     <?php require_once('assets/inc/footer.php'); ?>
@@ -381,54 +377,53 @@ include("assets/inc/head.php");
     <!--Load Canvas JS -->
     <script src="assets/js/canvasjs.min.js"></script>
     <!--Load Few Charts-->
-    <?php if ($user->role === 'supervisor') : ?>
-        <script>
-            window.onload = function() {
+    <script>
+        window.onload = function() {
 
-                var Piechart = new CanvasJS.Chart("PieChart_supervisor", {
-                    exportEnabled: false,
-                    animationEnabled: true,
-                    title: {
-                        text: "Percentage Of Treaties Approval Status"
-                    },
-                    legend: {
-                        cursor: "pointer",
-                        itemclick: explodePie
-                    },
-                    data: [{
-                        type: "pie",
-                        showInLegend: true,
-                        toolTipContent: "{name}: <strong>{y}%</strong>",
-                        indexLabel: "{name} - {y}%",
-                        dataPoints: [{
-                                y: <?= $approvedPercentage; ?>,
-                                name: "Approved",
-                                exploded: true
-                            },
+            var Piechart = new CanvasJS.Chart("PieChart_supervisor", {
+                exportEnabled: false,
+                animationEnabled: true,
+                title: {
+                    text: "Percentage Of Treaties Approval Status"
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: explodePie
+                },
+                data: [{
+                    type: "doughnut",
+                    showInLegend: true,
+                    toolTipContent: "{name}: <strong>{y}%</strong>",
+                    indexLabel: "{name} - {y}%",
+                    dataPoints: [{
+                            y: <?= $approvedPercentage; ?>,
+                            name: "Approved",
+                            exploded: true
+                        },
 
-                            {
-                                y: <?= $pendingPercentage; ?>,
-                                name: "Pending",
-                                exploded: true
-                            }
-                        ]
-                    }]
-                });
-                Piechart.render();
+                        {
+                            y: <?= $pendingPercentage; ?>,
+                            name: "Pending",
+                            exploded: true
+                        }
+                    ]
+                }]
+            });
+            Piechart.render();
 
+        }
+
+        function explodePie(e) {
+            if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
             }
+            e.chart.render();
 
-            function explodePie(e) {
-                if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
-                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
-                } else {
-                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
-                }
-                e.chart.render();
-
-            }
-        </script>
-    <?php elseif ($user->role === 'staff') : ?>
+        }
+    </script>
+    <?php if ($user->role === 'staff') : ?>
         <script>
             window.onload = function() {
                 var staff_Piechart = new CanvasJS.Chart("PieChart_staff", {
