@@ -377,55 +377,10 @@ include("assets/inc/head.php");
     <!--Load Canvas JS -->
     <script src="assets/js/canvasjs.min.js"></script>
     <!--Load Few Charts-->
+
     <script>
         window.onload = function() {
-
-            var Piechart = new CanvasJS.Chart("PieChart_supervisor", {
-                exportEnabled: false,
-                animationEnabled: true,
-                title: {
-                    text: "Percentage Of Treaties Approval Status"
-                },
-                legend: {
-                    cursor: "pointer",
-                    itemclick: explodePie
-                },
-                data: [{
-                    type: "doughnut",
-                    showInLegend: true,
-                    toolTipContent: "{name}: <strong>{y}%</strong>",
-                    indexLabel: "{name} - {y}%",
-                    dataPoints: [{
-                            y: <?= $approvedPercentage; ?>,
-                            name: "Approved",
-                            exploded: true
-                        },
-
-                        {
-                            y: <?= $pendingPercentage; ?>,
-                            name: "Pending",
-                            exploded: true
-                        }
-                    ]
-                }]
-            });
-            Piechart.render();
-
-        }
-
-        function explodePie(e) {
-            if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
-                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
-            } else {
-                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
-            }
-            e.chart.render();
-
-        }
-    </script>
-    <?php if ($user->role === 'staff') : ?>
-        <script>
-            window.onload = function() {
+            <?php if ($user->role === 'staff') : ?>
                 var staff_Piechart = new CanvasJS.Chart("PieChart_staff", {
                     exportEnabled: false,
                     animationEnabled: true,
@@ -456,19 +411,52 @@ include("assets/inc/head.php");
                     }]
                 });
                 staff_Piechart.render();
-            }
+            <?php endif; ?>
 
-            function explodePie(e) {
-                if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
-                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
-                } else {
-                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
-                }
-                e.chart.render();
+            var Piechart = new CanvasJS.Chart("PieChart_supervisor", {
+                exportEnabled: false,
+                animationEnabled: true,
+                title: {
+                    text: "Percentage Of Treaties Approval Status"
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: explodePie
+                },
+                data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    toolTipContent: "{name}: <strong>{y}%</strong>",
+                    indexLabel: "{name} - {y}%",
+                    dataPoints: [{
+                            y: <?= $approvedPercentage; ?>,
+                            name: "Approved",
+                            exploded: true
+                        },
 
+                        {
+                            y: <?= $pendingPercentage; ?>,
+                            name: "Pending",
+                            exploded: true
+                        }
+                    ]
+                }]
+            });
+            
+
+            Piechart.render();
+        }
+
+        function explodePie(e) {
+            if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
             }
-        </script>
-    <?php endif; ?>
+            e.chart.render();
+
+        }
+    </script>
 
     <!-- common functions -->
     <script src="assets/js/common.min.js"></script>

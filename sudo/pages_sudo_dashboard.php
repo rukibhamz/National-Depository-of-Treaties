@@ -136,6 +136,24 @@ $stmt->bind_result($treaty_status);
 $stmt->fetch();
 $stmt->close();
 
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE approved = 1 ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($approved);
+$stmt->fetch();
+$stmt->close();
+
+
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE approved = 0 ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($pending);
+$stmt->fetch();
+$stmt->close();
+
+$treaty_total = $treaty_total ?: 1;
+$pendingPercentage = round(($pending / $treaty_total) * 100, 1);
+$approvedPercentage = round(($approved / $treaty_total) * 100, 1);
 ?>
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
@@ -423,7 +441,7 @@ include("assets/inc/head.php");
                     <div class="space-10"></div>
                 </div>
 
-                   <div>
+                <div>
                     <div class="md-card card-alt">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
@@ -442,7 +460,7 @@ include("assets/inc/head.php");
                     <div class="space-10"></div>
                 </div>
 
-                   <div>
+                <div>
                     <div class="md-card card-alt">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
@@ -461,7 +479,7 @@ include("assets/inc/head.php");
                     <div class="space-10"></div>
                 </div>
 
-                   <div>
+                <div>
                     <div class="md-card card-alt">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
@@ -481,6 +499,29 @@ include("assets/inc/head.php");
                 </div>
             </div>
             <!-- ----------- -->
+            <div class="uk-grid uk-grid-width-large-1-1 uk-grid-width-medium-1-1 uk-grid-large" data-uk-grid-margin>
+                <div>
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon material-icons md-card-fullscreen-activate">&#xE5D0;</i>
+                                <!-- <i class="md-icon material-icons" id="print" onclick="printContent('Print_Content');">&#xE8ad;</i> -->
+                                <i class="md-icon material-icons">&#xE5D5;</i>
+
+                            </div>
+                        </div>
+                        <div class="md-card-content">
+
+                            <div class="mGraph-wrapper">
+                                <div id="statusChart" class="mGraph" style="height: 400px; max-width: 900px; margin: 0px auto;"></div>
+                            </div>
+                            <!-- -------- -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ---- -->
             <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-medium-1-1 uk-grid-large" data-uk-grid-margin>
                 <div>
                     <div class="md-card">
@@ -521,6 +562,7 @@ include("assets/inc/head.php");
                     </div>
                 </div>
             </div>
+            <!-- ----- -->
         </div>
     </div>
     <!--Footer-->
@@ -581,19 +623,19 @@ include("assets/inc/head.php");
                             exploded: true
                         },
 
-                          {
+                        {
                             y: <?= $Conventions; ?>,
                             name: "Conventions",
                             exploded: true
                         },
 
-                          {
+                        {
                             y: <?= $Protocols; ?>,
                             name: "Protocols",
                             exploded: true
                         },
 
-                          {
+                        {
                             y: <?= $Treaty; ?>,
                             name: "Treaty",
                             exploded: true
@@ -644,9 +686,39 @@ include("assets/inc/head.php");
                 }]
             });
 
+            var statusChart = new CanvasJS.Chart("statusChart", {
+                exportEnabled: false,
+                animationEnabled: true,
+                title: {
+                    text: "Percentage Of Treaties Approval Status"
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: explodePie
+                },
+                data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    toolTipContent: "{name}: <strong>{y}%</strong>",
+                    indexLabel: "{name} - {y}%",
+                    dataPoints: [{
+                            y: <?= $approvedPercentage; ?>,
+                            name: "Approved",
+                            exploded: true
+                        },
+
+                        {
+                            y: <?= $pendingPercentage; ?>,
+                            name: "Pending",
+                            exploded: true
+                        }
+                    ]
+                }]
+            });
 
             chart.render();
             Piechart.render();
+            statusChart.render();
 
         }
 
