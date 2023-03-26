@@ -426,7 +426,7 @@ include("assets/inc/head.php");
                     <div class="md-card card-alt">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $Memorandum_of_Understanding; ?></span></h2>
+                            <h2 class="uk-margin-remove"><span class="countUpMe"><?= $MOU; ?></span></h2>
                             <div class="space-10"></div>
                             <p class="text">Mou's</p>
 
@@ -642,7 +642,7 @@ include("assets/inc/head.php");
                         },
 
                         {
-                            y: <?= $Memorandum_of_Understanding; ?>,
+                            y: <?= $MOU; ?>,
                             name: " M.O.U.",
                             exploded: true
                         },
