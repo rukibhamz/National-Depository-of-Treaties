@@ -109,9 +109,10 @@ include("assets/inc/head.php");
                                         <a href="treaty_sudo_edit_treaty.php?doc_id=<?= $row->id; ?>">
                                             <span class='uk-badge uk-badge-primary'>Update</span>
                                         </a>
-                                        <a href="treaty_sudo_all_treaties.php?d_id=<?= $row->id; ?>">
-                                            <span class='uk-badge uk-badge-danger'>Delete</span>
+                                        <a href="treaty_sudo_all_treaties.php?d_id=<?= $row->id; ?>" onclick="return confirm('Are you sure you want to delete this treaty?');">
+                                         <span class='uk-badge uk-badge-danger'>Delete</span>
                                         </a>
+
                                         <?php endif; ?>
                                     </td>
                                 </tr>
