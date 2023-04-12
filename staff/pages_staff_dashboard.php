@@ -65,7 +65,6 @@ $stmt->bind_result($approved);
 $stmt->fetch();
 $stmt->close();
 
-//1.0.1 : Number Of Books under Non-fiction Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Instruments' AND b_publisher = '$user->name' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
@@ -73,7 +72,6 @@ $stmt->bind_result($instruments);
 $stmt->fetch();
 $stmt->close();
 
-//1.0.2 : Number Of Books under Fiction Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Agreements' AND b_publisher = '$user->name' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
@@ -102,7 +100,6 @@ $stmt->bind_result($treaty);
 $stmt->fetch();
 $stmt->close();
 
-//1.0.3 : Number Of Books under References Category
 $result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'MOU' AND b_publisher = '$user->name' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();

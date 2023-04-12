@@ -1,15 +1,13 @@
 <?php
 require_once('sudo/assets/config/config.php');
-$connect = mysqli_connect("localhost", "root", "", "treaties_db");  
-if(isset($_POST["submit"]))  
-{  
-     if(!empty($_POST["search"]))  
-     {  
-          $query = str_replace(" ", "+", $_POST["search"]);  
-          header("location:index.php?search=" . $query);  
-     }  
-}  
-?> 
+$connect = mysqli_connect("localhost", "root", "", "treaties_db");
+if (isset($_POST["submit"])) {
+    if (!empty($_POST["search"])) {
+        $query = str_replace(" ", "+", $_POST["search"]);
+        header("location:index.php?search=" . $query);
+    }
+}
+?>
 
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -84,11 +82,22 @@ if(isset($_POST["submit"]))
                             <li>
                                 <a href="treaties.php">CATALOGUES</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="staff/pages_staff_index.php" title="Staff Login">UPLOAD TREATY</a>
                             </li>
                             <li>
                                 <a href="sudo/pages_sudo_index.php" title="Admin Login">LOGIN</a>
+                            </li> -->
+                            <li class="position-relative">
+                                <a title="Login">LOGIN</a>
+                                <ul class="dropdown_list">
+                                    <li>
+                                    <a href="sudo/pages_sudo_index.php" title="Admin Login">Login as Admin</a>
+                                    </li>
+                                   <li>
+                                   <a href="sudo/pages_staff_index.php" title="Admin Login">Login as Staff</a>
+                                   </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -131,65 +140,67 @@ if(isset($_POST["submit"]))
                                     <div class="tab-pane fade in active" id="treaty">
                                         <form action="treaties.php" method="GET">
                                             <div class="input-group">
-                                                <input type="text" id="search" class="form-control" name="search_id" value="<?php if(isset($_GET['search_id'])){echo $_GET['search_id'];} ?>" placeholder="Enter document title">
+                                                <input type="text" id="search" class="form-control" name="search_id" value="<?php if (isset($_GET['search_id'])) {
+                                                                                                                                echo $_GET['search_id'];
+                                                                                                                            } ?>" placeholder="Enter document title">
                                                 <div class="input-group-btn">
                                                     <button type="submit" class="btn btn-primary px-3">Search <i class="icofont icofont-search-alt-2"></i></button>
                                                 </div>
                                             </div>
 
                                             <?php
-                                                $ret = null;
-                                                $res = null;
+                                            $ret = null;
+                                            $res = null;
 
-                                                if (isset($_GET['search_id'])) {
-                                                    $search_id = $_GET['search_id'];
+                                            if (isset($_GET['search_id'])) {
+                                                $search_id = $_GET['search_id'];
 
-                                                    // Debugging: print the query to the error log
-                                                    $ret = "SELECT * FROM tbl_treaties WHERE tc_name = ? OR signatory = ? OR title = ? ";
-                                                    error_log("SQL query: $ret");
+                                                // Debugging: print the query to the error log
+                                                $ret = "SELECT * FROM tbl_treaties WHERE tc_name = ? OR signatory = ? OR title = ? ";
+                                                error_log("SQL query: $ret");
 
-                                                    try {
-                                                        $stmt = $mysqli->prepare($ret);
-                                                        $stmt->bind_param("sss", $search_id, $search_id, $search_id);
-                                                        $stmt->execute();
-                                                        $res = $stmt->get_result();
-                                                    } catch (Exception $e) {
-                                                        error_log("Error executing SQL query: " . $e->getMessage());
-                                                        $res = null;
-                                                    }
+                                                try {
+                                                    $stmt = $mysqli->prepare($ret);
+                                                    $stmt->bind_param("sss", $search_id, $search_id, $search_id);
+                                                    $stmt->execute();
+                                                    $res = $stmt->get_result();
+                                                } catch (Exception $e) {
+                                                    error_log("Error executing SQL query: " . $e->getMessage());
+                                                    $res = null;
                                                 }
+                                            }
 
-                                                if ($res != null) {
-                                                    while ($row = $res->fetch_object()) {
+                                            if ($res != null) {
+                                                while ($row = $res->fetch_object()) {
                                             ?>
-                                                        <div class="col-xs-12 col-md-6">
-                                                            <div class="category-item well green">
-                                                                <div class="media">
-                                                                    <div class="media-body">
-                                                                        <h5><img src="images/file_icon.png" alt="<?= $row->title ?>" />&ensp;<span class="trim"><?= $row->title ?></span></h5>
-                                                                        <h6>Category: <?= $row->tc_name ?></h6>
-                                                                        <div class="space-10"></div>
-                                                                        <div class="title-bar blue text-center">
-                                                                            <ul class="list-inline list-unstyled">
-                                                                                <li><i class="icofont icofont-square"></i></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="space-10"></div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-4"><a href="treaty.php?doc_id=<?php echo $row->id ?>" class="text-primary">View</a></div>
-                                                                            <div class="col-md-8">
-                                                                                <img src="images/card-logo.png" alt="<?= $row->title ?>" class="img-responsive" />
-                                                                            </div>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <div class="category-item well green">
+                                                            <div class="media">
+                                                                <div class="media-body">
+                                                                    <h5><img src="images/file_icon.png" alt="<?= $row->title ?>" />&ensp;<span class="trim"><?= $row->title ?></span></h5>
+                                                                    <h6>Category: <?= $row->tc_name ?></h6>
+                                                                    <div class="space-10"></div>
+                                                                    <div class="title-bar blue text-center">
+                                                                        <ul class="list-inline list-unstyled">
+                                                                            <li><i class="icofont icofont-square"></i></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="space-10"></div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-4"><a href="treaty.php?doc_id=<?php echo $row->id ?>" class="text-primary">View</a></div>
+                                                                        <div class="col-md-8">
+                                                                            <img src="images/card-logo.png" alt="<?= $row->title ?>" class="img-responsive" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
                                             <?php
-                                                    }
-                                                } else {
-                                                    // echo "No record";
                                                 }
+                                            } else {
+                                                // echo "No record";
+                                            }
                                             ?>
                                     </div>
                                     <div class="tab-pane fade" id="author">
@@ -264,7 +275,7 @@ if(isset($_POST["submit"]))
                         <div class="category-item well blue">
                             <div>
                                 <!-- <p>Newly added treaties</p> -->
-                                
+
                                 <h3><?= $row->name; ?></h3>
                                 <p class="trim"><?= $row->description; ?></p>
                                 <div class="text-center">
@@ -287,7 +298,7 @@ if(isset($_POST["submit"]))
             <div class="space-20"></div>
             <div class="row">
 
-                </div>
+            </div>
             <div class="space-40"></div>
         </div>
     </section>
