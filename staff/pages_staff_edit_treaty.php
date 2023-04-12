@@ -32,15 +32,22 @@ if (isset($_POST['update_treaty'])) {
     $treaty_year = $_POST['treaty_year'];
     $s_status = $_POST['s_status'];
     $s_id = $_POST['s_id'];
+    $domesticated = $_POST["domesticated"];
+    $signed_date = $_POST["signed_date"];
+    $ratification = $_POST["ratification_date"];
+
+    // Convert date format from "24/04/2023" to "YYYY-MM-DD"
+    $signed_date = date("Y-m-d", strtotime($signed_date));
+    $ratification = date("Y-m-d", strtotime($ratification));
 
     // $b_file = $_FILES["b_file"]["name"];
     // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
     //Insert Captured information to a database table
-    $query = "UPDATE tbl_treaties SET title=?, signatory=?, b_publisher=?, tc_id=?, tc_name=?, b_summary=?, treaty_year=?, s_id=?, s_status=? WHERE id =?";
+    $query = "UPDATE tbl_treaties SET title=?, signatory=?, b_publisher=?, tc_id=?, tc_name=?, b_summary=?, treaty_year=?, s_id=?, s_status=? domesticated=?, signed_date=?, ratification=? WHERE id =?";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
-    $rc = $stmt->bind_param('sssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $s_id, $s_status, $doc_id);
+    $rc = $stmt->bind_param('ssssssssssssi', $title, $signatory, $b_publisher, $tc_id, $tc_name, $b_summary, $treaty_year, $s_id, $s_status, $domesticated, $signed_date, $ratification, $doc_id);
     $stmt->execute();
 
     //declare a variable which will be passed to alert function
@@ -99,18 +106,22 @@ include("assets/inc/head.php");
                         <hr>
                         <form method="post" enctype="multipart/form-data">
                             <div class="uk-grid" data-uk-grid-margin>
-                                <div class="uk-width-medium-1-2">
+
+                            <div class="uk-width-medium-2-2">
                                     <div class="uk-form-row">
                                         <label>Treaty Title</label>
-                                        <input type="text" value="<?= $row->title; ?>" required name="title" class="md-input" />
+                                        <input type="text" required name="title" class="md-input" value="<?= $row->title; ?>" />
                                     </div>
+                                </div>
+
+                                <div class="uk-width-medium-1-2">
                                     <div class="uk-form-row">
                                         <label>Treaty Signatory</label>
                                         <input type="text" value="<?= $row->signatory; ?>" required name="signatory" class="md-input" />
                                     </div>
                                     <div class="uk-form-row">
                                         <label>Treaty Status</label>
-                                        <select required name="s_status"  onChange="getStatusId(this.value);" id="s_status" class="md-input">
+                                        <select required name="s_status" onChange="getStatusId(this.value);" id="s_status" class="md-input">
                                             <?php
                                             $ret = "SELECT * FROM tbl_status";
                                             //$ret = "SELECT DISTINCT s_status FROM tbl_treaties";
@@ -129,6 +140,21 @@ include("assets/inc/head.php");
                                     <div class="uk-form-row" style="display:none">
                                         <label>Treaty Status ID</label>
                                         <input type="text" id="TreatyStatusID" value="<?= $row->s_id ?>" required name="s_id" class="md-input" readonly />
+                                    </div>
+
+                                    <div class="uk-form-row">
+                                        <label>Domesticated?</label>
+                                        <select required name="domesticated" id="domesticated" class="md-input">
+                                            <option value="" disabled>--Select An Option--</option>
+                                            <option value="no" <?= ($row->domesticated === 'no') ? 'selected' : '' ?>>NO</option>
+                                            <option value="yes" <?= ($row->domesticated === 'yes') ? 'selected' : '' ?>>YES</option>
+                                            <option value="n/a" <?= ($row->domesticated === 'n/a') ? 'selected' : '' ?>>N/A</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="uk-form-row">
+                                        <label>Signed Date</label>
+                                        <input id="signed_date" required name="signed_date" type="text" data-uk-datepicker="{format:'YYYY-MM-DD'}" class="md-input" value="<?= $row->signed_date ?>" />
                                     </div>
                                 </div>
 
@@ -162,6 +188,11 @@ include("assets/inc/head.php");
                                     <div class="uk-form-row">
                                         <label>Treaty Year</label>
                                         <input type="text" id="treaty_year" value="<?= $row->treaty_year ?>" required name="treaty_year" class="md-input" />
+                                    </div>
+
+                                    <div class="uk-form-row">
+                                        <label>Ratification Date</label>
+                                        <input id="ratification_date" required name="ratification_date" type="text" data-uk-datepicker="{format:'YYYY-MM-DD'}" class="md-input" value="<?= $row->ratification ?>" />
                                     </div>
 
                                 </div>

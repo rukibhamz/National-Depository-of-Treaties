@@ -125,6 +125,18 @@ include("assets/inc/head.php");
                                                         </div>
                                                     </li>
 
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">verified_user</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">
+                                                                <?= $row->signed_date ?>
+                                                            </span>
+                                                            <span class="uk-text-small uk-text-muted">Date Signed</span>
+                                                        </div>
+                                                    </li>
+
                                                 </ul>
                                             </div>
 
@@ -148,6 +160,27 @@ include("assets/inc/head.php");
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading"><?= $row->tc_name; ?></span>
                                                             <span class="uk-text-small uk-text-muted">Treaty Category</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">description</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                        <span class="md-list-heading"><?= strtoupper($row->domesticated); ?></span>
+                                                            <span class="uk-text-small uk-text-muted">Domesticated</span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">verified_user</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">
+                                                                <?= $row->ratification ?>
+                                                            </span>
+                                                            <span class="uk-text-small uk-text-muted">Ratification Date</span>
                                                         </div>
                                                     </li>
 

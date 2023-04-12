@@ -283,7 +283,7 @@ require_once('sudo/assets/config/config.php');
             window.location.href = url;
         }
     </script>
-    <<<<<<< HEAD=======<script>
+    <script>
         $("#search").on("keyup", function(){
         var value = $(this).val();
 
@@ -294,7 +294,6 @@ require_once('sudo/assets/config/config.php');
         var status = $(this).find("h6:contains('Status')").text();
 
         if(title.toLowerCase().indexOf(value.toLowerCase()) < 0 && category.toLowerCase().indexOf(value.toLowerCase()) < 0 && year.toLowerCase().indexOf(value.toLowerCase()) < 0 && status.toLowerCase().indexOf(value.toLowerCase()) < 0){ $(this).hide(); } else { $(this).show(); } }); }); </script>
-            >>>>>>> 2bb304fc252b851d8d30dc1f7f7206c2f7911d56
 
 
 </body>

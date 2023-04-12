@@ -150,13 +150,13 @@ while ($row = $res->fetch_object()) {
                                             }
                                             ?>
                                         </div>
-                                        <div class="md-card">
+                                        <!--<div class="md-card">-->
                                             <!-- Preview for desktop view -->
-                                            <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">
-                                            </div>
+                                        <!--    <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">-->
+                                        <!--    </div>-->
                                             <!-- Mobile View -->
-                                            <div id="pdf-container"></div>
-                                        </div>
+                                        <!--    <div id="pdf-container"></div>-->
+                                        <!--</div>-->
                                         <div class="media-body">
                                             <h5><?= $row->title; ?></h5>
                                             <div class="space-10"></div>
@@ -193,18 +193,18 @@ while ($row = $res->fetch_object()) {
         <script src="js/main.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
-            const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
-            const fileName = docsContainer.getAttribute('data-value');
-            const fileExt = fileName.split(".").pop();
-            if (screen.width < 768 && fileExt === 'pdf') {
-                var pdfUrl = `sudo/assets/magazines/${fileName}`;
-                // var pdfHtml = '<object data="' + pdfUrl + '" type="application/pdf" width="100%" height="100%"></object>';
-                let pdfHtml = `<a href="${pdfUrl}" download="${fileName}" class="btn btn-primary"><i class="icofont icofont-download-alt"></i>&ensp;Download PDF</a>`;
-                document.getElementById("pdf-container").innerHTML = pdfHtml;
-            } else if (fileExt === 'pdf' && screen.width >= 768) {
-                PDFObject.embed(`sudo/assets/magazines/${fileName}#toolbar=0`, "#<?= 'preview-', $_GET['doc_id'] ?>", { pdfOpenParams: { print: 0} });
+            // const docsContainer = document.getElementById('<?= 'preview-', $_GET['doc_id'] ?>')
+            // const fileName = docsContainer.getAttribute('data-value');
+            // const fileExt = fileName.split(".").pop();
+            // if (screen.width < 768 && fileExt === 'pdf') {
+            //     var pdfUrl = `sudo/assets/magazines/${fileName}`;
+            //     // var pdfHtml = '<object data="' + pdfUrl + '" type="application/pdf" width="100%" height="100%"></object>';
+            //     let pdfHtml = `<a href="${pdfUrl}" download="${fileName}" class="btn btn-primary"><i class="icofont icofont-download-alt"></i>&ensp;Download PDF</a>`;
+            //     document.getElementById("pdf-container").innerHTML = pdfHtml;
+            // } else if (fileExt === 'pdf' && screen.width >= 768) {
+            //     PDFObject.embed(`sudo/assets/magazines/${fileName}#toolbar=0`, "#<?= 'preview-', $_GET['doc_id'] ?>", { pdfOpenParams: { print: 0} });
                 
-            }
+            // }
         </script>
 
     </body>

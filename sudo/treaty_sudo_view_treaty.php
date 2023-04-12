@@ -39,8 +39,8 @@ include("assets/inc/head.php");
                 <ul id="breadcrumbs">
                     <li><a href="pages_sudo_dashboard.php">Dashboard</a></li>
                     <li><a href="treaty_sudo_all_treaties.php">All Treaty</a></li>
-                      <!-- <li><span><?= $row->title; ?></span></li> -->
-                      <li><span><?= strlen($row->title) > 60 ? substr($row->title, 0, 50) . '...' : $row->title; ?></span></li>
+                    <!-- <li><span><?= $row->title; ?></span></li> -->
+                    <li><span><?= strlen($row->title) > 60 ? substr($row->title, 0, 50) . '...' : $row->title; ?></span></li>
                 </ul>
             </div>
 
@@ -102,6 +102,30 @@ include("assets/inc/head.php");
                                                         </div>
                                                     </li>
 
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">verified_user</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">
+                                                                <?= $row->approved == 1 ? "Approved" : "Awaiting Approval"; ?>
+                                                            </span>
+                                                            <span class="uk-text-small uk-text-muted">Approval Status</span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">verified_user</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">
+                                                                <?= $row->signed_date ?>
+                                                            </span>
+                                                            <span class="uk-text-small uk-text-muted">Date Signed</span>
+                                                        </div>
+                                                    </li>
+
                                                 </ul>
                                             </div>
 
@@ -125,6 +149,28 @@ include("assets/inc/head.php");
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading"><?php echo $row->tc_name; ?></span>
                                                             <span class="uk-text-small uk-text-muted">Treaty Category</span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">description</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading"><?= strtoupper($row->domesticated); ?></span>
+                                                            <span class="uk-text-small uk-text-muted">Domesticated</span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="md-list-addon-element">
+                                                            <i class="md-list-addon-icon uk-text-primary material-icons">verified_user</i>
+                                                        </div>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">
+                                                                <?= $row->ratification ?>
+                                                            </span>
+                                                            <span class="uk-text-small uk-text-muted">Ratification Date</span>
                                                         </div>
                                                     </li>
 

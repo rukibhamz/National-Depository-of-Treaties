@@ -103,7 +103,7 @@ $stmt->fetch();
 $stmt->close();
 
 //1.0.3 : Number Of Books under References Category
-$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'Memorandum of Understanding' AND b_publisher = '$user->name' ";
+$result = "SELECT COUNT(*) FROM tbl_treaties WHERE tc_name = 'MOU' AND b_publisher = '$user->name' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($mou);
@@ -161,26 +161,8 @@ include("assets/inc/head.php");
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                                <span class="uk-text-muted uk-text-small">Number of Status</span>
-                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $total_status; ?></noscript></span></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="md-card">
-                            <div class="md-card-content">
-                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
                                 <span class="uk-text-muted uk-text-small">Number of Treaty</span>
                                 <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $total; ?></noscript></span></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="md-card">
-                            <div class="md-card-content">
-                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                                <span class="uk-text-muted uk-text-small">Pending Treaty</span>
-                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $pending; ?></noscript></span></h2>
                             </div>
                         </div>
                     </div>
@@ -193,8 +175,26 @@ include("assets/inc/head.php");
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Pending Treaty</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $pending; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
                 <?php endif; ?>
                 <?php if ($user->role == 'staff') : ?>
+                    <div>
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
+                                <span class="uk-text-muted uk-text-small">Number of Status</span>
+                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?= $total_status; ?></noscript></span></h2>
+                            </div>
+                        </div>
+                    </div>
                     <div>
                         <div class="md-card">
                             <div class="md-card-content">
@@ -240,15 +240,15 @@ include("assets/inc/head.php");
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="md-card">
-                            <div class="md-card-content">
-                                <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>
-                                <span class="uk-text-muted uk-text-small">Treaty Category</span>
-                                <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $treaty; ?></noscript></span></h2>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div>-->
+                    <!--    <div class="md-card">-->
+                    <!--        <div class="md-card-content">-->
+                    <!--            <div class="uk-float-right uk-margin-top uk-margin-small-right"></div>-->
+                    <!--            <span class="uk-text-muted uk-text-small">Treaty Category</span>-->
+                    <!--            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $treaty; ?></noscript></span></h2>-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
                     <div>
                         <div class="md-card">
                             <div class="md-card-content">

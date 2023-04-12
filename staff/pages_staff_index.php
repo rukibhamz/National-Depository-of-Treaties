@@ -29,10 +29,10 @@ if (isset($_POST['staff_login'])) {
     $stmt->execute(); //execute bind
     $stmt->bind_result($l_email, $l_email, $l_pwd, $id); //bind result
     $rs = $stmt->fetch();
-    $_SESSION['id'] = $id; //assaign session to sudo id
+    $_SESSION['id'] = $id; //assign session to sudo id
 
     if ($rs) {
-        //if its sucessfull
+        //if its successful
         header("location:pages_staff_dashboard.php");
         $_SESSION['loading'] = false;
     } else {
@@ -58,13 +58,7 @@ if (isset($_POST['Reset_pwd'])) {
 
     //declare a variable which will be passed to alert function
     if ($stmt) {
-        $mailer = new Mail(
-            host: 'mail.fmojtreaties.org.ng',
-            username: 'admin@fmojtreaties.org.ng', //Your company email
-            password: '[2tJe@)YQ0x(',
-            port: '465',
-            encryption: 'ssl'
-        );
+        $mailer = new Mail('mail.fmojtreaties.org.ng', 'admin@fmojtreaties.org.ng', '[2tJe@)YQ0x(', '465', 'ssl');
         $reset_link = "http://fmojtreaties.org.ng/staff/pages_staff_reset_password.php?validate_token=" . $pr_token;
         $message = "Please click on the following link to reset your password: <a href='$reset_link'>Reset Link</a>";
 

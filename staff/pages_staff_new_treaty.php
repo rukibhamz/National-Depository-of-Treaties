@@ -34,33 +34,43 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'active') {
     } else {
         $error = 1;
         $err = "Treaty title cannot be empty";
+        $_SESSION['loading'] = false;
     }
     if (isset($_POST['signatory']) && !empty($_POST['signatory'])) {
         $signatory = mysqli_real_escape_string($mysqli, trim($_POST['signatory']));
     } else {
         $error = 1;
         $err = "Treaty signatory cannot be empty";
+        $_SESSION['loading'] = false;
     }
     if (isset($_POST['s_status']) && !empty($_POST['s_status'])) {
         $s_status = mysqli_real_escape_string($mysqli, trim($_POST['s_status']));
     } else {
         $error = 1;
         $err = "Treaty status cannot be empty";
+        $_SESSION['loading'] = false;
     }
     if (isset($_POST['tc_name']) && !empty($_POST['tc_name'])) {
         $tc_name = mysqli_real_escape_string($mysqli, trim($_POST['tc_name']));
     } else {
         $error = 1;
         $err = "Treaty category cannot be empty";
+        $_SESSION['loading'] = false;
     }
     if (isset($_POST['b_summary']) && !empty($_POST['b_summary'])) {
         $b_summary = mysqli_real_escape_string($mysqli, trim($_POST['b_summary']));
     } else {
         $error = 1;
         $err = "Treaty description cannot be empty";
+        $_SESSION['loading'] = false;
     }
+    // if ($_FILES["b_file"]["size"] == 0) {
+    //     $error = 1;
+    //     $err = "Treaty document cannot be empty";
+    //     $_SESSION['loading'] = false;
+    // }
     if (!$error) {
-             $title  = $_POST['title'];
+        $title  = $_POST['title'];
         $sql = "SELECT * FROM tbl_treaties WHERE title='$title' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
@@ -80,7 +90,14 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'active') {
             $s_status = $_POST['s_status'];
             $s_id = $_POST['s_id'];
             $b_file = $_FILES["b_file"]["name"];
+            $domesticated = $_POST["domesticated"];
+            $signed_date = $_POST["signed_date"];
+            $ratification = $_POST["ratification_date"];
             $approved = false;
+
+            // Convert date format from "24/04/2023" to "YYYY-MM-DD"
+            $signed_date = date("Y-m-d", strtotime($signed_date));
+            $ratification = date("Y-m-d", strtotime($ratification));
 
             if (!empty($b_file)) {
                 move_uploaded_file($_FILES["b_file"]["tmp_name"], ".." . DIRECTORY_SEPARATOR . "sudo" . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "magazines" . DIRECTORY_SEPARATOR . $_FILES["b_file"]["name"]);
@@ -93,7 +110,7 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'active') {
             // move_uploaded_file($_FILES["b_file"]["tmp_name"], "../sudo/assets/magazines/" . $_FILES["b_file"]["name"]);
 
             //Insert Captured information to a database table
-            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id, approved) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO tbl_treaties (title, signatory, b_publisher, b_file, tc_id, tc_name, b_summary, treaty_year, s_status, s_id, domesticated, signed_date, ratification, approved) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $notification = "INSERT INTO il_notifications (content, user_id) VALUES(?,?)";
 
             $stmt = $mysqli->prepare($query);
@@ -103,7 +120,7 @@ if (isset($_POST['add_treaty']) && $user->acc_status == 'active') {
             $notification_stmt = $mysqli->prepare($notification);
 
             //bind parameters
-            $rc = $stmt->bind_param('sssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id, $approved);
+            $rc = $stmt->bind_param('ssssssssssssss', $title, $signatory, $b_publisher, $b_file, $tc_id, $tc_name, $b_summary, $treaty_year, $s_status, $s_id, $domesticated, $signed_date, $ratification, $approved);
             $rc = $notification_stmt->bind_param('ss', $content, $user_id);
 
             // Execute
@@ -163,11 +180,15 @@ include("assets/inc/head.php");
                     <hr>
                     <form method="post" enctype="multipart/form-data">
                         <div class="uk-grid" data-uk-grid-margin>
-                            <div class="uk-width-medium-1-2">
+
+                            <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Title</label>
                                     <input type="text" required name="title" class="md-input" />
                                 </div>
+                            </div>
+
+                            <div class="uk-width-medium-1-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Signatory</label>
                                     <input type="text" required name="signatory" class="md-input" />
@@ -192,6 +213,21 @@ include("assets/inc/head.php");
                                 <div class="uk-form-row" style="display:none">
                                     <label>Treaty Status ID</label>
                                     <input type="text" id="TreatyStatusID" required name="s_id" class="md-input" readonly />
+                                </div>
+
+                                <div class="uk-form-row">
+                                    <label>Domesticated ?</label>
+                                    <select required name="domesticated" id="domesticated" class="md-input">
+                                        <option value="" disabled selected>--Select An Option--</option>
+                                        <option value="no">NO</option>
+                                        <option value="yes">YES</option>
+                                        <option value="n/a">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="uk-form-row">
+                                    <label>Signed Date</label>
+                                    <input id="signed_date" required name="signed_date" type="text" data-uk-datepicker class="md-input" />
                                 </div>
                             </div>
 
@@ -226,6 +262,11 @@ include("assets/inc/head.php");
                                     <input type="text" id="treaty_year" required name="treaty_year" class="md-input" />
                                 </div>
 
+                                <div class="uk-form-row">
+                                    <label>Ratification Date</label>
+                                    <input id="ratification_date" required name="ratification_date" type="text" data-uk-datepicker class="md-input" value="" />
+                                </div>
+
                             </div>
 
                             <div class="uk-width-medium-2-2">
@@ -239,14 +280,16 @@ include("assets/inc/head.php");
                                 <div id="file_upload-progressbar" class="uk-progress uk-hidden">
                                     <div class="uk-progress-bar" style="width:0">0%</div>
                                 </div>
+
                             </div>
 
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <label>Treaty Description</label>
-                                    <textarea cols="30" rows="10" class="md-input" name="b_summary" required></textarea>
+                                    <textarea cols="30" rows="10" class="md-input" name="b_summary"></textarea>
                                 </div>
                             </div>
+
                             <div class="uk-width-medium-2-2">
                                 <div class="uk-form-row">
                                     <div id="loading-spinner" style="display:none;">
@@ -297,6 +340,13 @@ include("assets/inc/head.php");
     <script src="assets/js/altair_admin_common.min.js"></script>
     <script src="assets/js/pages/forms_file_upload.min.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Set ratification date input value to empty string
+            document.getElementById("ratification_date").value = "";
+            document.getElementById("signed_date").value = "";
+        });
+
+
         const fileUpload = document.getElementById("file_upload-select");
         const fileNameElement = document.getElementById("file_name");
 
