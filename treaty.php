@@ -85,11 +85,22 @@ while ($row = $res->fetch_object()) {
                                 <li class="active">
                                     <a href="treaties.php">CATALOGUES</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="staff/pages_staff_index.php" title="Staff Login">UPLOAD TREATY</a>
                                 </li>
                                 <li>
                                     <a href="sudo/pages_sudo_index.php" title="Admin Login">LOGIN</a>
+                                </li> -->
+                                <li class="position-relative">
+                                    <a title="Login">LOGIN</a>
+                                    <ul class="dropdown_list">
+                                        <li>
+                                            <a href="sudo/pages_sudo_index.php" title="Admin Login">Login as Admin</a>
+                                        </li>
+                                        <li>
+                                            <a href="sudo/pages_staff_index.php" title="Admin Login">Login as Staff</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -151,10 +162,10 @@ while ($row = $res->fetch_object()) {
                                             ?>
                                         </div>
                                         <!--<div class="md-card">-->
-                                            <!-- Preview for desktop view -->
+                                        <!-- Preview for desktop view -->
                                         <!--    <div data-value="<?= $row->b_file ?>" id="<?= 'preview-', $_GET['doc_id'] ?>">-->
                                         <!--    </div>-->
-                                            <!-- Mobile View -->
+                                        <!-- Mobile View -->
                                         <!--    <div id="pdf-container"></div>-->
                                         <!--</div>-->
                                         <div class="media-body">
@@ -203,7 +214,7 @@ while ($row = $res->fetch_object()) {
             //     document.getElementById("pdf-container").innerHTML = pdfHtml;
             // } else if (fileExt === 'pdf' && screen.width >= 768) {
             //     PDFObject.embed(`sudo/assets/magazines/${fileName}#toolbar=0`, "#<?= 'preview-', $_GET['doc_id'] ?>", { pdfOpenParams: { print: 0} });
-                
+
             // }
         </script>
 

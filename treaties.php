@@ -66,11 +66,22 @@ require_once('sudo/assets/config/config.php');
                             <li class="active">
                                 <a href="treaties.php">CATALOGUES</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="staff/pages_staff_index.php" title="Staff Login">UPLOAD TREATY</a>
                             </li>
                             <li>
                                 <a href="sudo/pages_sudo_index.php" title="Admin Login">LOGIN</a>
+                            </li> -->
+                            <li class="position-relative">
+                                <a title="Login">LOGIN</a>
+                                <ul class="dropdown_list">
+                                    <li>
+                                        <a href="sudo/pages_sudo_index.php" title="Admin Login">Login as Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="sudo/pages_staff_index.php" title="Admin Login">Login as Staff</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -200,10 +211,10 @@ require_once('sudo/assets/config/config.php');
                         <div class="sigle-sidebar">
                             <h4>Treaties Categories</h4>
                             <hr>
-                             <ul id="category_list" class="list-unstyled menu-tip overflow_display">
-                                
+                            <ul id="category_list" class="list-unstyled menu-tip overflow_display">
+
                                 <ul id="category_list" class="list-unstyled menu-tip">
-                                    
+
                                     <?php
                                     $ret = "SELECT * FROM  tbl_treatiescategory";
                                     $stmt = $mysqli->prepare($ret);
@@ -284,16 +295,23 @@ require_once('sudo/assets/config/config.php');
         }
     </script>
     <script>
-        $("#search").on("keyup", function(){
-        var value = $(this).val();
+        $("#search").on("keyup", function() {
+            var value = $(this).val();
 
-        $(".category-item").each(function(index, element){
-        var title = $(this).find(".trim").text();
-        var category = $(this).find("h6:contains('Category')").text();
-        var year = $(this).find("h6:contains('Year')").text();
-        var status = $(this).find("h6:contains('Status')").text();
+            $(".category-item").each(function(index, element) {
+                var title = $(this).find(".trim").text();
+                var category = $(this).find("h6:contains('Category')").text();
+                var year = $(this).find("h6:contains('Year')").text();
+                var status = $(this).find("h6:contains('Status')").text();
 
-        if(title.toLowerCase().indexOf(value.toLowerCase()) < 0 && category.toLowerCase().indexOf(value.toLowerCase()) < 0 && year.toLowerCase().indexOf(value.toLowerCase()) < 0 && status.toLowerCase().indexOf(value.toLowerCase()) < 0){ $(this).hide(); } else { $(this).show(); } }); }); </script>
+                if (title.toLowerCase().indexOf(value.toLowerCase()) < 0 && category.toLowerCase().indexOf(value.toLowerCase()) < 0 && year.toLowerCase().indexOf(value.toLowerCase()) < 0 && status.toLowerCase().indexOf(value.toLowerCase()) < 0) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+    </script>
 
 
 </body>
